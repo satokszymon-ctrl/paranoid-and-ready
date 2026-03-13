@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security & Defense — Paranoid & Ready</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #0f0f0f;
+    --bg-card-hover: #161616;
+    --red: #e02020;
+    --red-dim: #c01818;
+    --red-glow: #e0202010;
+    --red-glow-strong: #e0202020;
+    --text: #ffffff;
+    --text-secondary: #e0e0e0;
+    --text-muted: #b0b0b0;
+    --text-dim: #787878;
+    --border: #e02020;
+    --border-subtle: #1a1a1a;
+    --border-muted: #222222;
+    --surface-1: #0e0e0e;
+    --surface-2: #131313;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---- NAV ---- */
+  nav { padding: 28px 24px 0; }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    text-align: center;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 24px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-search {
+    background: transparent;
+    border: 1px solid var(--border-muted);
+    padding: 7px 14px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    width: 180px;
+    outline: none;
+    transition: border-color 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-search::placeholder { color: var(--text-dim); }
+  .nav-search:focus { border-color: var(--red); }
+
+  .header-line {
+    max-width: 1100px;
+    margin: 20px auto 0;
+    padding: 0 24px;
+  }
+
+  .header-line hr {
+    border: none;
+    height: 1px;
+    background: var(--red);
+  }
+
+  /* ---- BREADCRUMB ---- */
+  .breadcrumb {
+    padding: 28px 0 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+  }
+
+  .breadcrumb a {
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+
+  .breadcrumb a:hover { color: var(--red); }
+  .breadcrumb .sep { color: var(--text-dim); margin: 0 6px; }
+  .breadcrumb .current { color: var(--red); }
+
+  /* ---- CATEGORY HERO ---- */
+  .cat-hero {
+    padding: 48px 0 56px;
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .cat-hero h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 700;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .cat-hero-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ---- SUBCATEGORY ACCORDION ---- */
+  .subcategories {
+    padding-bottom: 48px;
+    animation: fadeIn 0.4s ease-out 0.05s both;
+  }
+
+  .subcat-item {
+    border-bottom: 1px solid var(--red);
+  }
+
+  .subcat-trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 0;
+    cursor: pointer;
+    gap: 24px;
+    transition: background 0.2s;
+  }
+
+  .subcat-trigger:hover {
+    background: var(--red-glow);
+  }
+
+  .subcat-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: left;
+  }
+
+  .subcat-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+
+  .subcat-icon {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    color: var(--red);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    line-height: 1;
+  }
+
+  .subcat-item.open .subcat-icon {
+    transform: rotate(45deg);
+  }
+
+  .subcat-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
+
+  .subcat-item.open .subcat-body {
+    max-height: 15000px;
+    transition: max-height 0.8s ease;
+  }
+
+  .subcat-content {
+    padding: 8px 0 56px;
+  }
+
+  /* ---- TYPE SECTIONS (within subcategory) ---- */
+  .type-intro {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 36px;
+  }
+
+  .type-section {
+    margin-bottom: 36px;
+    padding: 28px;
+    border: 1px solid var(--border-muted);
+    transition: border-color 0.3s;
+  }
+
+  .type-section:hover {
+    border-color: #444;
+  }
+
+  .type-section:last-of-type {
+    margin-bottom: 48px;
+  }
+
+  .type-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 16px;
+  }
+
+  .type-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text);
+  }
+
+  .type-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    border: 1px solid var(--border-muted);
+    padding: 3px 10px;
+    flex-shrink: 0;
+  }
+
+  .type-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .type-specs {
+    display: flex;
+    gap: 24px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .type-spec {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  .type-spec strong {
+    color: var(--text-muted);
+  }
+
+  /* ---- FEATURED PICKS ---- */
+  .featured-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .featured-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-muted);
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .featured-card {
+    border: 1px solid var(--border-muted);
+    background: var(--bg);
+    transition: all 0.25s;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .featured-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+
+  .featured-card:hover::before { transform: scaleX(1); }
+
+  .featured-card:hover {
+    border-color: #444;
+    background: var(--surface-1);
+  }
+
+  .featured-img {
+    width: 100%;
+    height: 140px;
+    background: var(--surface-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-muted);
+  }
+
+  .featured-img-placeholder {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .featured-info {
+    padding: 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .featured-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .featured-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    font-weight: 300;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+
+  .featured-specs {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+
+  .featured-spec {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  .featured-spec strong {
+    color: var(--text-muted);
+  }
+
+  .featured-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: auto;
+  }
+
+  .featured-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .featured-btn {
+    background: transparent;
+    border: 1px solid var(--red);
+    color: var(--red);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 7px 16px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .featured-btn:hover {
+    background: var(--red);
+    color: var(--bg);
+  }
+
+  /* ---- HOW TO CHOOSE ---- */
+  .guide {
+    padding: 56px 0;
+    border-top: 1px solid var(--border-muted);
+    animation: fadeIn 0.4s ease-out 0.1s both;
+  }
+
+  .guide-header {
+    margin-bottom: 24px;
+  }
+
+  .guide-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .guide-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-muted);
+  }
+
+  .guide-content {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+
+  .gift-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .gift-card {
+    border: 1px solid var(--border-muted);
+    background: var(--bg);
+    transition: all 0.25s;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gift-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+
+  .gift-card:hover::before { transform: scaleX(1); }
+
+  .gift-card:hover {
+    border-color: #444;
+    background: var(--surface-1);
+  }
+
+  .gift-img {
+    width: 100%;
+    height: 140px;
+    background: var(--surface-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-muted);
+  }
+
+  .gift-img-placeholder {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .gift-info {
+    padding: 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gift-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .gift-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    font-weight: 300;
+    margin-bottom: 18px;
+    flex: 1;
+  }
+
+  .gift-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: auto;
+  }
+
+  .gift-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* ---- RELATED GUIDES ---- */
+  .related {
+    padding: 56px 0;
+    border-top: 1px solid var(--border-muted);
+  }
+
+  .related-header {
+    margin-bottom: 8px;
+  }
+
+  .article-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-row {
+    display: flex;
+    align-items: baseline;
+    gap: 32px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .article-row:last-child { border-bottom: none; }
+  .article-row:hover { background: var(--red-glow); }
+
+  .article-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+    min-width: 100px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .article-tag {
+    color: var(--red);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 9px;
+  }
+
+  .article-time { color: var(--text-dim); }
+
+  .article-content { flex: 1; }
+
+  .article-title {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    transition: color 0.2s;
+  }
+
+  .article-row:hover .article-title { color: var(--red); }
+
+  .article-excerpt {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .article-read {
+    margin-top: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.2s;
+  }
+
+  .article-row:hover .article-read { color: var(--red); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    padding: 40px 24px 48px;
+    border-top: 1px solid var(--border-muted);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+  }
+
+  .footer-brand {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.2s;
+  }
+
+  .footer-nav a:hover { color: var(--text); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .footer-tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    
+  }
+
+  .footer-disclaimer {
+    font-size: 11px;
+    color: var(--text-dim);
+    max-width: 480px;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  /* ---- UNIT TOGGLE ---- */
+  .unit-toggle {
+    display: flex;
+    border: 1px solid var(--border-muted);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .unit-toggle .u-opt {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .unit-toggle .u-opt.active {
+    background: var(--red);
+    color: var(--bg);
+  }
+
+  .unit-toggle .u-opt:not(.active):hover {
+    color: var(--text);
+  }
+
+  /* ---- LOGO AND ---- */
+  .logo-and {
+    
+    
+    color: #ffffff;
+  }
+
+  /* ---- CATEGORY AMPERSAND ---- */
+  .cat-amp {
+    
+    
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  nav { animation: fadeIn 0.5s ease-out; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 900px) {
+    .featured-grid { grid-template-columns: 1fr; }
+    .gift-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .nav-left { display: none; }
+    .nav-inner { grid-template-columns: auto 1fr; }
+    .nav-right { gap: 12px; }
+    .type-specs { gap: 12px; }
+    .article-row { flex-direction: column; gap: 8px; }
+    .footer-top { flex-direction: column; gap: 20px; }
+    .footer-bottom { flex-direction: column; gap: 12px; }
+    .footer-disclaimer { text-align: left; }
+  }
+
+  @media (max-width: 480px) {
+    .gift-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <ul class="nav-links">
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">Guides</a></li>
+        <li><a href="#">Gifts</a></li>
+      </ul>
+    </div>
+    <a href="#" class="logo">PARANOID<span class="logo-and">AND</span>READY</a>
+    <div class="nav-right">
+      <input type="text" class="nav-search" placeholder="Search gear...">
+      <div class="unit-toggle">
+        <button class="u-opt active" data-system="imperial" onclick="setUnits('imperial')">LB</button>
+        <button class="u-opt" data-system="metric" onclick="setUnits('metric')">KG</button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="header-line"><hr></div>
+
+<!-- BREADCRUMB -->
+<div class="container">
+  <div class="breadcrumb">
+    <a href="#">Home</a><span class="sep">/</span><span class="current">Security <span class="cat-amp">&amp;</span> Defense</span>
+  </div>
+</div>
+
+<!-- CATEGORY HERO -->
+<section class="cat-hero">
+  <div class="container">
+    <h1>Security <span class="cat-amp">&amp;</span> Defense</h1>
+    <p class="cat-hero-desc">Preparedness without security is just stockpiling for someone else. When normal systems of order are disrupted — whether for hours or months — the ability to protect your household, your supplies, and your people becomes the foundation everything else rests on. This section covers home hardening, surveillance, perimeter awareness, personal defense tools, and the mindset that ties it all together.</p>
+  </div>
+</section>
+
+
+
+
+<!-- SUBCATEGORIES -->
+<div class="subcategories">
+  <div class="container">
+
+    <!-- ========== HOME HARDENING ========== -->
+    <div class="subcat-item">
+      <button class="subcat-trigger" onclick="toggleSubcat(this)">
+        <span class="subcat-name">Home Hardening</span>
+        <span class="subcat-icon">+</span>
+      </button>
+      <div class="subcat-body">
+        <div class="subcat-content">
+
+          <p class="type-intro">Most residential doors and windows can be defeated in seconds. Home hardening is about buying time — making your home difficult enough to breach that an intruder either gives up or gives you time to react. None of this requires a construction crew. Most upgrades are bolt-on, DIY-friendly, and cost less than a single insurance deductible. The philosophy is simple: deter, delay, defend — in that order.</p>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Door Reinforcement</div>
+              <div class="type-tag">Weakest Point, Biggest Impact</div>
+            </div>
+            <div class="type-desc">The front door is breached in 90% of home invasions, and it usually takes one kick. The problem isn't the door itself — it's the strike plate. Standard strike plates are held by <span class="u" data-imperial="¾ inch" data-metric="19mm">¾ inch</span> screws into soft pine trim. Replacing them with reinforced strike plates secured by <span class="u" data-imperial="3 inch" data-metric="76mm">3 inch</span> screws that reach the wall studs turns a one-kick entry into a many-kick ordeal. Door armor kits (like Door Armor MAX) reinforce the strike plate, hinge side, and door edge simultaneously. Pair with a heavy-duty deadbolt and you've hardened the most vulnerable entry point in your home for under $100.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>3" screws</strong> into studs</span>
+              <span class="type-spec"><strong>Biggest</strong> security ROI</span>
+              <span class="type-spec"><strong>Price:</strong> $40–100</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Window Security</div>
+              <div class="type-tag">Glass Is Not a Barrier</div>
+            </div>
+            <div class="type-desc">Standard window glass shatters with a single hit. Security window film (like 3M Safety & Security Film) holds shattered glass in place, turning a quick smash-and-entry into a sustained effort that creates noise and delay. It doesn't make glass unbreakable — it makes it resistant enough to buy time. Additional measures: window bars or grilles (controversial aesthetically, effective practically), window pin locks that prevent sliding windows from being forced, and thorny landscaping beneath ground-floor windows. For sliding glass doors: a security bar in the track is the simplest effective upgrade.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Security film</strong> holds glass</span>
+              <span class="type-spec"><strong>Pin locks</strong> for sliders</span>
+              <span class="type-spec"><strong>Thorny plants</strong> as deterrent</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Door Barricades & Security Bars</div>
+              <div class="type-tag">Last Line at the Door</div>
+            </div>
+            <div class="type-desc">Door barricade devices mount at the base of the door and brace against the floor — distributing forced-entry impact across the entire floor rather than a few screws. Products like the Nightlock and Master Lock Door Security Bar can withstand several hundred pounds of force. They're particularly useful for apartments (where you can't modify the frame), hotel rooms, and safe-room doors. Some are portable enough for travel. Pair with door reinforcement for a layered approach — the reinforced frame resists the kick, and the barricade absorbs what gets through.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Floor-braced</strong> resistance</span>
+              <span class="type-spec"><strong>Works in</strong> apartments</span>
+              <span class="type-spec"><strong>Portable</strong> travel options</span>
+            </div>
+          </div>
+
+          <!-- Featured Picks -->
+          <div class="featured-label">Featured Picks</div>
+          <div class="featured-grid">
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Door Reinforcement Kit]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Window Security Film]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Door Barricade / Security Bar]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SURVEILLANCE & AWARENESS ========== -->
+    <div class="subcat-item">
+      <button class="subcat-trigger" onclick="toggleSubcat(this)">
+        <span class="subcat-name">Surveillance <span class="cat-amp">&amp;</span> Awareness</span>
+        <span class="subcat-icon">+</span>
+      </button>
+      <div class="subcat-body">
+        <div class="subcat-content">
+
+          <p class="type-intro">You can't defend against what you can't see coming. Surveillance and early warning systems give you the critical advantage of time — seconds to minutes of advance notice that someone is approaching your property. In normal times, cameras and smart doorbells deter porch pirates. When things deteriorate, the same equipment becomes your early warning network. The best systems work without Wi-Fi or grid power.</p>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Security Cameras</div>
+              <div class="type-tag">Eyes When You Can't Watch</div>
+            </div>
+            <div class="type-desc">Outdoor security cameras provide 24/7 visual coverage of entry points and property lines. For preparedness, prioritize cameras with local storage (SD card or NVR) over cloud-only systems — when the internet goes down, cloud cameras become blind. Solar-powered models with battery backup operate indefinitely off-grid. Night vision (infrared) is non-negotiable for any useful security camera. Systems like Reolink and Eufy offer local storage, solar power options, and no monthly subscriptions. Position cameras to cover all entry points and the driveway approach.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Local storage</strong> essential</span>
+              <span class="type-spec"><strong>Solar + battery</strong> for off-grid</span>
+              <span class="type-spec"><strong>Night vision</strong> required</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Driveway & Perimeter Alarms</div>
+              <div class="type-tag">Early Warning</div>
+            </div>
+            <div class="type-desc">Motion-activated alarms positioned at property entry points — driveways, gates, paths — that alert you inside the house when someone approaches. Wireless models (like the Guardline or Chamberlain CWA2000) use a sensor outdoors and a receiver indoors, with ranges up to <span class="u" data-imperial="½ mile" data-metric="800m">½ mile</span>. Different chime tones for different sensors let you know which approach is active. Battery-powered sensors require no wiring. In a grid-down scenario, these passive systems continue working on batteries long after smart home systems have died. The low-tech solution that provides the highest-value early warning.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Battery</strong> powered</span>
+              <span class="type-spec"><strong>Up to ½ mile</strong> range</span>
+              <span class="type-spec"><strong>No Wi-Fi</strong> required</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Motion-Sensor Lights</div>
+              <div class="type-tag">Simplest Deterrent</div>
+            </div>
+            <div class="type-desc">Bright lights that activate when motion is detected — the single most effective and cheapest security upgrade for any property. Criminals avoid lit areas because illumination removes their advantage. Solar-powered motion lights mount anywhere without wiring and operate indefinitely. LED floodlights (800+ lumens) with adjustable sensitivity and range cover driveways, doors, and dark corners. Place them high enough to prevent easy tampering. In a grid-down scenario, solar motion lights continue working when everything else is dark — making your perimeter conspicuously watched while neighbors' properties go black.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Solar:</strong> no wiring needed</span>
+              <span class="type-spec"><strong>800+ lumens</strong></span>
+              <span class="type-spec"><strong>Price:</strong> $15–40 each</span>
+            </div>
+          </div>
+
+          <!-- Featured Picks -->
+          <div class="featured-label">Featured Picks</div>
+          <div class="featured-grid">
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Security Camera (local/solar)]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Driveway / Perimeter Alarm]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Solar Motion-Sensor Light]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== PERSONAL DEFENSE ========== -->
+    <div class="subcat-item">
+      <button class="subcat-trigger" onclick="toggleSubcat(this)">
+        <span class="subcat-name">Personal Defense</span>
+        <span class="subcat-icon">+</span>
+      </button>
+      <div class="subcat-body">
+        <div class="subcat-content">
+
+          <p class="type-intro">Personal defense tools are the last resort — behind awareness, avoidance, and de-escalation. But when those fail, having an effective tool and the training to use it matters. This section focuses on non-lethal and less-lethal options that are legal in most jurisdictions, effective when deployed correctly, and appropriate for a preparedness context. Always check your local laws before purchasing, and always get training with any defense tool you carry.</p>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Pepper Spray / OC Spray</div>
+              <div class="type-tag">Most Accessible Defense Tool</div>
+            </div>
+            <div class="type-desc">OC (oleoresin capsicum) spray causes immediate, involuntary eye closure, coughing, and pain — incapacitating an attacker at a distance of 10–15 feet for 20–45 minutes. Legal in all 50 U.S. states (some restrictions on size/concentration apply). Stream pattern is preferred over cone/fog for outdoor use — less blowback, more range. Sabre and POM are the leading brands. Replace annually — propellant degrades over time. Carry it where you can reach it in one second: clipped to a pocket, in a holster, or on a keychain. Buried in the bottom of a bag is useless.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>10–15 ft</strong> range</span>
+              <span class="type-spec"><strong>Replace</strong> annually</span>
+              <span class="type-spec"><strong>Legal</strong> in all 50 states</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Tactical Flashlights</div>
+              <div class="type-tag">Dual-Use: Light + Defense</div>
+            </div>
+            <div class="type-desc">A high-output flashlight (1,000+ lumens) with a strobe function is a legitimate defensive tool. In darkness, a sudden blast of bright light causes temporary flash blindness and disorientation — buying 3–5 seconds to create distance or assess a threat. The strobe mode amplifies the effect. Beyond defense: it's also the best flashlight you'll own for everyday use. Crenulated bezels (the aggressive crown around the lens) provide a striking surface as a last resort. SureFire, Streamlight, and Fenix make proven tactical lights. Carry it daily — a flashlight you have beats a weapon you left at home.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>1,000+ lumens</strong></span>
+              <span class="type-spec"><strong>Strobe</strong> mode</span>
+              <span class="type-spec"><strong>Dual-use:</strong> light + defense</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Personal Alarms</div>
+              <div class="type-tag">Attract Attention, Create Distance</div>
+            </div>
+            <div class="type-desc">Compact devices that emit a 120–140 dB alarm when activated — loud enough to cause pain at close range and audible from several blocks away. The goal isn't to fight — it's to attract attention and startle an attacker long enough to escape. Pin-pull activation means one motion triggers it, even under stress. Ideal for family members who aren't comfortable with other defense tools — children, elderly, or anyone who wants a simple, non-violent option. Attach one to every family member's keychain or bag. She's Birdie and KOSIN are popular options under $15.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>120–140 dB</strong></span>
+              <span class="type-spec"><strong>Pin-pull</strong> activation</span>
+              <span class="type-spec"><strong>Price:</strong> $8–15</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Bear Spray</div>
+              <div class="type-tag">Maximum Range & Volume</div>
+            </div>
+            <div class="type-desc">Bear spray is OC spray on a much larger scale — canisters deliver a 20–30 foot fog of concentrated capsaicin designed to stop a charging bear. In a defensive context, it offers significantly more range, volume, and stopping power than standard pepper spray. A single canister provides 7–9 seconds of continuous spray. Legal to carry in most areas, though designed and marketed for animal defense. Counter Assault and UDAP are the trusted brands. Best for property defense and outdoor scenarios where maximum standoff distance matters. Large size means it lives in a home or vehicle rather than a pocket.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>20–30 ft</strong> range</span>
+              <span class="type-spec"><strong>7–9 sec</strong> continuous spray</span>
+              <span class="type-spec"><strong>Best use:</strong> property, outdoors</span>
+            </div>
+          </div>
+
+          <!-- Featured Picks -->
+          <div class="featured-label">Featured Picks</div>
+          <div class="featured-grid">
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Pepper Spray]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Tactical Flashlight]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Personal Alarm]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SAFES & SECURE STORAGE ========== -->
+    <div class="subcat-item">
+      <button class="subcat-trigger" onclick="toggleSubcat(this)">
+        <span class="subcat-name">Safes <span class="cat-amp">&amp;</span> Secure Storage</span>
+        <span class="subcat-icon">+</span>
+      </button>
+      <div class="subcat-body">
+        <div class="subcat-content">
+
+          <p class="type-intro">Securing your valuables, documents, and defense tools is as important as having them. A safe protects against theft, fire, and unauthorized access — including by children. Proper secure storage also supports operational security (OPSEC): if nobody can see what you have, nobody knows to come take it. Match the safe to what you're storing and the threats you're protecting against.</p>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Home Safes (Fire & Burglary)</div>
+              <div class="type-tag">Documents, Cash & Valuables</div>
+            </div>
+            <div class="type-desc">Fire-rated safes protect documents, passports, cash, hard drives, and precious metals from both theft and fire. A UL-rated fire safe withstands 1,200°F+ for 30–60 minutes — enough to survive most house fires. For burglary resistance, look for solid steel construction, pry-resistant doors, and bolt-down hardware. A safe that isn't bolted to the floor is just a heavy box someone can carry out. SentrySafe and Honeywell make affordable home safes; Liberty and Fort Knox are the step-ups. Size it for what you need today plus room for growth.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>UL fire-rated</strong></span>
+              <span class="type-spec"><strong>Bolt-down</strong> essential</span>
+              <span class="type-spec"><strong>Price:</strong> $50–500</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Quick-Access Safes</div>
+              <div class="type-tag">Seconds Matter</div>
+            </div>
+            <div class="type-desc">Small safes designed for rapid access — biometric (fingerprint), RFID, or mechanical push-button locks that open in 1–2 seconds. Primarily used for firearms storage near the bed, but also useful for any high-value item you need access to immediately. Biometric locks work without remembering a code; mechanical locks work without batteries. The best models (like Vaultek and Fort Knox) use redundant access methods: fingerprint + code + backup key. Mount them to furniture or wall studs. The goal is fast access for you, zero access for everyone else.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>1–2 second</strong> access</span>
+              <span class="type-spec"><strong>Biometric / code / key</strong></span>
+              <span class="type-spec"><strong>Mount to</strong> studs or furniture</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Lockboxes & Portable Safes</div>
+              <div class="type-tag">Security on the Move</div>
+            </div>
+            <div class="type-desc">Smaller lockable containers for vehicles, travel, and temporary storage. Cable-tethered lockboxes secure to vehicle seat frames or fixed objects — preventing smash-and-grab theft of valuables left in a car. Portable safes with TSA-approved locks work for travel. Pelican-style waterproof cases with integrated locks protect documents and electronics from both water and unauthorized access. For vehicle kits: a cable-lock box under the seat stores defense tools, documents, or cash securely when you're away from the vehicle.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Cable-tether</strong> to vehicle</span>
+              <span class="type-spec"><strong>Best use:</strong> cars, travel</span>
+              <span class="type-spec"><strong>Price:</strong> $25–80</span>
+            </div>
+          </div>
+
+          <!-- Featured Picks -->
+          <div class="featured-label">Featured Picks</div>
+          <div class="featured-grid">
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Home Safe (fire-rated)]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Quick-Access Safe]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Vehicle Lockbox / Portable]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- GIFTS FOR THE PARANOID -->
+<section class="guide">
+  <div class="container">
+    <div class="guide-header">
+      <div class="guide-title">Gifts for the Paranoid</div>
+    </div>
+    <div class="guide-content">Buying for someone who takes security seriously? These picks make practical, thoughtful gifts — from door reinforcement kits to quality tactical flashlights and personal alarms.</div>
+    <div class="gift-grid">
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-name">[Gift Pick 1]</div>
+          <div class="gift-desc">Product to be selected.</div>
+          <div class="gift-bottom">
+            <span class="gift-price">$—</span>
+            <span class="featured-btn" style="opacity:0.3">Amazon</span>
+          </div>
+        </div>
+      </div>
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-name">[Gift Pick 2]</div>
+          <div class="gift-desc">Product to be selected.</div>
+          <div class="gift-bottom">
+            <span class="gift-price">$—</span>
+            <span class="featured-btn" style="opacity:0.3">Amazon</span>
+          </div>
+        </div>
+      </div>
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-name">[Gift Pick 3]</div>
+          <div class="gift-desc">Product to be selected.</div>
+          <div class="gift-bottom">
+            <span class="gift-price">$—</span>
+            <span class="featured-btn" style="opacity:0.3">Amazon</span>
+          </div>
+        </div>
+      </div>
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-name">[Gift Pick 4]</div>
+          <div class="gift-desc">Product to be selected.</div>
+          <div class="gift-bottom">
+            <span class="gift-price">$—</span>
+            <span class="featured-btn" style="opacity:0.3">Amazon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED GUIDES -->
+<section class="related">
+  <div class="container">
+    <div class="related-header">
+      <div class="guide-title">Related Guides</div>
+    </div>
+    <div class="article-list">
+      <div class="article-row">
+        <div class="article-meta">
+          <span class="article-tag">Beginner</span>
+          <span class="article-time">8 min read</span>
+        </div>
+        <div class="article-content">
+          <div class="article-title">The $100 Home Security Upgrade That Stops 90% of Break-Ins</div>
+          <div class="article-excerpt">Most home invasions succeed because of a $2 strike plate held by ¾-inch screws. How to fix the weakest point in your home in under an hour — with basic tools and under $100.</div>
+          <div class="article-read">Read →</div>
+        </div>
+      </div>
+      <div class="article-row">
+        <div class="article-meta">
+          <span class="article-tag">Deep Dive</span>
+          <span class="article-time">12 min read</span>
+        </div>
+        <div class="article-content">
+          <div class="article-title">Layered Home Defense: Deter, Delay, Defend</div>
+          <div class="article-excerpt">A practical framework for home security that works in normal times and crisis scenarios — from perimeter lighting and cameras to interior hardening and safe rooms.</div>
+          <div class="article-read">Read →</div>
+        </div>
+      </div>
+      <div class="article-row">
+        <div class="article-meta">
+          <span class="article-tag">Practical</span>
+          <span class="article-time">6 min read</span>
+        </div>
+        <div class="article-content">
+          <div class="article-title">OPSEC for Preppers: What Your Neighbors Don't Need to Know</div>
+          <div class="article-excerpt">Operational security isn't just for the military. How to keep your preparedness efforts discreet — from delivery habits to social media to the "grey man" principle.</div>
+          <div class="article-read">Read →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">PARANOID<span class="logo-and">AND</span>READY</div>
+      <ul class="footer-nav">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Affiliate Disclosure</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-tagline">Stay prepared. Not surprised.</div>
+      <div class="footer-disclaimer">As an Amazon Associate, paranoidandready.com earns from qualifying purchases. Prices and availability are subject to change. © 2025</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Subcategory accordion ----
+  function toggleSubcat(trigger) {
+    const item = trigger.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.subcat-item.open').forEach(el => {
+      el.classList.remove('open');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      setTimeout(() => {
+        trigger.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }
+
+  // ---- Unit system: imperial / metric ----
+  (function() {
+    const IMPERIAL_LOCALES = ['en-US', 'en-LR', 'en-MM'];
+
+    function detectSystem() {
+      const lang = navigator.language || navigator.userLanguage || 'en-US';
+      return IMPERIAL_LOCALES.some(l => lang.startsWith(l)) ? 'imperial' : 'metric';
+    }
+
+    function getSystem() {
+      try {
+        return localStorage.getItem('pr-units') || detectSystem();
+      } catch(e) {
+        return detectSystem();
+      }
+    }
+
+    function saveSystem(sys) {
+      try { localStorage.setItem('pr-units', sys); } catch(e) {}
+    }
+
+    function applyUnits(sys) {
+      document.querySelectorAll('.u, [data-imperial][data-metric]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + sys);
+      });
+      document.querySelectorAll('.u-opt').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-system') === sys);
+      });
+      document.documentElement.setAttribute('data-units', sys);
+    }
+
+    const initial = getSystem();
+    applyUnits(initial);
+
+    window.setUnits = function(sys) {
+      saveSystem(sys);
+      applyUnits(sys);
+    };
+  })();
+</script>
+
+</body>
+</html>

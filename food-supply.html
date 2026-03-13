@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food & Supply — Paranoid & Ready</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #0f0f0f;
+    --bg-card-hover: #161616;
+    --red: #e02020;
+    --red-dim: #c01818;
+    --red-glow: #e0202010;
+    --red-glow-strong: #e0202020;
+    --text: #ffffff;
+    --text-secondary: #e0e0e0;
+    --text-muted: #b0b0b0;
+    --text-dim: #787878;
+    --border: #e02020;
+    --border-subtle: #1a1a1a;
+    --border-muted: #222222;
+    --surface-1: #0e0e0e;
+    --surface-2: #131313;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---- NAV ---- */
+  nav { padding: 28px 24px 0; }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    text-align: center;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 24px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-search {
+    background: transparent;
+    border: 1px solid var(--border-muted);
+    padding: 7px 14px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    width: 180px;
+    outline: none;
+    transition: border-color 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-search::placeholder { color: var(--text-dim); }
+  .nav-search:focus { border-color: var(--red); }
+
+  .header-line {
+    max-width: 1100px;
+    margin: 20px auto 0;
+    padding: 0 24px;
+  }
+
+  .header-line hr {
+    border: none;
+    height: 1px;
+    background: var(--red);
+  }
+
+  /* ---- BREADCRUMB ---- */
+  .breadcrumb {
+    padding: 28px 0 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+  }
+
+  .breadcrumb a {
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+
+  .breadcrumb a:hover { color: var(--red); }
+  .breadcrumb .sep { color: var(--text-dim); margin: 0 6px; }
+  .breadcrumb .current { color: var(--red); }
+
+  /* ---- CATEGORY HERO ---- */
+  .cat-hero {
+    padding: 48px 0 56px;
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .cat-hero h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 700;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .cat-hero-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ---- SUBCATEGORY ACCORDION ---- */
+  .subcategories {
+    padding-bottom: 48px;
+    animation: fadeIn 0.4s ease-out 0.05s both;
+  }
+
+  .subcat-item {
+    border-bottom: 1px solid var(--red);
+  }
+
+  .subcat-trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 0;
+    cursor: pointer;
+    gap: 24px;
+    transition: background 0.2s;
+  }
+
+  .subcat-trigger:hover {
+    background: var(--red-glow);
+  }
+
+  .subcat-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: left;
+  }
+
+  .subcat-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+
+  .subcat-icon {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    color: var(--red);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    line-height: 1;
+  }
+
+  .subcat-item.open .subcat-icon {
+    transform: rotate(45deg);
+  }
+
+  .subcat-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
+
+  .subcat-item.open .subcat-body {
+    max-height: 15000px;
+    transition: max-height 0.8s ease;
+  }
+
+  .subcat-content {
+    padding: 8px 0 56px;
+  }
+
+  /* ---- TYPE SECTIONS (within subcategory) ---- */
+  .type-intro {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 36px;
+  }
+
+  .type-section {
+    margin-bottom: 36px;
+    padding: 28px;
+    border: 1px solid var(--border-muted);
+    transition: border-color 0.3s;
+  }
+
+  .type-section:hover {
+    border-color: #444;
+  }
+
+  .type-section:last-of-type {
+    margin-bottom: 48px;
+  }
+
+  .type-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 16px;
+  }
+
+  .type-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text);
+  }
+
+  .type-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    border: 1px solid var(--border-muted);
+    padding: 3px 10px;
+    flex-shrink: 0;
+  }
+
+  .type-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .type-specs {
+    display: flex;
+    gap: 24px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .type-spec {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  .type-spec strong {
+    color: var(--text-muted);
+  }
+
+  /* ---- FEATURED PICKS ---- */
+  .featured-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .featured-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-muted);
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .featured-card {
+    border: 1px solid var(--border-muted);
+    background: var(--bg);
+    transition: all 0.25s;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .featured-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+
+  .featured-card:hover::before { transform: scaleX(1); }
+
+  .featured-card:hover {
+    border-color: #444;
+    background: var(--surface-1);
+  }
+
+  .featured-img {
+    width: 100%;
+    height: 140px;
+    background: var(--surface-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-muted);
+  }
+
+  .featured-img-placeholder {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .featured-info {
+    padding: 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .featured-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .featured-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    font-weight: 300;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+
+  .featured-specs {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+
+  .featured-spec {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  .featured-spec strong {
+    color: var(--text-muted);
+  }
+
+  .featured-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: auto;
+  }
+
+  .featured-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .featured-btn {
+    background: transparent;
+    border: 1px solid var(--red);
+    color: var(--red);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 7px 16px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .featured-btn:hover {
+    background: var(--red);
+    color: var(--bg);
+  }
+
+  /* ---- HOW TO CHOOSE ---- */
+  .guide {
+    padding: 56px 0;
+    border-top: 1px solid var(--border-muted);
+    animation: fadeIn 0.4s ease-out 0.1s both;
+  }
+
+  .guide-header {
+    margin-bottom: 24px;
+  }
+
+  .guide-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .guide-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-muted);
+  }
+
+  .guide-content {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+
+  .gift-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .gift-card {
+    border: 1px solid var(--border-muted);
+    background: var(--bg);
+    transition: all 0.25s;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gift-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+
+  .gift-card:hover::before { transform: scaleX(1); }
+
+  .gift-card:hover {
+    border-color: #444;
+    background: var(--surface-1);
+  }
+
+  .gift-img {
+    width: 100%;
+    height: 140px;
+    background: var(--surface-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-muted);
+  }
+
+  .gift-img-placeholder {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .gift-info {
+    padding: 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gift-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .gift-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    font-weight: 300;
+    margin-bottom: 18px;
+    flex: 1;
+  }
+
+  .gift-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: auto;
+  }
+
+  .gift-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* ---- RELATED GUIDES ---- */
+  .related {
+    padding: 56px 0;
+    border-top: 1px solid var(--border-muted);
+  }
+
+  .related-header {
+    margin-bottom: 8px;
+  }
+
+  .article-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-row {
+    display: flex;
+    align-items: baseline;
+    gap: 32px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .article-row:last-child { border-bottom: none; }
+  .article-row:hover { background: var(--red-glow); }
+
+  .article-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+    min-width: 100px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .article-tag {
+    color: var(--red);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 9px;
+  }
+
+  .article-time { color: var(--text-dim); }
+
+  .article-content { flex: 1; }
+
+  .article-title {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    transition: color 0.2s;
+  }
+
+  .article-row:hover .article-title { color: var(--red); }
+
+  .article-excerpt {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .article-read {
+    margin-top: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.2s;
+  }
+
+  .article-row:hover .article-read { color: var(--red); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    padding: 40px 24px 48px;
+    border-top: 1px solid var(--border-muted);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+  }
+
+  .footer-brand {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.2s;
+  }
+
+  .footer-nav a:hover { color: var(--text); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .footer-tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .footer-disclaimer {
+    font-size: 11px;
+    color: var(--text-dim);
+    max-width: 480px;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  /* ---- UNIT TOGGLE ---- */
+  .unit-toggle {
+    display: flex;
+    border: 1px solid var(--border-muted);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .unit-toggle .u-opt {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .unit-toggle .u-opt.active {
+    background: var(--red);
+    color: var(--bg);
+  }
+
+  .unit-toggle .u-opt:not(.active):hover {
+    color: var(--text);
+  }
+
+  /* ---- LOGO AND ---- */
+  .logo-and {
+    color: #ffffff;
+  }
+
+  /* ---- CATEGORY AMPERSAND ---- */
+  .cat-amp {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  nav { animation: fadeIn 0.5s ease-out; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 900px) {
+    .featured-grid { grid-template-columns: 1fr; }
+    .gift-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .nav-left { display: none; }
+    .nav-inner { grid-template-columns: auto 1fr; }
+    .nav-right { gap: 12px; }
+    .type-specs { gap: 12px; }
+    .article-row { flex-direction: column; gap: 8px; }
+    .footer-top { flex-direction: column; gap: 20px; }
+    .footer-bottom { flex-direction: column; gap: 12px; }
+    .footer-disclaimer { text-align: left; }
+  }
+
+  @media (max-width: 480px) {
+    .gift-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <ul class="nav-links">
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">Guides</a></li>
+        <li><a href="#">Gifts</a></li>
+      </ul>
+    </div>
+    <a href="#" class="logo">PARANOID<span class="logo-and">AND</span>READY</a>
+    <div class="nav-right">
+      <input type="text" class="nav-search" placeholder="Search gear...">
+      <div class="unit-toggle">
+        <button class="u-opt active" data-system="imperial" onclick="setUnits('imperial')">LB</button>
+        <button class="u-opt" data-system="metric" onclick="setUnits('metric')">KG</button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="header-line"><hr></div>
+
+<!-- BREADCRUMB -->
+<div class="container">
+  <div class="breadcrumb">
+    <a href="#">Home</a><span class="sep">/</span><span class="current">Food <span class="cat-amp">&amp;</span> Supply</span>
+  </div>
+</div>
+
+<!-- CATEGORY HERO -->
+<section class="cat-hero">
+  <div class="container">
+    <h1>Food <span class="cat-amp">&amp;</span> Supply</h1>
+    <p class="cat-hero-desc">In a prolonged emergency, food becomes the difference between enduring and falling apart. This section covers the full spectrum — from ready-to-eat meals that need zero prep to long-term bulk staples designed to last decades. Plus the cooking gear and storage solutions that make it all work when the kitchen doesn't.</p>
+  </div>
+</section>
+
+
+
+<!-- SUBCATEGORIES -->
+<div class="subcategories">
+  <div class="container">
+
+    <!-- ========== EMERGENCY FOOD ========== -->
+    <div class="subcat-item">
+      <button class="subcat-trigger" onclick="toggleSubcat(this)">
+        <span class="subcat-name">Emergency Food</span>
+        <span class="subcat-icon">+</span>
+      </button>
+      <div class="subcat-body">
+        <div class="subcat-content">
+
+          <p class="type-intro">The food itself. Emergency food ranges from grab-and-go ration bars that need zero prep to freeze-dried meals that just need hot water to full #10 cans of bulk staples designed to last 25+ years. The right mix depends on your scenario: a 72-hour go-bag needs different food than a 6-month home pantry. Most preppers layer multiple types — fast calories for the first days, real meals for weeks, bulk staples for months.</p>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Freeze-Dried Meals</div>
+              <div class="type-tag">Best Taste & Nutrition</div>
+            </div>
+            <div class="type-desc">Complete meals — pasta, rice dishes, breakfast scrambles — that have been freeze-dried to remove 98% of moisture while preserving flavor, texture, and nutritional value. Just add boiling water, wait 10 minutes, and eat from the pouch. Shelf life ranges from 7 years (pouches) to 25–30 years (#10 cans) depending on packaging. They taste remarkably close to the real thing. The trade-off is cost — freeze-dried meals are the most expensive per calorie. Mountain House, Peak Refuel, and ReadyWise are the major brands.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>7–30 year</strong> shelf life</span>
+              <span class="type-spec"><strong>Requires</strong> hot water</span>
+              <span class="type-spec"><strong>Price:</strong> highest per calorie</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">MREs (Meals Ready to Eat)</div>
+              <div class="type-tag">Zero Prep Required</div>
+            </div>
+            <div class="type-desc">Self-contained individual meals — entrée, side, dessert, drink mix, utensils, and a flameless ration heater. Originally developed for the U.S. military. Each MRE delivers 1,000–1,300 calories and can be eaten hot or cold with absolutely no external tools, water, or heat source required. That makes them unbeatable for go-bags and immediate disaster response. The downsides: shorter shelf life (3–5 years), heavier than freeze-dried, and the taste — while improved over the years — won't win any awards. Rotate them regularly.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>3–5 year</strong> shelf life</span>
+              <span class="type-spec"><strong>No water</strong> or cooking needed</span>
+              <span class="type-spec"><strong>Best use:</strong> go-bags, 72-hour kits</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Dehydrated Staples (#10 Cans)</div>
+              <div class="type-tag">Bulk Long-Term</div>
+            </div>
+            <div class="type-desc">Individual ingredients — rice, beans, oats, powdered milk, egg powder, dehydrated vegetables — sealed in large #10 cans (about the size of a coffee can) or Mylar-lined buckets. Shelf life of 20–30 years when properly sealed with oxygen absorbers. These are the building blocks, not complete meals — you'll need to combine ingredients and cook them. The most cost-effective approach per calorie for serious long-term storage. Requires cooking knowledge and equipment, but gives you maximum flexibility and nutrition.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>20–30 year</strong> shelf life</span>
+              <span class="type-spec"><strong>Requires</strong> cooking</span>
+              <span class="type-spec"><strong>Price:</strong> lowest per calorie</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Emergency Ration Bars</div>
+              <div class="type-tag">Compact Calories</div>
+            </div>
+            <div class="type-desc">Dense, high-calorie bars (typically 2,400–3,600 calories per package) designed for lifeboats, go-bags, and vehicle kits. Coast Guard-approved brands like Datrex and SOS are the standard. They don't crumble, they don't melt, they don't require water, and they have a 5-year shelf life. The taste is functional — dry, slightly sweet, biscuit-like. Not something you'd eat by choice, but 3,600 calories in a compact, lightweight brick is hard to argue with for the first 72 hours.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>5-year</strong> shelf life</span>
+              <span class="type-spec"><strong>2,400–3,600 cal</strong> per pack</span>
+              <span class="type-spec"><strong>Best use:</strong> go-bags, vehicles</span>
+            </div>
+          </div>
+
+          <!-- Featured Picks -->
+          <div class="featured-label">Featured Picks</div>
+          <div class="featured-grid">
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Freeze-Dried Meal Kit]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs">
+                  <span class="featured-spec"><strong>—</strong></span>
+                </div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[MRE Case]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs">
+                  <span class="featured-spec"><strong>—</strong></span>
+                </div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Emergency Ration Bars]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs">
+                  <span class="featured-spec"><strong>—</strong></span>
+                </div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== COOKING STOVES ========== -->
+    <div class="subcat-item">
+      <button class="subcat-trigger" onclick="toggleSubcat(this)">
+        <span class="subcat-name">Cooking Stoves</span>
+        <span class="subcat-icon">+</span>
+      </button>
+      <div class="subcat-body">
+        <div class="subcat-content">
+
+          <p class="type-intro">When the power goes out, your electric range becomes furniture. A reliable off-grid cooking method is what turns raw ingredients into hot meals and contaminated water into something drinkable. The right stove depends on your scenario — a 2-burner propane stove is perfect for home outages, while an ultralight canister stove belongs in a go-bag. Ideally, you have at least two options using different fuel sources.</p>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Portable Gas Stoves (Butane / Propane)</div>
+              <div class="type-tag">Home Emergency Staple</div>
+            </div>
+            <div class="type-desc">Tabletop stoves that run on butane canisters or 1 lb propane bottles. The closest thing to cooking on a normal stovetop — adjustable flame, stable grate, familiar form factor. Dual-fuel models that accept both butane and propane give you maximum fuel flexibility. These are the workhorses for home power outages: set one on your patio table and cook a real dinner. The trade-off is bulk — they're too large for a backpack. Store extra fuel canisters and always use outdoors or in very well-ventilated spaces.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>7,000–15,000 BTU</strong></span>
+              <span class="type-spec"><strong>Best use:</strong> home outages</span>
+              <span class="type-spec"><strong>Outdoor use</strong> only</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Backpacking Canister Stoves</div>
+              <div class="type-tag">Ultralight & Fast</div>
+            </div>
+            <div class="type-desc">Compact stoves that screw onto isobutane/propane fuel canisters — the kind you find at any outdoor retailer. They weigh 2–4 oz, boil water in 3–4 minutes, and pack smaller than a fist. The MSR PocketRocket and Jetboil are the benchmark products. Perfect for go-bags and bug-out kits where every ounce matters. The limitation is fuel dependency — once your canisters are empty, the stove is useless. Pack enough fuel for your planned duration plus a buffer. Performance drops in temperatures below freezing.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>2–4 oz</strong> stove weight</span>
+              <span class="type-spec"><strong>Best use:</strong> go-bags, hiking</span>
+              <span class="type-spec"><strong>Price:</strong> $30–100</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Wood-Burning / Rocket Stoves</div>
+              <div class="type-tag">Infinite Fuel Supply</div>
+            </div>
+            <div class="type-desc">Stoves that burn sticks, twigs, pinecones, and other biomass — fuel you can scavenge almost anywhere. Rocket stove designs use a combustion chamber that concentrates heat upward with remarkable efficiency. Solo Stove and similar double-wall designs create a secondary combustion effect that burns cleaner and hotter than an open campfire. The key advantage: you never run out of fuel. The trade-offs are smoke, slower cook times, and the need for dry fuel. Not viable indoors. The non-electric option for when all other fuel sources are gone.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Free fuel</strong> (wood/biomass)</span>
+              <span class="type-spec"><strong>No fuel</strong> to store</span>
+              <span class="type-spec"><strong>Outdoor use</strong> only</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Solid Fuel Stoves (Esbit / Canned Heat)</div>
+              <div class="type-tag">Compact Backup</div>
+            </div>
+            <div class="type-desc">Folding metal stoves that burn hexamine fuel tablets (Esbit) or canned fuel (Sterno). Fuel tablets are the size of a sugar cube and burn for 12–15 minutes each — enough to boil two cups of water. Canned heat burns 2–4 hours per can. Both store indefinitely, weigh almost nothing, and take up minimal space. They won't cook a gourmet meal, but they'll heat water for freeze-dried food and make coffee. The ultimate backup stove — toss a folding stove and a sleeve of tabs into any kit.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>12–15 min</strong> per tablet</span>
+              <span class="type-spec"><strong>Indefinite</strong> fuel shelf life</span>
+              <span class="type-spec"><strong>Best use:</strong> backup, minimal kits</span>
+            </div>
+          </div>
+
+          <!-- Featured Picks -->
+          <div class="featured-label">Featured Picks</div>
+          <div class="featured-grid">
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Portable Gas Stove]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs">
+                  <span class="featured-spec"><strong>—</strong></span>
+                </div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Backpacking Canister Stove]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs">
+                  <span class="featured-spec"><strong>—</strong></span>
+                </div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Wood/Rocket Stove]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs">
+                  <span class="featured-spec"><strong>—</strong></span>
+                </div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== LONG-TERM FOOD STORAGE ========== -->
+    <div class="subcat-item">
+      <button class="subcat-trigger" onclick="toggleSubcat(this)">
+        <span class="subcat-name">Long-Term Food Storage</span>
+        <span class="subcat-icon">+</span>
+      </button>
+      <div class="subcat-body">
+        <div class="subcat-content">
+
+          <p class="type-intro">Buying emergency food is step one. Keeping it edible for years or decades is step two. Long-term food storage is about packaging, environment control, and the right combination of barriers against the four enemies of shelf life: oxygen, moisture, light, and heat. Whether you're storing bulk rice in 5-gallon buckets or vacuum-sealing individual portions, the principles are the same.</p>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Mylar Bags + Oxygen Absorbers</div>
+              <div class="type-tag">DIY Long-Term Sealing</div>
+            </div>
+            <div class="type-desc">Mylar bags are metallized polyester pouches that block light and moisture. Paired with oxygen absorbers (small iron-powder packets that chemically remove O₂), they create an anaerobic environment that prevents oxidation, mold, and insect activity. You fill the bag with dry goods — rice, beans, oats, pasta — drop in an appropriately sized oxygen absorber, and heat-seal the bag shut. Properly sealed Mylar bags inside food-grade buckets can preserve dry staples for 20–30 years. The most cost-effective way to build serious long-term food storage from grocery-store bulk purchases.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>20–30 year</strong> storage</span>
+              <span class="type-spec"><strong>Best use:</strong> bulk dry goods</span>
+              <span class="type-spec"><strong>Price:</strong> pennies per bag</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Food-Grade Buckets (5–6 Gallon)</div>
+              <div class="type-tag">Bulk Storage Container</div>
+            </div>
+            <div class="type-desc">HDPE plastic buckets with gamma-seal or snap-on lids — the outer shell for your Mylar bags. A 5-gallon bucket holds roughly 33 lbs of rice or 30 lbs of beans. They're stackable, rodent-proof, waterproof, and reusable. Gamma-seal lids screw on and off for easy access once opened. Always use food-grade buckets (marked with HDPE / recycling symbol #2) — non-food-grade buckets may leach chemicals. Available cheaply at hardware stores or from prep suppliers.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>30–35 lbs</strong> capacity</span>
+              <span class="type-spec"><strong>Rodent-proof</strong></span>
+              <span class="type-spec"><strong>Stackable</strong></span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Vacuum Sealers</div>
+              <div class="type-tag">Mid-Term Preservation</div>
+            </div>
+            <div class="type-desc">Countertop machines that remove air from specially textured plastic bags and heat-seal them shut. Effective for extending the shelf life of dehydrated food, jerky, nuts, coffee, and other goods by removing most (not all) oxygen. Vacuum-sealed food in a cool, dark pantry lasts 1–5 years depending on the contents — significantly longer than original packaging, but not a substitute for Mylar + O₂ absorbers for true long-term storage. The sweet spot is mid-term food rotation: things you'll actually eat within a few years.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>1–5 year</strong> extension</span>
+              <span class="type-spec"><strong>Best use:</strong> rotating pantry</span>
+              <span class="type-spec"><strong>Requires</strong> electricity</span>
+            </div>
+          </div>
+
+          <!-- Featured Picks -->
+          <div class="featured-label">Featured Picks</div>
+          <div class="featured-grid">
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Mylar Bag Kit]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs">
+                  <span class="featured-spec"><strong>—</strong></span>
+                </div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Food-Grade Bucket + Lid]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs">
+                  <span class="featured-spec"><strong>—</strong></span>
+                </div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Vacuum Sealer]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs">
+                  <span class="featured-spec"><strong>—</strong></span>
+                </div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== COOKWARE & SMALL ESSENTIALS ========== -->
+    <div class="subcat-item">
+      <button class="subcat-trigger" onclick="toggleSubcat(this)">
+        <span class="subcat-name">Cookware <span class="cat-amp">&amp;</span> Small Essentials</span>
+        <span class="subcat-icon">+</span>
+      </button>
+      <div class="subcat-body">
+        <div class="subcat-content">
+
+          <p class="type-intro">A stove without a pot is just a flame. This section covers the pots, pans, utensils, and supporting gear that make emergency cooking actually work — from ultralight titanium camp sets for go-bags to cast iron that'll outlive you. Plus the small items everyone forgets until they need them: can openers, fuel canisters, and mess kits.</p>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Camp Cookware Sets</div>
+              <div class="type-tag">All-in-One Kits</div>
+            </div>
+            <div class="type-desc">Nesting pot and pan sets — typically 1–2 pots, a lid that doubles as a frying pan, and sometimes a kettle — that stack inside each other for compact storage. Available in stainless steel (heavy, durable), aluminum (light, cheap), or titanium (ultralight, expensive). For go-bags, a single 750ml titanium pot covers boiling water for freeze-dried meals and making coffee. For home emergency kits, a stainless steel set with a real frying pan is more practical. Match your cookware to your stove and your scenario.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Nesting</strong> compact design</span>
+              <span class="type-spec"><strong>Materials:</strong> steel, aluminum, titanium</span>
+              <span class="type-spec"><strong>Price:</strong> $15–80</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Cast Iron</div>
+              <div class="type-tag">Indestructible & Versatile</div>
+            </div>
+            <div class="type-desc">A seasoned cast iron skillet or Dutch oven works on any heat source — gas stove, campfire, charcoal, wood-burning stove, even placed directly on coals. They distribute heat evenly, retain it for a long time, and are virtually indestructible. A 10" skillet handles everything from frying eggs to baking bread. A Dutch oven lets you slow-cook stews, bake, and boil. Heavy — not for backpacks — but for home emergency cooking or a base camp, nothing beats cast iron's versatility and longevity.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Any heat</strong> source</span>
+              <span class="type-spec"><strong>Durability:</strong> lifetime</span>
+              <span class="type-spec"><strong>Best use:</strong> home, base camp</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Utensils & Mess Kits</div>
+              <div class="type-tag">Don't Forget the Basics</div>
+            </div>
+            <div class="type-desc">The small items that make eating possible: a quality spork or utensil set, a P-38/P-51 military can opener (weighs nothing, opens everything), mess plates and bowls, and a collapsible cup. Titanium sporks are lighter and more durable than plastic. Stainless steel mess kits are affordable and clean easily. Keep a dedicated set in each emergency kit — digging through drawers during a blackout is exactly the kind of friction that good prep eliminates.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>P-38 opener</strong> weighs <span class="u" data-imperial="0.3 oz" data-metric="9 g">0.3 oz</span></span>
+              <span class="type-spec"><strong>Titanium</strong> spork: lightest</span>
+              <span class="type-spec"><strong>Price:</strong> $2–20</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Fuel Canisters & Tablets</div>
+              <div class="type-tag">Stockpile Your BTUs</div>
+            </div>
+            <div class="type-desc">Your stove is only useful as long as you have fuel. Isobutane/propane canisters (for backpacking stoves) store indefinitely in a sealed state and are widely available. Butane canisters are cheaper but perform poorly below freezing. Coleman-style 1 lb propane bottles are the most common fuel for portable tabletop stoves. Esbit hexamine tablets and Sterno canned heat round out the backup fuels. Store fuel in a cool, ventilated area — never indoors or in direct sunlight. Calculate your burn rate and stock accordingly.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Indefinite</strong> sealed shelf life</span>
+              <span class="type-spec"><strong>Store</strong> cool & ventilated</span>
+              <span class="type-spec"><strong>Match</strong> fuel to stove</span>
+            </div>
+          </div>
+
+          <!-- Featured Picks -->
+          <div class="featured-label">Featured Picks</div>
+          <div class="featured-grid">
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Camp Cookware Set]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs">
+                  <span class="featured-spec"><strong>—</strong></span>
+                </div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Cast Iron Skillet / Dutch Oven]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs">
+                  <span class="featured-spec"><strong>—</strong></span>
+                </div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Utensil / Mess Kit]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs">
+                  <span class="featured-spec"><strong>—</strong></span>
+                </div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- GIFTS FOR THE PARANOID -->
+<section class="guide">
+  <div class="container">
+    <div class="guide-header">
+      <div class="guide-title">Gifts for the Paranoid</div>
+    </div>
+    <div class="guide-content">Buying for someone who takes preparedness seriously? These food & supply picks make practical, thoughtful gifts — from premium freeze-dried meal kits to ultralight camp cookware.</div>
+    <div class="gift-grid">
+
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-name">[Gift Pick 1]</div>
+          <div class="gift-desc">Product to be selected.</div>
+          <div class="gift-bottom">
+            <span class="gift-price">$—</span>
+            <span class="featured-btn" style="opacity:0.3">Amazon</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-name">[Gift Pick 2]</div>
+          <div class="gift-desc">Product to be selected.</div>
+          <div class="gift-bottom">
+            <span class="gift-price">$—</span>
+            <span class="featured-btn" style="opacity:0.3">Amazon</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-name">[Gift Pick 3]</div>
+          <div class="gift-desc">Product to be selected.</div>
+          <div class="gift-bottom">
+            <span class="gift-price">$—</span>
+            <span class="featured-btn" style="opacity:0.3">Amazon</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-name">[Gift Pick 4]</div>
+          <div class="gift-desc">Product to be selected.</div>
+          <div class="gift-bottom">
+            <span class="gift-price">$—</span>
+            <span class="featured-btn" style="opacity:0.3">Amazon</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RELATED GUIDES -->
+<section class="related">
+  <div class="container">
+    <div class="related-header">
+      <div class="guide-title">Related Guides</div>
+    </div>
+    <div class="article-list">
+      <div class="article-row">
+        <div class="article-meta">
+          <span class="article-tag">Beginner</span>
+          <span class="article-time">10 min read</span>
+        </div>
+        <div class="article-content">
+          <div class="article-title">Freeze-Dried vs MRE vs Dehydrated: Which Emergency Food Is Right for You?</div>
+          <div class="article-excerpt">Each type of emergency food has trade-offs in shelf life, taste, cost, and convenience. A practical breakdown of when each one makes sense — and the right mix for most households.</div>
+          <div class="article-read">Read →</div>
+        </div>
+      </div>
+      <div class="article-row">
+        <div class="article-meta">
+          <span class="article-tag">Deep Dive</span>
+          <span class="article-time">14 min read</span>
+        </div>
+        <div class="article-content">
+          <div class="article-title">How to Build a 6-Month Food Supply with Mylar Bags and Bulk Staples</div>
+          <div class="article-excerpt">Step-by-step guide to buying rice, beans, oats, and other staples in bulk, packaging them in Mylar with oxygen absorbers, and storing them for 25+ years. Includes cost breakdown and shopping list.</div>
+          <div class="article-read">Read →</div>
+        </div>
+      </div>
+      <div class="article-row">
+        <div class="article-meta">
+          <span class="article-tag">Gift Guide</span>
+          <span class="article-time">6 min read</span>
+        </div>
+        <div class="article-content">
+          <div class="article-title">Food & Supply Gifts: Practical Picks for the Prepared</div>
+          <div class="article-excerpt">From a $15 Esbit stove to a premium Mountain House bucket — thoughtful gift ideas for the prepper who takes food seriously.</div>
+          <div class="article-read">Read →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">PARANOID<span class="logo-and">AND</span>READY</div>
+      <ul class="footer-nav">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Affiliate Disclosure</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-tagline">Stay prepared. Not surprised.</div>
+      <div class="footer-disclaimer">As an Amazon Associate, paranoidandready.com earns from qualifying purchases. Prices and availability are subject to change. © 2025</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Subcategory accordion ----
+  function toggleSubcat(trigger) {
+    const item = trigger.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.subcat-item.open').forEach(el => {
+      el.classList.remove('open');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      setTimeout(() => {
+        trigger.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }
+
+  // ---- Unit system: imperial / metric ----
+  (function() {
+    const IMPERIAL_LOCALES = ['en-US', 'en-LR', 'en-MM'];
+
+    function detectSystem() {
+      const lang = navigator.language || navigator.userLanguage || 'en-US';
+      return IMPERIAL_LOCALES.some(l => lang.startsWith(l)) ? 'imperial' : 'metric';
+    }
+
+    function getSystem() {
+      try {
+        return localStorage.getItem('pr-units') || detectSystem();
+      } catch(e) {
+        return detectSystem();
+      }
+    }
+
+    function saveSystem(sys) {
+      try { localStorage.setItem('pr-units', sys); } catch(e) {}
+    }
+
+    function applyUnits(sys) {
+      document.querySelectorAll('.u, [data-imperial][data-metric]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + sys);
+      });
+      document.querySelectorAll('.u-opt').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-system') === sys);
+      });
+      document.documentElement.setAttribute('data-units', sys);
+    }
+
+    const initial = getSystem();
+    applyUnits(initial);
+
+    window.setUnits = function(sys) {
+      saveSystem(sys);
+      applyUnits(sys);
+    };
+  })();
+</script>
+
+</body>
+</html>

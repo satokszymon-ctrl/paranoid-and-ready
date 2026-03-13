@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Communication & Navigation — Paranoid & Ready</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #0f0f0f;
+    --bg-card-hover: #161616;
+    --red: #e02020;
+    --red-dim: #c01818;
+    --red-glow: #e0202010;
+    --red-glow-strong: #e0202020;
+    --text: #ffffff;
+    --text-secondary: #e0e0e0;
+    --text-muted: #b0b0b0;
+    --text-dim: #787878;
+    --border: #e02020;
+    --border-subtle: #1a1a1a;
+    --border-muted: #222222;
+    --surface-1: #0e0e0e;
+    --surface-2: #131313;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---- NAV ---- */
+  nav { padding: 28px 24px 0; }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    text-align: center;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 24px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-search {
+    background: transparent;
+    border: 1px solid var(--border-muted);
+    padding: 7px 14px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    width: 180px;
+    outline: none;
+    transition: border-color 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-search::placeholder { color: var(--text-dim); }
+  .nav-search:focus { border-color: var(--red); }
+
+  .header-line {
+    max-width: 1100px;
+    margin: 20px auto 0;
+    padding: 0 24px;
+  }
+
+  .header-line hr {
+    border: none;
+    height: 1px;
+    background: var(--red);
+  }
+
+  /* ---- BREADCRUMB ---- */
+  .breadcrumb {
+    padding: 28px 0 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+  }
+
+  .breadcrumb a {
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+
+  .breadcrumb a:hover { color: var(--red); }
+  .breadcrumb .sep { color: var(--text-dim); margin: 0 6px; }
+  .breadcrumb .current { color: var(--red); }
+
+  /* ---- CATEGORY HERO ---- */
+  .cat-hero {
+    padding: 48px 0 56px;
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .cat-hero h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 700;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .cat-hero-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ---- SUBCATEGORY ACCORDION ---- */
+  .subcategories {
+    padding-bottom: 48px;
+    animation: fadeIn 0.4s ease-out 0.05s both;
+  }
+
+  .subcat-item {
+    border-bottom: 1px solid var(--red);
+  }
+
+  .subcat-trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 0;
+    cursor: pointer;
+    gap: 24px;
+    transition: background 0.2s;
+  }
+
+  .subcat-trigger:hover {
+    background: var(--red-glow);
+  }
+
+  .subcat-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: left;
+  }
+
+  .subcat-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+
+  .subcat-icon {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    color: var(--red);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    line-height: 1;
+  }
+
+  .subcat-item.open .subcat-icon {
+    transform: rotate(45deg);
+  }
+
+  .subcat-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
+
+  .subcat-item.open .subcat-body {
+    max-height: 15000px;
+    transition: max-height 0.8s ease;
+  }
+
+  .subcat-content {
+    padding: 8px 0 56px;
+  }
+
+  /* ---- TYPE SECTIONS (within subcategory) ---- */
+  .type-intro {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 36px;
+  }
+
+  .type-section {
+    margin-bottom: 36px;
+    padding: 28px;
+    border: 1px solid var(--border-muted);
+    transition: border-color 0.3s;
+  }
+
+  .type-section:hover {
+    border-color: #444;
+  }
+
+  .type-section:last-of-type {
+    margin-bottom: 48px;
+  }
+
+  .type-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 16px;
+  }
+
+  .type-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text);
+  }
+
+  .type-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    border: 1px solid var(--border-muted);
+    padding: 3px 10px;
+    flex-shrink: 0;
+  }
+
+  .type-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .type-specs {
+    display: flex;
+    gap: 24px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .type-spec {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  .type-spec strong {
+    color: var(--text-muted);
+  }
+
+  /* ---- FEATURED PICKS ---- */
+  .featured-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .featured-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-muted);
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .featured-card {
+    border: 1px solid var(--border-muted);
+    background: var(--bg);
+    transition: all 0.25s;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .featured-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+
+  .featured-card:hover::before { transform: scaleX(1); }
+
+  .featured-card:hover {
+    border-color: #444;
+    background: var(--surface-1);
+  }
+
+  .featured-img {
+    width: 100%;
+    height: 140px;
+    background: var(--surface-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-muted);
+  }
+
+  .featured-img-placeholder {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .featured-info {
+    padding: 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .featured-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .featured-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    font-weight: 300;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+
+  .featured-specs {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+
+  .featured-spec {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  .featured-spec strong {
+    color: var(--text-muted);
+  }
+
+  .featured-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: auto;
+  }
+
+  .featured-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .featured-btn {
+    background: transparent;
+    border: 1px solid var(--red);
+    color: var(--red);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 7px 16px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .featured-btn:hover {
+    background: var(--red);
+    color: var(--bg);
+  }
+
+  /* ---- HOW TO CHOOSE ---- */
+  .guide {
+    padding: 56px 0;
+    border-top: 1px solid var(--border-muted);
+    animation: fadeIn 0.4s ease-out 0.1s both;
+  }
+
+  .guide-header {
+    margin-bottom: 24px;
+  }
+
+  .guide-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .guide-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-muted);
+  }
+
+  .guide-content {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+
+  .gift-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .gift-card {
+    border: 1px solid var(--border-muted);
+    background: var(--bg);
+    transition: all 0.25s;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gift-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+
+  .gift-card:hover::before { transform: scaleX(1); }
+
+  .gift-card:hover {
+    border-color: #444;
+    background: var(--surface-1);
+  }
+
+  .gift-img {
+    width: 100%;
+    height: 140px;
+    background: var(--surface-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-muted);
+  }
+
+  .gift-img-placeholder {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .gift-info {
+    padding: 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gift-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .gift-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    font-weight: 300;
+    margin-bottom: 18px;
+    flex: 1;
+  }
+
+  .gift-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: auto;
+  }
+
+  .gift-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* ---- RELATED GUIDES ---- */
+  .related {
+    padding: 56px 0;
+    border-top: 1px solid var(--border-muted);
+  }
+
+  .related-header {
+    margin-bottom: 8px;
+  }
+
+  .article-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-row {
+    display: flex;
+    align-items: baseline;
+    gap: 32px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .article-row:last-child { border-bottom: none; }
+  .article-row:hover { background: var(--red-glow); }
+
+  .article-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+    min-width: 100px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .article-tag {
+    color: var(--red);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 9px;
+  }
+
+  .article-time { color: var(--text-dim); }
+
+  .article-content { flex: 1; }
+
+  .article-title {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    transition: color 0.2s;
+  }
+
+  .article-row:hover .article-title { color: var(--red); }
+
+  .article-excerpt {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .article-read {
+    margin-top: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.2s;
+  }
+
+  .article-row:hover .article-read { color: var(--red); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    padding: 40px 24px 48px;
+    border-top: 1px solid var(--border-muted);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+  }
+
+  .footer-brand {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.2s;
+  }
+
+  .footer-nav a:hover { color: var(--text); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .footer-tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .footer-disclaimer {
+    font-size: 11px;
+    color: var(--text-dim);
+    max-width: 480px;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  /* ---- UNIT TOGGLE ---- */
+  .unit-toggle {
+    display: flex;
+    border: 1px solid var(--border-muted);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .unit-toggle .u-opt {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .unit-toggle .u-opt.active {
+    background: var(--red);
+    color: var(--bg);
+  }
+
+  .unit-toggle .u-opt:not(.active):hover {
+    color: var(--text);
+  }
+
+  /* ---- LOGO AND ---- */
+  .logo-and {
+    color: #ffffff;
+  }
+
+  /* ---- CATEGORY AMPERSAND ---- */
+  .cat-amp {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  nav { animation: fadeIn 0.5s ease-out; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 900px) {
+    .featured-grid { grid-template-columns: 1fr; }
+    .gift-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .nav-left { display: none; }
+    .nav-inner { grid-template-columns: auto 1fr; }
+    .nav-right { gap: 12px; }
+    .type-specs { gap: 12px; }
+    .article-row { flex-direction: column; gap: 8px; }
+    .footer-top { flex-direction: column; gap: 20px; }
+    .footer-bottom { flex-direction: column; gap: 12px; }
+    .footer-disclaimer { text-align: left; }
+  }
+
+  @media (max-width: 480px) {
+    .gift-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <ul class="nav-links">
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">Guides</a></li>
+        <li><a href="#">Gifts</a></li>
+      </ul>
+    </div>
+    <a href="#" class="logo">PARANOID<span class="logo-and">AND</span>READY</a>
+    <div class="nav-right">
+      <input type="text" class="nav-search" placeholder="Search gear...">
+      <div class="unit-toggle">
+        <button class="u-opt active" data-system="imperial" onclick="setUnits('imperial')">LB</button>
+        <button class="u-opt" data-system="metric" onclick="setUnits('metric')">KG</button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="header-line"><hr></div>
+
+<!-- BREADCRUMB -->
+<div class="container">
+  <div class="breadcrumb">
+    <a href="#">Home</a><span class="sep">/</span><span class="current">Communication <span class="cat-amp">&amp;</span> Navigation</span>
+  </div>
+</div>
+
+<!-- CATEGORY HERO -->
+<section class="cat-hero">
+  <div class="container">
+    <h1>Communication <span class="cat-amp">&amp;</span> Navigation</h1>
+    <p class="cat-hero-desc">When cell towers go dark and GPS stops refreshing, your ability to receive information, communicate with others, and find your way becomes the difference between coordination and chaos. This section covers emergency radios, two-way communication systems, navigation tools, and signaling devices — from license-free walkie-talkies to ham radios that reach across continents.</p>
+  </div>
+</section>
+
+
+
+<!-- SUBCATEGORIES -->
+<div class="subcategories">
+  <div class="container">
+
+    <!-- ========== EMERGENCY RADIOS (RECEIVE) ========== -->
+    <div class="subcat-item">
+      <button class="subcat-trigger" onclick="toggleSubcat(this)">
+        <span class="subcat-name">Emergency Radios (Receive)</span>
+        <span class="subcat-icon">+</span>
+      </button>
+      <div class="subcat-body">
+        <div class="subcat-content">
+
+          <p class="type-intro">The first priority in any emergency is information — what happened, what's coming, and where it's safe. Receive-only radios give you access to NOAA weather alerts, AM/FM news, and shortwave broadcasts without needing a license, without infrastructure, and often without external power. These are the radios that tell you when to shelter, when to evacuate, and when it's over. Every household should have at least one.</p>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">NOAA / AM / FM Emergency Radios</div>
+              <div class="type-tag">Essential for Every Kit</div>
+            </div>
+            <div class="type-desc">Compact radios that receive NOAA Weather Radio (7 dedicated frequencies), AM, and FM broadcasts. The best models include SAME (Specific Area Message Encoding) alerts that activate automatically for your county — the radio literally wakes you up when a warning is issued. Look for models with multiple power sources: hand crank, solar panel, USB charging, and AA batteries. Many also include a built-in flashlight and USB phone charging port. Midland, Eton, and Sangean are the trusted brands. At $25–60, there's no excuse not to have one.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>NOAA + AM/FM</strong></span>
+              <span class="type-spec"><strong>SAME alerts</strong> wake you up</span>
+              <span class="type-spec"><strong>Crank / solar / USB</strong></span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Shortwave Receivers</div>
+              <div class="type-tag">Global Information Access</div>
+            </div>
+            <div class="type-desc">Shortwave radio waves bounce off the ionosphere, which means a receiver in your living room can pick up broadcasts from thousands of miles away — BBC World Service, Voice of America, Radio Australia, and amateur radio nets from other continents. When local media is down and internet is dead, shortwave is often the only source of information about what's happening beyond your immediate area. Models with SSB (Single Sideband) capability can also monitor amateur ham radio traffic. No license required to listen. Sangean, Tecsun, and C.Crane make solid portable receivers.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Worldwide</strong> reception</span>
+              <span class="type-spec"><strong>SSB</strong> for ham monitoring</span>
+              <span class="type-spec"><strong>No license</strong> to listen</span>
+            </div>
+          </div>
+
+          <!-- Featured Picks -->
+          <div class="featured-label">Featured Picks</div>
+          <div class="featured-grid">
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[NOAA/AM/FM Emergency Radio]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Shortwave Receiver]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Budget / Crank Radio]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== TWO-WAY RADIOS ========== -->
+    <div class="subcat-item">
+      <button class="subcat-trigger" onclick="toggleSubcat(this)">
+        <span class="subcat-name">Two-Way Radios</span>
+        <span class="subcat-icon">+</span>
+      </button>
+      <div class="subcat-body">
+        <div class="subcat-content">
+
+          <p class="type-intro">Receiving information is step one. Communicating with your family, group, or emergency services is step two. Two-way radios let you transmit and receive — coordinating evacuation, requesting help, and maintaining contact when phones are dead. The trade-offs between radio types are range, power, licensing requirements, and complexity. Start simple (FRS walkie-talkies), step up when ready (GMRS), and go deep if motivated (ham radio).</p>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">FRS Walkie-Talkies</div>
+              <div class="type-tag">No License, Short Range</div>
+            </div>
+            <div class="type-desc">Family Radio Service radios — the classic blister-pack walkie-talkies. No license required, 22 channels, limited to 2 watts. Realistic range is 1–2 miles in most conditions (ignore the "35-mile" marketing claims). Dead simple to use — turn on, select a channel, push to talk. The right choice for family communication within a neighborhood or campsite. Models with NOAA weather alerts add genuine value. At $20–50 for a pair, they're cheap enough to buy multiples. Not suitable for serious distance or emergency infrastructure.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>No license</strong> required</span>
+              <span class="type-spec"><strong>1–2 mile</strong> realistic range</span>
+              <span class="type-spec"><strong>Price:</strong> $20–50/pair</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">GMRS Radios</div>
+              <div class="type-tag">Best Balance for Preppers</div>
+            </div>
+            <div class="type-desc">General Mobile Radio Service — a significant step up from FRS. GMRS radios can transmit up to 50 watts, access repeater networks that extend range to 20+ miles, and share channels 1–7 with FRS radios so they're backward compatible. Requires an FCC license ($35, no exam, covers your entire family for 10 years). The best balance of range, simplicity, and legal accessibility for most preppers. Midland and Motorola make dedicated GMRS handhelds; mobile units mount in vehicles for even more range. Channel 20 is the designated emergency/traveler assistance channel.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Up to 50W</strong></span>
+              <span class="type-spec"><strong>$35 license</strong> (no exam)</span>
+              <span class="type-spec"><strong>5–25 mile</strong> range</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Ham Radio (Amateur)</div>
+              <div class="type-tag">Maximum Capability</div>
+            </div>
+            <div class="type-desc">The Swiss Army knife of emergency communication. Ham radios can access virtually every frequency band — NOAA, FRS, GMRS, marine, aviation, and dedicated amateur bands that span from local repeaters to worldwide HF communication. A Technician license (entry-level, $15 exam fee) gives you access to VHF/UHF for local/regional communication. A General license adds HF bands for cross-country and international reach. The learning curve is steeper, but the capability is unmatched. In every major disaster, ham radio operators are the first to establish communication when all else fails. Baofeng radios are the budget entry point; Yaesu and Icom are the serious options.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Local to worldwide</strong> range</span>
+              <span class="type-spec"><strong>License + exam</strong> required</span>
+              <span class="type-spec"><strong>Steepest</strong> learning curve</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">CB Radios</div>
+              <div class="type-tag">No License, 40 Channels</div>
+            </div>
+            <div class="type-desc">Citizens Band radio — 40 channels at 4 watts, no license required. Primarily used by truckers on Channel 19, with Channel 9 designated for emergencies. Range is 3–10 miles depending on terrain and antenna. CB radios are useful for vehicle-to-vehicle communication on the road and tapping into the trucker network for real-time road conditions during evacuations. The technology is decades old but the infrastructure is massive. Handheld CBs exist but vehicle-mounted units with proper antennas perform significantly better. A good complement to GMRS, not a replacement.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>No license</strong> required</span>
+              <span class="type-spec"><strong>3–10 mile</strong> range</span>
+              <span class="type-spec"><strong>Best use:</strong> road, vehicle convoys</span>
+            </div>
+          </div>
+
+          <!-- Featured Picks -->
+          <div class="featured-label">Featured Picks</div>
+          <div class="featured-grid">
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[GMRS Radio]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[FRS Walkie-Talkie Pair]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Ham / Baofeng Entry]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== NAVIGATION ========== -->
+    <div class="subcat-item">
+      <button class="subcat-trigger" onclick="toggleSubcat(this)">
+        <span class="subcat-name">Navigation</span>
+        <span class="subcat-icon">+</span>
+      </button>
+      <div class="subcat-body">
+        <div class="subcat-content">
+
+          <p class="type-intro">GPS is wonderful until it isn't — satellites can be jammed, phones die, and apps need data. When you need to navigate without electronics — during an evacuation, in unfamiliar terrain, or when roads are impassable — analog navigation skills and tools become critical. A quality compass and a paper map of your area are two of the cheapest and most reliable pieces of emergency gear you can own.</p>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Compasses</div>
+              <div class="type-tag">No Batteries, No Satellites</div>
+            </div>
+            <div class="type-desc">A baseplate compass (like a Suunto or Silva) is the standard for land navigation — transparent baseplate for map reading, rotating bezel for bearing work, declination adjustment for accuracy. They require zero power, have no moving electronic parts, and work anywhere on Earth. Lensatic (military-style) compasses are more rugged and precise for field navigation but have a steeper learning curve. A button compass on a zipper pull is a backup, not a primary. Learn basic map-and-compass skills before you need them — in an emergency is not the time to start reading the manual.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>No power</strong> required</span>
+              <span class="type-spec"><strong>Declination</strong> adjustable</span>
+              <span class="type-spec"><strong>Price:</strong> $10–60</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Paper Maps & Atlases</div>
+              <div class="type-tag">Works When Everything Else Fails</div>
+            </div>
+            <div class="type-desc">Topographic maps of your local area, state road atlases, and regional maps printed on waterproof/tear-resistant paper. USGS topographic maps (1:24,000 scale) show terrain, elevation, water sources, buildings, and trails — everything you need to navigate on foot when roads are blocked. State highway atlases cover major and secondary roads for vehicle evacuation planning. National Geographic Trails Illustrated maps are waterproof and cover popular recreation areas. Store maps in a waterproof bag with your compass. Your phone's offline maps are a good supplement but not a replacement.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>No power</strong> required</span>
+              <span class="type-spec"><strong>Waterproof</strong> versions available</span>
+              <span class="type-spec"><strong>USGS topo</strong> for detail</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Handheld GPS Devices</div>
+              <div class="type-tag">Digital Backup</div>
+            </div>
+            <div class="type-desc">Dedicated GPS units (Garmin inReach, Garmin GPSMAP series) with preloaded topographic maps that work without cell service or data connections. They receive satellite signals directly and display your position on a detailed map. Battery life ranges from 16 hours to several days depending on model and usage. Some models (like the Garmin inReach Mini) include satellite messaging and SOS functions via the Iridium satellite network — letting you send texts and emergency alerts from anywhere on the planet. More reliable than phone GPS because they're purpose-built, waterproof, and have significantly better battery life and antenna sensitivity.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>No cell service</strong> needed</span>
+              <span class="type-spec"><strong>Satellite SOS</strong> on some models</span>
+              <span class="type-spec"><strong>Price:</strong> $150–450</span>
+            </div>
+          </div>
+
+          <!-- Featured Picks -->
+          <div class="featured-label">Featured Picks</div>
+          <div class="featured-grid">
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Baseplate Compass]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Handheld GPS / Satellite Messenger]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Road Atlas / Topo Maps]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SIGNALING & RESCUE ========== -->
+    <div class="subcat-item">
+      <button class="subcat-trigger" onclick="toggleSubcat(this)">
+        <span class="subcat-name">Signaling <span class="cat-amp">&amp;</span> Rescue</span>
+        <span class="subcat-icon">+</span>
+      </button>
+      <div class="subcat-body">
+        <div class="subcat-content">
+
+          <p class="type-intro">When you can't reach someone by radio, you signal. Visual and audible signaling devices work when all electronics have failed — a mirror flash can be seen for miles, a whistle carries further than a human voice, and a signal flare is unmistakable. These are last-resort communication tools, but they've saved countless lives. Light, cheap, and zero-maintenance — there's no reason not to carry them.</p>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Signal Whistles</div>
+              <div class="type-tag">Loudest Per Gram</div>
+            </div>
+            <div class="type-desc">A pealess survival whistle produces 100–120 dB — audible over a mile away and far louder than shouting. Pealess designs (no ball inside) work wet, frozen, or clogged with debris. The international distress signal is three short blasts, repeated. Attach one to every bag, every jacket, every kit. The Fox 40 Classic and S.O.L. Rescue Howler are the standards. At $5–8 and weighing a fraction of an ounce, it's arguably the best value in all of emergency preparedness. Teaches children the universal signal for help.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>100–120 dB</strong></span>
+              <span class="type-spec"><strong>Pealess:</strong> works wet/frozen</span>
+              <span class="type-spec"><strong>Price:</strong> $5–8</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Signal Mirrors</div>
+              <div class="type-tag">Visual Over Miles</div>
+            </div>
+            <div class="type-desc">A glass or polycarbonate signal mirror with an aiming hole can reflect sunlight to a target up to 10+ miles away — search aircraft have spotted mirror flashes from over 50 miles in ideal conditions. Virtually weightless, no batteries, no expiration. Military-spec mirrors (like the Coghlan's or UST StarFlash) have a retro-reflective aiming aid that makes targeting easy. Practice the aiming technique before you need it — it takes about 30 seconds to learn but feels counterintuitive at first. Tuck one into every go-bag and vehicle kit.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>10+ mile</strong> visibility</span>
+              <span class="type-spec"><strong>No power</strong> or expiration</span>
+              <span class="type-spec"><strong>Weighs</strong> almost nothing</span>
+            </div>
+          </div>
+
+          <div class="type-section">
+            <div class="type-header">
+              <div class="type-name">Flares & Glow Sticks</div>
+              <div class="type-tag">Night Visibility</div>
+            </div>
+            <div class="type-desc">Handheld road flares (15–30 minute burn time) mark your position at night or in poor visibility. Aerial signal flares launch a bright light visible for miles — primarily for maritime and wilderness rescue. Chemical glow sticks (cyalume) provide 8–12 hours of low-level light for marking positions, tent lighting, or signaling — no flame, no heat, safe around children. Store flares carefully (they're pyrotechnic devices) and check expiration dates. Glow sticks have a 5-year shelf life sealed and are dirt cheap in bulk.</div>
+            <div class="type-specs">
+              <span class="type-spec"><strong>Road flares:</strong> 15–30 min burn</span>
+              <span class="type-spec"><strong>Glow sticks:</strong> 8–12 hrs</span>
+              <span class="type-spec"><strong>5-year</strong> shelf life (sealed)</span>
+            </div>
+          </div>
+
+          <!-- Featured Picks -->
+          <div class="featured-label">Featured Picks</div>
+          <div class="featured-grid">
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Signal Whistle]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Signal Mirror]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+            <div class="featured-card">
+              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
+              <div class="featured-info">
+                <div class="featured-name">[Glow Sticks / Flares]</div>
+                <div class="featured-desc">Product to be selected.</div>
+                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
+                <div class="featured-bottom">
+                  <span class="featured-price">$—</span>
+                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- GIFTS FOR THE PARANOID -->
+<section class="guide">
+  <div class="container">
+    <div class="guide-header">
+      <div class="guide-title">Gifts for the Paranoid</div>
+    </div>
+    <div class="guide-content">Buying for someone who takes preparedness seriously? These communication & navigation picks make practical, thoughtful gifts — from crank-powered emergency radios to satellite messengers.</div>
+    <div class="gift-grid">
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-name">[Gift Pick 1]</div>
+          <div class="gift-desc">Product to be selected.</div>
+          <div class="gift-bottom">
+            <span class="gift-price">$—</span>
+            <span class="featured-btn" style="opacity:0.3">Amazon</span>
+          </div>
+        </div>
+      </div>
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-name">[Gift Pick 2]</div>
+          <div class="gift-desc">Product to be selected.</div>
+          <div class="gift-bottom">
+            <span class="gift-price">$—</span>
+            <span class="featured-btn" style="opacity:0.3">Amazon</span>
+          </div>
+        </div>
+      </div>
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-name">[Gift Pick 3]</div>
+          <div class="gift-desc">Product to be selected.</div>
+          <div class="gift-bottom">
+            <span class="gift-price">$—</span>
+            <span class="featured-btn" style="opacity:0.3">Amazon</span>
+          </div>
+        </div>
+      </div>
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-name">[Gift Pick 4]</div>
+          <div class="gift-desc">Product to be selected.</div>
+          <div class="gift-bottom">
+            <span class="gift-price">$—</span>
+            <span class="featured-btn" style="opacity:0.3">Amazon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED GUIDES -->
+<section class="related">
+  <div class="container">
+    <div class="related-header">
+      <div class="guide-title">Related Guides</div>
+    </div>
+    <div class="article-list">
+      <div class="article-row">
+        <div class="article-meta">
+          <span class="article-tag">Beginner</span>
+          <span class="article-time">10 min read</span>
+        </div>
+        <div class="article-content">
+          <div class="article-title">FRS vs GMRS vs Ham: Which Radio Do You Actually Need?</div>
+          <div class="article-excerpt">A no-jargon comparison of the three main two-way radio options for preppers — covering range, licensing, cost, and which one fits your scenario.</div>
+          <div class="article-read">Read →</div>
+        </div>
+      </div>
+      <div class="article-row">
+        <div class="article-meta">
+          <span class="article-tag">Deep Dive</span>
+          <span class="article-time">15 min read</span>
+        </div>
+        <div class="article-content">
+          <div class="article-title">Getting Your Ham Radio License: A Step-by-Step Guide for Non-Technical People</div>
+          <div class="article-excerpt">The Technician license exam is 35 multiple choice questions — most people pass with a week of study. Here's exactly how to prepare, where to take it, and what gear to buy first.</div>
+          <div class="article-read">Read →</div>
+        </div>
+      </div>
+      <div class="article-row">
+        <div class="article-meta">
+          <span class="article-tag">Practical</span>
+          <span class="article-time">8 min read</span>
+        </div>
+        <div class="article-content">
+          <div class="article-title">Map & Compass Basics: Navigation When GPS Dies</div>
+          <div class="article-excerpt">How to read a topographic map, take a bearing, and navigate to a destination using only a compass and paper — the skills that work when batteries don't.</div>
+          <div class="article-read">Read →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">PARANOID<span class="logo-and">AND</span>READY</div>
+      <ul class="footer-nav">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Affiliate Disclosure</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-tagline">Stay prepared. Not surprised.</div>
+      <div class="footer-disclaimer">As an Amazon Associate, paranoidandready.com earns from qualifying purchases. Prices and availability are subject to change. © 2025</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Subcategory accordion ----
+  function toggleSubcat(trigger) {
+    const item = trigger.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.subcat-item.open').forEach(el => {
+      el.classList.remove('open');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      setTimeout(() => {
+        trigger.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }
+
+  // ---- Unit system: imperial / metric ----
+  (function() {
+    const IMPERIAL_LOCALES = ['en-US', 'en-LR', 'en-MM'];
+
+    function detectSystem() {
+      const lang = navigator.language || navigator.userLanguage || 'en-US';
+      return IMPERIAL_LOCALES.some(l => lang.startsWith(l)) ? 'imperial' : 'metric';
+    }
+
+    function getSystem() {
+      try {
+        return localStorage.getItem('pr-units') || detectSystem();
+      } catch(e) {
+        return detectSystem();
+      }
+    }
+
+    function saveSystem(sys) {
+      try { localStorage.setItem('pr-units', sys); } catch(e) {}
+    }
+
+    function applyUnits(sys) {
+      document.querySelectorAll('.u, [data-imperial][data-metric]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + sys);
+      });
+      document.querySelectorAll('.u-opt').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-system') === sys);
+      });
+      document.documentElement.setAttribute('data-units', sys);
+    }
+
+    const initial = getSystem();
+    applyUnits(initial);
+
+    window.setUnits = function(sys) {
+      saveSystem(sys);
+      applyUnits(sys);
+    };
+  })();
+</script>
+
+</body>
+</html>

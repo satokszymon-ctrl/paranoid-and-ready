@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paranoid & Ready — Gear, Guides & Gifts for the Prepared Mind</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #0f0f0f;
+    --bg-card-hover: #161616;
+    --bg-elevated: #111111;
+    --red: #e02020;
+    --red-dim: #c01818;
+    --red-glow: #e0202010;
+    --red-glow-strong: #e0202020;
+    --text: #ffffff;
+    --text-secondary: #e0e0e0;
+    --text-muted: #b0b0b0;
+    --text-dim: #787878;
+    --border: #e02020;
+    --border-subtle: #1a1a1a;
+    --border-muted: #222222;
+    --surface-1: #0e0e0e;
+    --surface-2: #131313;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    padding: 28px 24px 0;
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    text-align: center;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 24px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-search {
+    background: transparent;
+    border: 1px solid var(--border-muted);
+    border-radius: 0;
+    padding: 7px 14px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    width: 180px;
+    outline: none;
+    transition: border-color 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-search::placeholder { color: var(--text-dim); }
+  .nav-search:focus { border-color: var(--red); }
+
+  .header-line {
+    max-width: 1100px;
+    margin: 20px auto 0;
+    padding: 0 24px;
+  }
+
+  .header-line hr {
+    border: none;
+    height: 1px;
+    background: var(--red);
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    padding: 72px 0 56px;
+    position: relative;
+  }
+
+  .hero-inner {
+    position: relative;
+  }
+
+  .hero-tagline {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(28px, 5vw, 60px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    color: var(--text);
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .hero-tagline span {
+    color: var(--red);
+  }
+
+  .hero-sub {
+    margin-top: 20px;
+    font-size: 16px;
+    color: var(--text-secondary);
+    font-weight: 300;
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  .hero-marker {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    position: absolute;
+    right: 0;
+    top: 8px;
+  }
+
+  /* ---- SCENARIOS ---- */
+  .scenarios {
+    padding: 0 0 56px;
+  }
+
+  .scenario-row {
+    display: flex;
+    gap: 1px;
+    background: var(--border-muted);
+    border: 1px solid var(--border-muted);
+  }
+
+  .scenario-pill {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 12px;
+    cursor: pointer;
+    transition: all 0.25s;
+    background: var(--bg);
+    text-align: center;
+  }
+
+  .scenario-pill:hover {
+    background: var(--red-glow-strong);
+  }
+
+  .scenario-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .scenario-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .scenario-pill:hover .scenario-name {
+    color: var(--text);
+  }
+
+  /* ---- CATEGORIES ---- */
+  .categories {
+    padding: 48px 0;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--red);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-muted);
+  }
+
+  .cat-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cat-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--red);
+    cursor: pointer;
+    transition: background 0.2s;
+    gap: 24px;
+  }
+
+  .cat-row:hover {
+    background: var(--red-glow);
+  }
+
+  .cat-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .cat-examples {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: right;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ---- SECTION HEADER ---- */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 36px;
+  }
+
+  .section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-title::after {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: var(--border-muted);
+  }
+
+  .section-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .section-link:hover { color: var(--red); }
+
+  /* ---- PRODUCTS (4 columns) ---- */
+  .products {
+    padding: 64px 0;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .product-card {
+    border: 1px solid var(--border-muted);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+
+  .product-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .product-card:hover {
+    border-color: #444;
+    background: var(--surface-1);
+  }
+
+  .product-img {
+    width: 100%;
+    height: 140px;
+    background: var(--surface-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-img-placeholder {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .product-tag {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    background: var(--red);
+    color: var(--bg);
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 4px 10px 4px 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .product-info {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-category {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .product-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .product-rating {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+  }
+
+  .product-rating .stars { color: var(--red); letter-spacing: -1px; }
+
+  .product-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.55;
+    font-weight: 300;
+    flex: 1;
+  }
+
+  .product-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: auto;
+  }
+
+  .product-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .product-btn {
+    background: transparent;
+    border: 1px solid var(--red);
+    color: var(--red);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 7px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .product-btn:hover {
+    background: var(--red);
+    color: var(--bg);
+  }
+
+  /* ---- GIFT SECTION ---- */
+  .gifts {
+    padding: 64px 0;
+    border-top: 1px solid var(--border-muted);
+    border-bottom: 1px solid var(--border-muted);
+  }
+
+  .gift-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .gift-card {
+    border: 1px solid var(--border-muted);
+    background: var(--bg);
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .gift-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+
+  .gift-card:hover::before { transform: scaleX(1); }
+
+  .gift-card:hover {
+    border-color: #444;
+    background: var(--surface-1);
+  }
+
+  .gift-img {
+    width: 100%;
+    height: 140px;
+    background: var(--surface-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-muted);
+  }
+
+  .gift-img-placeholder {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .gift-info {
+    padding: 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gift-category {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .gift-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .gift-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-weight: 300;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+
+  .gift-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: auto;
+  }
+
+  .gift-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .gift-btn {
+    background: transparent;
+    border: 1px solid var(--red);
+    color: var(--red);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .gift-btn:hover {
+    background: var(--red);
+    color: var(--bg);
+  }
+
+  /* ---- ARTICLES ---- */
+  .articles {
+    padding: 64px 0;
+  }
+
+  .article-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .article-card {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 28px 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 32px;
+  }
+
+  .article-card:first-child {
+    padding-top: 0;
+  }
+
+  .article-card:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .article-card:hover .article-title {
+    color: var(--red);
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    min-width: 100px;
+  }
+
+  .article-tag {
+    color: var(--red);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 9px;
+  }
+
+  .article-content {
+    flex: 1;
+  }
+
+  .article-title {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    transition: color 0.2s;
+  }
+
+  .article-excerpt {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .article-read {
+    margin-top: 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.2s;
+  }
+
+  .article-card:hover .article-read { color: var(--red); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    padding: 40px 24px 48px;
+    border-top: 1px solid var(--border-muted);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+  }
+
+  .footer-brand {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.2s;
+  }
+
+  .footer-nav a:hover { color: var(--text); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .footer-tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .footer-disclaimer {
+    font-size: 11px;
+    color: var(--text-dim);
+    max-width: 480px;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  /* ---- UNIT TOGGLE ---- */
+  .unit-toggle {
+    display: flex;
+    border: 1px solid var(--border-muted);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .unit-toggle .u-opt {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .unit-toggle .u-opt.active {
+    background: var(--red);
+    color: var(--bg);
+  }
+
+  .unit-toggle .u-opt:not(.active):hover {
+    color: var(--text);
+  }
+
+  /* ---- LOGO AMPERSAND ---- */
+  .logo-and {
+    color: #ffffff;
+  }
+
+  /* ---- CATEGORY AMPERSAND ---- */
+  .cat-amp {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  nav { animation: fadeIn 0.5s ease-out; }
+  .hero { animation: fadeIn 0.6s ease-out 0.05s both; }
+  .scenarios { animation: fadeIn 0.5s ease-out 0.1s both; }
+  .categories { animation: fadeIn 0.5s ease-out 0.15s both; }
+  .products { animation: fadeIn 0.5s ease-out 0.2s both; }
+  .gifts { animation: fadeIn 0.5s ease-out 0.25s both; }
+  .articles { animation: fadeIn 0.5s ease-out 0.3s both; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 1000px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .gift-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .scenario-row { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .scenario-pill { flex: 0 0 auto; min-width: 120px; }
+    .cat-row { flex-wrap: wrap; }
+    .cat-examples { display: none; }
+    .article-card { flex-direction: column; gap: 8px; }
+    .nav-left { display: none; }
+    .nav-inner { grid-template-columns: auto 1fr; }
+    .nav-right { gap: 12px; }
+    .footer-top { flex-direction: column; gap: 20px; }
+    .footer-bottom { flex-direction: column; gap: 12px; }
+    .footer-disclaimer { text-align: left; }
+    .hero-marker { display: none; }
+    .hero-tagline { white-space: normal; }
+  }
+
+  @media (max-width: 480px) {
+    .product-grid { grid-template-columns: 1fr; }
+    .gift-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <ul class="nav-links">
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">Guides</a></li>
+        <li><a href="#">Gifts</a></li>
+      </ul>
+    </div>
+    <a href="#" class="logo">Paranoid<span class="logo-and">and</span>Ready</a>
+    <div class="nav-right">
+      <input type="text" class="nav-search" placeholder="Search gear...">
+      <div class="unit-toggle">
+        <button class="u-opt active" data-system="imperial" onclick="setUnits('imperial')">LB</button>
+        <button class="u-opt" data-system="metric" onclick="setUnits('metric')">KG</button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="header-line"><hr></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <h1 class="hero-tagline">Stay prepared. <span>Not surprised.</span></h1>
+    </div>
+  </div>
+</section>
+
+<!-- SCENARIOS -->
+<section class="scenarios">
+  <div class="container">
+    <div class="scenario-row">
+      <a href="#" class="scenario-pill">
+        <span class="scenario-icon">⚡</span>
+        <span class="scenario-name">Power Outage</span>
+      </a>
+      <a href="#" class="scenario-pill">
+        <span class="scenario-icon">🌪️</span>
+        <span class="scenario-name">Natural Disaster</span>
+      </a>
+      <a href="#" class="scenario-pill">
+        <span class="scenario-icon">🔥</span>
+        <span class="scenario-name">War & Unrest</span>
+      </a>
+      <a href="#" class="scenario-pill">
+        <span class="scenario-icon">📉</span>
+        <span class="scenario-name">Economic Collapse</span>
+      </a>
+      <a href="#" class="scenario-pill">
+        <span class="scenario-icon">🏥</span>
+        <span class="scenario-name">Medical Emergency</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories">
+  <div class="container">
+    <div class="section-label">Browse by Category</div>
+    <div class="cat-list">
+      <div class="cat-row">
+        <div class="cat-name">Energy <span class="cat-amp">&amp;</span> Power</div>
+        <div class="cat-examples">Solar panels, portable power stations, generators, batteries</div>
+      </div>
+      <div class="cat-row">
+        <div class="cat-name">Water <span class="cat-amp">&amp;</span> Hydration</div>
+        <div class="cat-examples">Water filters, purification tablets, storage containers</div>
+      </div>
+      <div class="cat-row">
+        <div class="cat-name">Food</div>
+        <div class="cat-examples">Freeze-dried meals, MREs, seed vaults, long-term storage</div>
+      </div>
+      <div class="cat-row">
+        <div class="cat-name">Medical <span class="cat-amp">&amp;</span> Hygiene</div>
+        <div class="cat-examples">First aid kits, trauma supplies, medications, sanitation</div>
+      </div>
+      <div class="cat-row">
+        <div class="cat-name">Communication <span class="cat-amp">&amp;</span> Navigation</div>
+        <div class="cat-examples">Emergency radios, walkie-talkies, compasses, GPS</div>
+      </div>
+      <div class="cat-row">
+        <div class="cat-name">Survival <span class="cat-amp">&amp;</span> Repair</div>
+        <div class="cat-examples">Multi-tools, fire starters, paracord, tarps, knives</div>
+      </div>
+      <div class="cat-row">
+        <div class="cat-name">Security <span class="cat-amp">&amp;</span> Defense</div>
+        <div class="cat-examples">Safes, door reinforcements, cameras, motion sensors</div>
+      </div>
+      <div class="cat-row">
+        <div class="cat-name">Books <span class="cat-amp">&amp;</span> Knowledge</div>
+        <div class="cat-examples">Survival references, off-grid living, self-sufficiency</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS — 4 in a row -->
+<section class="products">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-title">Featured Gear</div>
+      <a href="#" class="section-link">View All →</a>
+    </div>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="product-img">
+          <span class="product-tag">Best Seller</span>
+          <span class="product-img-placeholder">Photo</span>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Energy & Power</div>
+          <div class="product-name">Jackery Explorer 300 Portable Power Station</div>
+          <div class="product-rating"><span class="stars">★★★★★</span> 4.8 · 12,400+ reviews</div>
+          <div class="product-desc">293Wh capacity. Charges phones, laptops, mini fridges. Solar compatible.</div>
+          <div class="product-bottom">
+            <div class="product-price">$289</div>
+            <button class="product-btn">Amazon</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <span class="product-tag">Top Pick</span>
+          <span class="product-img-placeholder">Photo</span>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Water & Hydration</div>
+          <div class="product-name">LifeStraw Personal Water Filter</div>
+          <div class="product-rating"><span class="stars">★★★★★</span> 4.8 · 68,000+ reviews</div>
+          <div class="product-desc">Filters 99.99% of bacteria. No batteries, no moving parts. Lightweight.</div>
+          <div class="product-bottom">
+            <div class="product-price">$18</div>
+            <button class="product-btn">Amazon</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <span class="product-tag">Essential</span>
+          <span class="product-img-placeholder">Photo</span>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Communication</div>
+          <div class="product-name">Midland ER310 Emergency Crank Radio</div>
+          <div class="product-rating"><span class="stars">★★★★☆</span> 4.6 · 5,200+ reviews</div>
+          <div class="product-desc">AM/FM/NOAA weather alerts. Solar + hand crank + USB charging.</div>
+          <div class="product-bottom">
+            <div class="product-price">$49</div>
+            <button class="product-btn">Amazon</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <span class="product-tag">Great Gift</span>
+          <span class="product-img-placeholder">Photo</span>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Survival Kits</div>
+          <div class="product-name">Sustain Supply Co. Premium 72-Hour Kit</div>
+          <div class="product-rating"><span class="stars">★★★★★</span> 4.7 · 3,100+ reviews</div>
+          <div class="product-desc">Food, water, shelter, first aid — everything for 2 people for 3 days.</div>
+          <div class="product-bottom">
+            <div class="product-price">$169</div>
+            <button class="product-btn">Amazon</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GREAT GIFT IDEAS — with Amazon buttons -->
+<section class="gifts">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-title">Gifts for the Paranoid</div>
+      <a href="#" class="section-link">All Gifts →</a>
+    </div>
+    <div class="gift-grid">
+
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-category">Water & Hydration</div>
+          <div class="gift-name">Grayl GeoPress Purifier Bottle</div>
+          <div class="gift-desc">Press down, drink clean. Removes viruses, bacteria, and chemicals in 8 seconds.</div>
+          <div class="gift-bottom">
+            <div class="gift-price">$90</div>
+            <button class="gift-btn">Amazon</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-category">Survival & Repair</div>
+          <div class="gift-name">Victorinox Swiss Army Fieldmaster</div>
+          <div class="gift-desc">The classic. 15 functions, legendary reliability. A gift that lasts a lifetime.</div>
+          <div class="gift-bottom">
+            <div class="gift-price">$35</div>
+            <button class="gift-btn">Amazon</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-category">Energy & Power</div>
+          <div class="gift-name">LuminAID PackLite Max 2-in-1</div>
+          <div class="gift-desc">Inflatable solar lantern + phone charger. Packs flat, waterproof, 50-hour runtime.</div>
+          <div class="gift-bottom">
+            <div class="gift-price">$25</div>
+            <button class="gift-btn">Amazon</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="gift-card">
+        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
+        <div class="gift-info">
+          <div class="gift-category">Books & Knowledge</div>
+          <div class="gift-name">The Knowledge by Lewis Dartnell</div>
+          <div class="gift-desc">How to rebuild civilization from scratch. Fascinating read for the big "what if."</div>
+          <div class="gift-bottom">
+            <div class="gift-price">$15</div>
+            <button class="gift-btn">Amazon</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section class="articles">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-title">Latest Guides</div>
+      <a href="#" class="section-link">All Guides →</a>
+    </div>
+    <div class="article-grid">
+
+      <div class="article-card">
+        <div class="article-meta">
+          <span class="article-tag">Beginner</span>
+          <span>8 min read</span>
+        </div>
+        <div class="article-content">
+          <div class="article-title">The $200 Go-Bag That Could Actually Save Your Life</div>
+          <div class="article-excerpt">You don't need to spend thousands. A no-BS breakdown of exactly what to pack and where to buy it — all under $200.</div>
+          <div class="article-read">Read →</div>
+        </div>
+      </div>
+
+      <div class="article-card">
+        <div class="article-meta">
+          <span class="article-tag">Food</span>
+          <span>12 min read</span>
+        </div>
+        <div class="article-content">
+          <div class="article-title">The 30-Day Pantry: Feed a Family of 4 for a Month on $350</div>
+          <div class="article-excerpt">A practical, shelf-stable meal plan with a complete shopping list. No freeze-dried astronaut food required.</div>
+          <div class="article-read">Read →</div>
+        </div>
+      </div>
+
+      <div class="article-card">
+        <div class="article-meta">
+          <span class="article-tag">Gift Guide</span>
+          <span>6 min read</span>
+        </div>
+        <div class="article-content">
+          <div class="article-title">20 Gifts for the Person Who's "Just Asking Questions"</div>
+          <div class="article-excerpt">Your uncle, your coworker, your Reddit-obsessed friend — they all want this stuff. Best gear gifts from $15 to $500.</div>
+          <div class="article-read">Read →</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">Paranoid<span class="logo-and">and</span>Ready</div>
+      <ul class="footer-nav">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Affiliate Disclosure</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-tagline">Stay prepared. Not surprised.</div>
+      <div class="footer-disclaimer">As an Amazon Associate, paranoidandready.com earns from qualifying purchases. Prices and availability are subject to change. © 2025</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Unit system: imperial / metric ----
+  (function() {
+    const IMPERIAL_LOCALES = ['en-US', 'en-LR', 'en-MM'];
+
+    function detectSystem() {
+      const lang = navigator.language || navigator.userLanguage || 'en-US';
+      return IMPERIAL_LOCALES.some(l => lang.startsWith(l)) ? 'imperial' : 'metric';
+    }
+
+    function getSystem() {
+      try {
+        return localStorage.getItem('pr-units') || detectSystem();
+      } catch(e) {
+        return detectSystem();
+      }
+    }
+
+    function saveSystem(sys) {
+      try { localStorage.setItem('pr-units', sys); } catch(e) {}
+    }
+
+    function applyUnits(sys) {
+      document.querySelectorAll('.u, [data-imperial][data-metric]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + sys);
+      });
+      document.querySelectorAll('.u-opt').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-system') === sys);
+      });
+      document.documentElement.setAttribute('data-units', sys);
+    }
+
+    const initial = getSystem();
+    applyUnits(initial);
+
+    window.setUnits = function(sys) {
+      saveSystem(sys);
+      applyUnits(sys);
+    };
+  })();
+</script>
+
+</body>
+</html>
