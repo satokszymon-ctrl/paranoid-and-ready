@@ -3,177 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Energy & Power — Paranoid & Ready</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Energy AND Power — PARANOID AND READY</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  /* ---- PALETTE: Cold Bureaucracy / Classified Document / Concrete Bunker ---- */
   :root {
-    --bg: #0a0a0a;
-    --bg-card: #0f0f0f;
-    --bg-card-hover: #161616;
-    --red: #e02020;
-    --red-dim: #c01818;
-    --red-glow: #e0202010;
-    --red-glow-strong: #e0202020;
-    --text: #ffffff;
-    --text-secondary: #e0e0e0;
-    --text-muted: #b0b0b0;
-    --text-dim: #787878;
-    --border: #e02020;
-    --border-subtle: #1a1a1a;
-    --border-muted: #222222;
-    --surface-1: #0e0e0e;
-    --surface-2: #131313;
+    --bg:          #C5C5C5;
+    --bg-surface:  #b8b8b8;
+    --bg-raised:   #aeaeae;
+    --red:         #8B0000;
+    --red-glow:    rgba(139, 0, 0, 0.07);
+    --ink:         #1A1A1A;
+    --ink-mid:     #3a3a3a;
+    --ink-light:   #555555;
+    --white:       #ffffff;
+    --border:      #1A1A1A;
+    --border-mid:  #888888;
+    --max-w:       1000px;
+    --pad:         48px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     background: var(--bg);
-    color: var(--text);
+    color: var(--ink);
+    font-size: 16px;
     line-height: 1.6;
+    letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
-    position: relative;
   }
 
+  /* Paper grain noise */
   body::before {
     content: '';
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.4;
+    opacity: 0.6;
   }
 
   a { color: inherit; text-decoration: none; }
 
   .container {
-    max-width: 1100px;
+    max-width: var(--max-w);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--pad);
   }
 
   /* ---- NAV ---- */
-  nav { padding: 28px 24px 0; }
-
-  .nav-inner {
-    max-width: 1100px;
+  nav {
+    max-width: var(--max-w);
     margin: 0 auto;
+    padding: 28px var(--pad) 0;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
   }
 
-  .nav-left {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
+  .nav-left { display: flex; align-items: center; }
 
   .logo {
-    font-family: 'Space Mono', monospace;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--red);
-    text-align: center;
   }
+
+  .logo-and { color: var(--ink); }
+
+  .nav-links { list-style: none; display: flex; gap: 28px; }
+
+  .nav-links a {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
 
   .nav-right {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 24px;
+    gap: 16px;
   }
-
-  .nav-links {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--text); }
 
   .nav-search {
     background: transparent;
-    border: 1px solid var(--border-muted);
-    padding: 7px 14px;
-    color: var(--text);
-    font-size: 12px;
-    font-family: 'Space Mono', monospace;
-    width: 180px;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    width: 150px;
     outline: none;
     transition: border-color 0.2s;
-    letter-spacing: 0.5px;
   }
 
-  .nav-search::placeholder { color: var(--text-dim); }
+  .nav-search::placeholder { color: var(--ink-light); }
   .nav-search:focus { border-color: var(--red); }
 
+  /* ---- HEADER LINE ---- */
   .header-line {
-    max-width: 1100px;
+    max-width: var(--max-w);
     margin: 20px auto 0;
-    padding: 0 24px;
+    padding: 0 var(--pad);
   }
 
   .header-line hr {
     border: none;
-    height: 1px;
-    background: var(--red);
+    border-top: 2px solid var(--ink);
+  }
+
+  /* ---- DIVIDER ---- */
+  .divider {
+    border: none;
+    border-top: 2px solid var(--ink);
   }
 
   /* ---- BREADCRUMB ---- */
   .breadcrumb {
-    padding: 28px 0 0;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
+    padding: 16px 0 0;
+    font-size: 10px;
+    font-weight: 500;
     letter-spacing: 1px;
-    color: var(--text-dim);
+    color: var(--ink-light);
+    text-transform: uppercase;
   }
 
-  .breadcrumb a {
-    color: var(--text-muted);
-    transition: color 0.2s;
-  }
-
+  .breadcrumb a { color: var(--ink-mid); transition: color 0.2s; }
   .breadcrumb a:hover { color: var(--red); }
-  .breadcrumb .sep { color: var(--text-dim); margin: 0 6px; }
+  .breadcrumb .sep { margin: 0 8px; color: var(--border-mid); }
   .breadcrumb .current { color: var(--red); }
 
-  /* ---- CATEGORY HERO ---- */
+  /* ---- HERO ---- */
   .cat-hero {
     padding: 48px 0 56px;
-    animation: fadeIn 0.4s ease-out;
+    animation: fadeIn 0.4s ease-out both;
   }
 
   .cat-hero h1 {
-    font-family: 'Space Mono', monospace;
-    font-size: clamp(24px, 4vw, 42px);
-    font-weight: 700;
+    font-size: clamp(22px, 3.5vw, 38px);
+    font-weight: 800;
     color: var(--red);
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 20px;
-    line-height: 1.2;
+    line-height: 1.15;
   }
 
   .cat-hero-desc {
-    font-size: 15px;
-    color: var(--text-secondary);
+    font-size: 14px;
+    color: var(--ink);
     line-height: 1.75;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   /* ---- SUBCATEGORY ACCORDION ---- */
@@ -182,9 +174,8 @@
     animation: fadeIn 0.4s ease-out 0.05s both;
   }
 
-  .subcat-item {
-    border-bottom: 1px solid var(--red);
-  }
+  .subcat-item { border-bottom: 2px solid var(--ink); }
+  .subcat-item:first-child { border-top: 2px solid var(--ink); }
 
   .subcat-trigger {
     width: 100%;
@@ -196,43 +187,31 @@
     padding: 22px 0;
     cursor: pointer;
     gap: 24px;
+    font-family: 'JetBrains Mono', monospace;
     transition: background 0.2s;
   }
 
-  .subcat-trigger:hover {
-    background: var(--red-glow);
-  }
+  .subcat-trigger:hover { background: var(--red-glow); }
 
   .subcat-name {
-    font-family: 'Space Mono', monospace;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 800;
     color: var(--red);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-align: left;
   }
 
-  .subcat-count {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-    flex-shrink: 0;
-  }
-
   .subcat-icon {
-    font-family: 'Space Mono', monospace;
     font-size: 18px;
-    color: var(--red);
+    color: var(--ink);
     flex-shrink: 0;
     transition: transform 0.3s ease;
     line-height: 1;
+    font-weight: 800;
   }
 
-  .subcat-item.open .subcat-icon {
-    transform: rotate(45deg);
-  }
+  .subcat-item.open .subcat-icon { transform: rotate(45deg); }
 
   .subcat-body {
     max-height: 0;
@@ -245,459 +224,265 @@
     transition: max-height 0.8s ease;
   }
 
-  .subcat-content {
-    padding: 8px 0 56px;
-  }
+  .subcat-content { padding: 8px 0 56px; }
 
-  /* ---- TYPE SECTIONS (within subcategory) ---- */
+  /* ---- TYPE INTRO ---- */
   .type-intro {
     font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    font-weight: 300;
-    margin-bottom: 36px;
+    color: var(--ink);
+    line-height: 1.75;
+    font-weight: 400;
+    margin-bottom: 32px;
   }
 
+  /* ---- TYPE SECTIONS ---- */
   .type-section {
-    margin-bottom: 36px;
-    padding: 28px;
-    border: 1px solid var(--border-muted);
-    transition: border-color 0.3s;
+    margin-bottom: 16px;
+    padding: 22px 26px;
+    border: 1px solid var(--border);
+    background: rgba(197, 197, 197, 0.3);
+    transition: background 0.3s;
   }
 
-  .type-section:hover {
-    border-color: #444;
-  }
-
-  .type-section:last-of-type {
-    margin-bottom: 48px;
-  }
+  .type-section:hover { background: rgba(184, 184, 184, 0.6); }
 
   .type-header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-bottom: 16px;
     gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
   }
 
   .type-name {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--text);
+    letter-spacing: 2px;
+    color: var(--ink);
   }
 
   .type-tag {
-    font-family: 'Space Mono', monospace;
     font-size: 9px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--text-dim);
-    border: 1px solid var(--border-muted);
-    padding: 3px 10px;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 2px 9px;
     flex-shrink: 0;
   }
 
   .type-desc {
     font-size: 14px;
-    color: var(--text-secondary);
+    color: var(--ink);
     line-height: 1.75;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   .type-specs {
     display: flex;
     gap: 24px;
-    margin-top: 16px;
+    margin-top: 12px;
     flex-wrap: wrap;
   }
 
   .type-spec {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-  }
-
-  .type-spec strong {
-    color: var(--text-muted);
-  }
-
-  /* ---- FEATURED PICKS ---- */
-  .featured-label {
-    font-family: 'Space Mono', monospace;
     font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .featured-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border-muted);
-  }
-
-  .featured-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  .featured-card {
-    border: 1px solid var(--border-muted);
-    background: var(--bg);
-    transition: all 0.25s;
-    cursor: pointer;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .featured-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--red);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-    z-index: 1;
-  }
-
-  .featured-card:hover::before { transform: scaleX(1); }
-
-  .featured-card:hover {
-    border-color: #444;
-    background: var(--surface-1);
-  }
-
-  .featured-img {
-    width: 100%;
-    height: 140px;
-    background: var(--surface-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid var(--border-muted);
-  }
-
-  .featured-img-placeholder {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  .featured-info {
-    padding: 22px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .featured-name {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-
-  .featured-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.55;
-    font-weight: 300;
-    margin-bottom: 14px;
-    flex: 1;
-  }
-
-  .featured-specs {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-  }
-
-  .featured-spec {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-  }
-
-  .featured-spec strong {
-    color: var(--text-muted);
-  }
-
-  .featured-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 16px;
-    border-top: 1px solid var(--border-subtle);
-    margin-top: auto;
-  }
-
-  .featured-price {
-    font-family: 'Space Mono', monospace;
-    font-size: 16px;
-    font-weight: 700;
-  }
-
-  .featured-btn {
-    background: transparent;
-    border: 1px solid var(--red);
     color: var(--red);
+    letter-spacing: 0.5px;
+  }
+
+  .type-spec strong { color: var(--red); }
+
+  /* ---- WHAT TO OWN ---- */
+  .own-section {
+    margin-top: 28px;
+    border-left: 3px solid var(--red);
+    background: var(--bg-surface);
+    padding: 24px 28px;
+  }
+
+  .own-label {
     font-size: 9px;
-    font-weight: 700;
-    padding: 7px 16px;
-    font-family: 'Space Mono', monospace;
-    letter-spacing: 1.5px;
+    font-weight: 800;
     text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    display: inline-block;
+    letter-spacing: 3px;
+    color: var(--red);
+    margin-bottom: 20px;
   }
 
-  .featured-btn:hover {
-    background: var(--red);
-    color: var(--bg);
+  .own-list {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 0;
+    list-style: none;
   }
 
-  /* ---- HOW TO CHOOSE ---- */
-  .guide {
-    padding: 56px 0;
-    border-top: 1px solid var(--border-muted);
+  .own-item { display: contents; }
+
+  .own-what {
+    padding: 10px 20px 10px 0;
+    border-bottom: 1px solid var(--border-mid);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .own-why {
+    padding: 10px 0 10px 20px;
+    border-bottom: 1px solid var(--border-mid);
+    border-left: 1px solid var(--border-mid);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+
+  .own-item:last-child .own-what,
+  .own-item:last-child .own-why {
+    border-bottom: none;
+  }
+
+  /* ---- CTA ---- */
+  .cta-section {
+    padding: 64px 0;
     animation: fadeIn 0.4s ease-out 0.1s both;
   }
 
-  .guide-header {
-    margin-bottom: 24px;
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
   }
 
-  .guide-title {
-    font-family: 'Space Mono', monospace;
+  .cta-text h2 {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ink);
+  }
+
+  .cta-text p {
+    font-size: 14px;
+    color: var(--ink-mid);
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    color: var(--white);
+    font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .cta-btn:hover { background: var(--red); border-color: var(--red); }
+
+  /* ---- SECTION LABEL ---- */
+  .section-label {
+    font-size: 10px;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 3px;
     color: var(--red);
     display: flex;
     align-items: center;
     gap: 16px;
+    margin-bottom: 24px;
   }
 
-  .guide-title::after {
+  .section-label::after {
     content: '';
     flex: 1;
     height: 1px;
-    background: var(--border-muted);
-  }
-
-  .guide-content {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.8;
-    font-weight: 300;
-    margin-bottom: 28px;
-  }
-
-  .gift-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-
-  .gift-card {
-    border: 1px solid var(--border-muted);
-    background: var(--bg);
-    transition: all 0.25s;
-    cursor: pointer;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .gift-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--red);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-    z-index: 1;
-  }
-
-  .gift-card:hover::before { transform: scaleX(1); }
-
-  .gift-card:hover {
-    border-color: #444;
-    background: var(--surface-1);
-  }
-
-  .gift-img {
-    width: 100%;
-    height: 140px;
-    background: var(--surface-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid var(--border-muted);
-  }
-
-  .gift-img-placeholder {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  .gift-info {
-    padding: 22px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .gift-name {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-
-  .gift-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.55;
-    font-weight: 300;
-    margin-bottom: 18px;
-    flex: 1;
-  }
-
-  .gift-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 16px;
-    border-top: 1px solid var(--border-subtle);
-    margin-top: auto;
-  }
-
-  .gift-price {
-    font-family: 'Space Mono', monospace;
-    font-size: 16px;
-    font-weight: 700;
+    background: var(--ink);
   }
 
   /* ---- RELATED GUIDES ---- */
   .related {
     padding: 56px 0;
-    border-top: 1px solid var(--border-muted);
   }
 
-  .related-header {
-    margin-bottom: 8px;
-  }
-
-  .article-list {
-    display: flex;
-    flex-direction: column;
-  }
+  .article-list { display: flex; flex-direction: column; }
 
   .article-row {
     display: flex;
-    align-items: baseline;
+    align-items: flex-start;
     gap: 32px;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--border-subtle);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-mid);
     cursor: pointer;
-    transition: background 0.15s;
+    transition: opacity 0.2s;
   }
 
-  .article-row:last-child { border-bottom: none; }
-  .article-row:hover { background: var(--red-glow); }
+  .article-row:hover { opacity: 0.6; }
+  .article-row:first-child { border-top: 1px solid var(--border-mid); }
 
   .article-meta {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     flex-shrink: 0;
-    min-width: 100px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.5px;
+    width: 90px;
   }
 
   .article-tag {
-    color: var(--red);
+    font-size: 9px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--red);
   }
 
-  .article-time { color: var(--text-dim); }
-
-  .article-content { flex: 1; }
+  .article-time {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ink-light);
+  }
 
   .article-title {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 600;
-    line-height: 1.35;
-    margin-bottom: 8px;
-    transition: color 0.2s;
+    margin-bottom: 6px;
+    line-height: 1.4;
+    color: var(--ink);
   }
-
-  .article-row:hover .article-title { color: var(--red); }
 
   .article-excerpt {
     font-size: 13px;
-    color: var(--text-secondary);
+    color: var(--ink-mid);
+    font-weight: 400;
     line-height: 1.6;
-    font-weight: 300;
+    margin-bottom: 10px;
   }
 
   .article-read {
-    margin-top: 10px;
-    font-family: 'Space Mono', monospace;
     font-size: 10px;
     font-weight: 700;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    transition: color 0.2s;
+    color: var(--red);
+    letter-spacing: 1px;
   }
-
-  .article-row:hover .article-read { color: var(--red); }
 
   /* ---- FOOTER ---- */
-  footer {
-    padding: 40px 24px 48px;
-    border-top: 1px solid var(--border-muted);
-  }
-
-  .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+  footer { padding: 40px 0; }
 
   .footer-top {
     display: flex;
@@ -707,124 +492,99 @@
   }
 
   .footer-brand {
-    font-family: 'Space Mono', monospace;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--red);
     letter-spacing: 2px;
     text-transform: uppercase;
   }
 
-  .footer-nav {
-    display: flex;
-    gap: 28px;
-    list-style: none;
-  }
+  .footer-nav { display: flex; gap: 28px; list-style: none; }
 
   .footer-nav a {
-    font-family: 'Space Mono', monospace;
     font-size: 10px;
-    font-weight: 400;
-    color: var(--text-muted);
+    font-weight: 500;
+    color: var(--ink-mid);
     text-transform: uppercase;
     letter-spacing: 1.5px;
     transition: color 0.2s;
   }
 
-  .footer-nav a:hover { color: var(--text); }
+  .footer-nav a:hover { color: var(--ink); }
 
   .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     padding-top: 24px;
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--border-mid);
   }
 
   .footer-tagline {
-    font-family: 'DM Sans', sans-serif;
     font-size: 13px;
-    color: var(--text-muted);
-    font-weight: 300;
+    color: var(--ink-mid);
+    font-weight: 400;
     font-style: italic;
   }
 
-  .footer-disclaimer {
-    font-size: 11px;
-    color: var(--text-dim);
-    max-width: 480px;
-    text-align: right;
-    line-height: 1.5;
-  }
+  .footer-copyright { font-size: 11px; color: var(--ink-light); text-align: right; }
 
   /* ---- UNIT TOGGLE ---- */
   .unit-toggle {
     display: flex;
-    border: 1px solid var(--border-muted);
-    flex-shrink: 0;
+    border: 1px solid var(--border);
     overflow: hidden;
+    flex-shrink: 0;
   }
 
   .unit-toggle .u-opt {
-    font-family: 'Space Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     letter-spacing: 1px;
     text-transform: uppercase;
     background: transparent;
     border: none;
-    color: var(--text-dim);
+    color: var(--ink-light);
     padding: 5px 10px;
     cursor: pointer;
     transition: all 0.2s;
   }
 
-  .unit-toggle .u-opt.active {
-    background: var(--red);
-    color: var(--bg);
-  }
+  .unit-toggle .u-opt.active { background: var(--ink); color: var(--white); }
+  .unit-toggle .u-opt:not(.active):hover { color: var(--ink); }
 
-  .unit-toggle .u-opt:not(.active):hover {
-    color: var(--text);
-  }
-
-  /* ---- LOGO AND ---- */
-  .logo-and {
-    color: #ffffff;
-  }
-
-  /* ---- CATEGORY AMPERSAND ---- */
-  .cat-amp {
-    font-family: 'Georgia', 'Times New Roman', serif;
-    font-style: italic;
-  }
-
-  /* ---- ANIMATIONS ---- */
+  /* ---- MISC ---- */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   nav { animation: fadeIn 0.5s ease-out; }
 
   /* ---- RESPONSIVE ---- */
-  @media (max-width: 900px) {
-    .featured-grid { grid-template-columns: 1fr; }
-    .gift-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
   @media (max-width: 768px) {
+    :root { --pad: 24px; }
     .nav-left { display: none; }
-    .nav-inner { grid-template-columns: auto 1fr; }
-    .nav-right { gap: 12px; }
+    nav { grid-template-columns: auto 1fr; }
     .type-specs { gap: 12px; }
     .article-row { flex-direction: column; gap: 8px; }
     .footer-top { flex-direction: column; gap: 20px; }
     .footer-bottom { flex-direction: column; gap: 12px; }
-    .footer-disclaimer { text-align: left; }
+    .footer-copyright { text-align: left; }
+    .cta-inner { flex-direction: column; }
+    .own-list { grid-template-columns: 1fr; }
+    .own-item { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+    .own-item:last-child { margin-bottom: 0; }
+    .own-what { border-bottom: none; padding-bottom: 2px; }
+    .own-why { border-left: none; border-bottom: 1px solid var(--border-mid); padding-top: 0; padding-left: 0; padding-bottom: 14px; }
+    .own-item:last-child .own-why { border-bottom: none; }
   }
 
   @media (max-width: 480px) {
-    .gift-grid { grid-template-columns: 1fr; }
+    .subcat-name { font-size: 11px; letter-spacing: 0.5px; }
+    .type-header { flex-direction: column; gap: 8px; }
+    .type-section { padding: 16px 18px; }
+    .own-section { padding: 18px 20px; }
   }
 </style>
 </head>
@@ -832,38 +592,35 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-inner">
     <div class="nav-left">
       <ul class="nav-links">
-        <li><a href="/">Categories</a></li>
-        <li><a href="/#guides">Guides</a></li>
-        <li><a href="/#gifts">Gifts</a></li>
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">Guides</a></li>
       </ul>
     </div>
-    <a href="/" class="logo">PARANOID<span class="logo-and">AND</span>READY</a>
+    <a href="#" class="logo">PARANOID <span class="logo-and">AND</span> READY</a>
     <div class="nav-right">
-      <input type="text" class="nav-search" placeholder="Search gear...">
+      <input type="text" class="nav-search" placeholder="Search...">
       <div class="unit-toggle">
-        <button class="u-opt active" data-system="imperial" onclick="setUnits('imperial')">LB</button>
+        <button class="u-opt" data-system="imperial" onclick="setUnits('imperial')">LB</button>
         <button class="u-opt" data-system="metric" onclick="setUnits('metric')">KG</button>
       </div>
     </div>
-  </div>
 </nav>
 <div class="header-line"><hr></div>
 
 <!-- BREADCRUMB -->
 <div class="container">
   <div class="breadcrumb">
-    <a href="/">Home</a><span class="sep">/</span><span class="current">Energy <span class="cat-amp">&amp;</span> Power</span>
+    <a href="#">Home</a><span class="sep">/</span><span class="current">Energy AND Power</span>
   </div>
 </div>
 
-<!-- CATEGORY HERO -->
+<!-- HERO -->
 <section class="cat-hero">
   <div class="container">
-    <h1>Energy <span class="cat-amp">&amp;</span> Power</h1>
-    <p class="cat-hero-desc">Whether it's a blackout that lasts a few hours or an extended grid failure that stretches into days, access to reliable power changes everything. This section breaks down every type of off-grid energy solution — what they are, how they work, and when each one makes sense — so you can make informed decisions before you need to.</p>
+    <h1>Energy AND Power</h1>
+    <p class="cat-hero-desc">The grid goes down and suddenly everything you took for granted stops working. This section covers every off-grid power option worth knowing about: what it is, how it works, and who it actually makes sense for. Read it now, before it gets dark.</p>
   </div>
 </section>
 
@@ -871,7 +628,7 @@
 <div class="subcategories">
   <div class="container">
 
-    <!-- ========== PORTABLE POWER STATIONS ========== -->
+    <!-- PORTABLE POWER STATIONS -->
     <div class="subcat-item">
       <button class="subcat-trigger" onclick="toggleSubcat(this)">
         <span class="subcat-name">Portable Power Stations</span>
@@ -879,17 +636,16 @@
       </button>
       <div class="subcat-body">
         <div class="subcat-content">
-
-          <p class="type-intro">Portable power stations are rechargeable battery units that store energy and deliver it through standard outlets, USB ports, and DC outputs. Think of them as giant power banks that can run real appliances. They're silent, produce no exhaust, and work indoors — making them the default choice for apartment dwellers and anyone who wants clean, quiet backup power.</p>
+          <p class="type-intro">Portable power stations are rechargeable battery units that store energy and deliver it through standard outlets, USB ports, and DC outputs. Think of them as giant power banks that can run real appliances. They're silent, produce no exhaust, and work indoors, making them the default choice for apartment dwellers and anyone who wants clean, quiet backup power.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Lithium-Ion (Li-Ion / NMC)</div>
               <div class="type-tag">Most Common</div>
             </div>
-            <div class="type-desc">The standard chemistry in most consumer power stations. Lithium-ion cells offer a good balance of energy density, weight, and cost. They charge relatively fast and hold their charge well in storage. The trade-off is a shorter overall lifespan — typically 500–800 charge cycles before capacity starts to degrade noticeably. Fine for occasional use and emergency standby, but less ideal if you're cycling the unit daily.</div>
+            <div class="type-desc">The standard chemistry in most consumer power stations. Lithium-ion cells offer a solid balance of energy density, weight, and cost. They charge relatively fast and hold their charge well in storage. The trade-off is a shorter overall lifespan, typically 500 to 800 charge cycles before capacity starts to degrade noticeably. Fine for occasional use and emergency standby, less ideal if you're cycling the unit daily.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>500–800</strong> cycle life</span>
+              <span class="type-spec"><strong>500-800</strong> cycle life</span>
               <span class="type-spec"><strong>Lightest</strong> per Wh</span>
               <span class="type-spec"><strong>Price:</strong> lowest entry</span>
             </div>
@@ -900,9 +656,9 @@
               <div class="type-name">Lithium Iron Phosphate (LiFePO4)</div>
               <div class="type-tag">Longest Lifespan</div>
             </div>
-            <div class="type-desc">LFP batteries last significantly longer than standard lithium-ion — 2,500 to 3,500+ cycles is typical. They're also more thermally stable, meaning less risk of overheating. The downside is they're heavier for the same capacity and usually more expensive upfront. If you plan to use a power station regularly or want something you can buy once and use for a decade, LFP is the chemistry to look for.</div>
+            <div class="type-desc">LFP batteries last significantly longer than standard lithium-ion, with 2,500 to 3,500+ cycles being typical. They're also more thermally stable, meaning less risk of overheating. The downside is they're heavier for the same capacity and usually more expensive upfront. If you plan to use a power station regularly or want something you can buy once and use for a decade, LFP is the chemistry to look for.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>2,500–3,500+</strong> cycle life</span>
+              <span class="type-spec"><strong>2,500-3,500+</strong> cycle life</span>
               <span class="type-spec"><strong>Durability:</strong> exceptional</span>
               <span class="type-spec"><strong>Price:</strong> higher upfront</span>
             </div>
@@ -913,7 +669,7 @@
               <div class="type-name">Solar Generators (Station + Panel Kits)</div>
               <div class="type-tag">Self-Sustaining</div>
             </div>
-            <div class="type-desc">Not a separate battery chemistry — "solar generator" is a marketing term for a power station bundled with compatible solar panels. The advantage is a fully renewable charging loop: the sun charges the battery, the battery powers your gear. The disadvantage is you're entirely dependent on sunlight, which means clouds, shade, and nighttime are real constraints. Most useful as a complementary charging method rather than the sole power source.</div>
+            <div class="type-desc">"Solar generator" is a marketing term for a power station bundled with compatible solar panels. The advantage is a fully renewable charging loop: the sun charges the battery, the battery powers your gear. The disadvantage is full dependence on sunlight. Clouds, shade, and nighttime are real constraints. Most useful as a complementary charging method rather than a sole power source.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Renewable</strong> charging</span>
               <span class="type-spec"><strong>Best use:</strong> extended outages</span>
@@ -921,64 +677,28 @@
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">Jackery Explorer 500</div>
-                <div class="featured-desc">518Wh in a package the size of a basketball. Runs a mini fridge, charges laptops, powers a CPAP machine overnight. Solar compatible. The workhorse most people start with.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>518Wh</strong> capacity</span>
-                  <span class="featured-spec"><strong>500W</strong> output</span>
-                  <span class="featured-spec"><strong>Li-Ion</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$329</span>
-                  <a href="https://amzn.to/40RL0ZP" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">EcoFlow Delta 2</div>
-                <div class="featured-desc">The sweet spot between portable and powerful. Runs a full-size fridge, charges 0–80% in 50 minutes. LFP battery means 3,000+ cycles — buy it once, use it for a decade. Expandable to 3kWh.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>1,024Wh</strong> capacity</span>
-                  <span class="featured-spec"><strong>1,800W</strong> output</span>
-                  <span class="featured-spec"><strong>LFP</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$649</span>
-                  <a href="https://amzn.to/4bwfdDV" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">BLUETTI Elite 400 + 2×200W Panels</div>
-                <div class="featured-desc">3,840Wh of LFP storage with two 200W solar panels included. Wheels and telescoping handle for a unit this size. Powers a fridge for days, recharges from the sun. Less "portable power" — more "off-grid home energy."</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>3,840Wh</strong> capacity</span>
-                  <span class="featured-spec"><strong>2,600W</strong> output</span>
-                  <span class="featured-spec"><strong>LFP + Solar</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$1,879</span>
-                  <a href="https://amzn.to/4bx2pNy" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Power station, 500-1,000Wh</span>
+                <span class="own-why">Covers a mini fridge, phone charging, and lights for 12-24 hours. LFP chemistry is worth the premium if you expect regular use.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Compatible foldable solar panel</span>
+                <span class="own-why">Paired with your station, creates a self-sustaining loop with no grid dependence. Aim for 100-200W output.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Second, smaller unit (200-300Wh)</span>
+                <span class="own-why">For travel or a go-bag. Your main station likely isn't moving anywhere fast if it weighs <span data-imperial="30+ lbs" data-metric="14+ kg">30+ lbs</span>.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
 
-    <!-- ========== SOLAR PANELS ========== -->
+    <!-- SOLAR PANELS -->
     <div class="subcat-item">
       <button class="subcat-trigger" onclick="toggleSubcat(this)">
         <span class="subcat-name">Solar Panels</span>
@@ -986,18 +706,17 @@
       </button>
       <div class="subcat-body">
         <div class="subcat-content">
-
-          <p class="type-intro">Solar panels convert sunlight into electricity you can use to charge power stations, batteries, and devices directly. In a prolonged outage, solar is the only truly renewable power source available to most people. The key variables are wattage (how fast it charges), efficiency (how much sunlight it actually converts), and portability (how easy it is to set up and move).</p>
+          <p class="type-intro">Solar panels convert sunlight into electricity that can charge power stations, run appliances directly, or top off batteries. For emergency preparedness, portable foldable panels are the most practical option: they work with your existing power station and can be deployed anywhere outdoors. Fixed rooftop solar is a separate, much larger category that requires professional installation and a different budget conversation entirely.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Monocrystalline Panels</div>
-              <div class="type-tag">Highest Efficiency</div>
+              <div class="type-tag">Best Efficiency</div>
             </div>
-            <div class="type-desc">Made from single-crystal silicon wafers, monocrystalline cells are the most efficient portable panels on the market — typically 20–24% conversion rates. They perform better in low-light conditions than other types and deliver more power <span class="u" data-imperial="per square foot" data-metric="per square metre">per square foot</span>. Most premium portable panels use this technology. The trade-off is price: monocrystalline panels cost more per watt than polycrystalline alternatives.</div>
+            <div class="type-desc">Made from a single crystal structure, monocrystalline panels are the most efficient type available for consumer use, typically 20 to 23%. They perform better in partial shade and high temperatures than other panel types. For portable applications where you want maximum power from minimum surface area, monocrystalline is the clear choice. The vast majority of quality portable panels use this technology.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>20–24%</strong> efficiency</span>
-              <span class="type-spec"><strong>Best use:</strong> maximum power per area</span>
+              <span class="type-spec"><strong>20-23%</strong> efficiency</span>
+              <span class="type-spec"><strong>Best use:</strong> portable, maximum output</span>
               <span class="type-spec"><strong>Price:</strong> mid-high</span>
             </div>
           </div>
@@ -1007,9 +726,9 @@
               <div class="type-name">Polycrystalline Panels</div>
               <div class="type-tag">Budget Option</div>
             </div>
-            <div class="type-desc">Made from melted silicon fragments rather than single crystals, polycrystalline panels are cheaper to produce but slightly less efficient — typically 15–18%. They're heavier per watt and perform worse in high heat and partial shade. For fixed installations where space and weight aren't critical, they offer decent value. For portable use, monocrystalline usually makes more sense.</div>
+            <div class="type-desc">Made from melted silicon fragments rather than single crystals, polycrystalline panels are cheaper to produce but slightly less efficient, typically 15 to 18%. They're heavier per watt and perform worse in high heat and partial shade. For fixed installations where space and weight aren't critical, they offer decent value. For portable use, monocrystalline almost always makes more sense.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>15–18%</strong> efficiency</span>
+              <span class="type-spec"><strong>15-18%</strong> efficiency</span>
               <span class="type-spec"><strong>Price:</strong> lowest</span>
               <span class="type-spec"><strong>Best use:</strong> fixed installations</span>
             </div>
@@ -1020,56 +739,36 @@
               <div class="type-name">Flexible / Thin-Film Panels</div>
               <div class="type-tag">Ultralight</div>
             </div>
-            <div class="type-desc">Thin-film panels use a different manufacturing process that allows them to bend and flex. They're extremely lightweight and can conform to curved surfaces like vehicle roofs or backpacks. Efficiency is lower — usually 10–15% — and durability is a concern over time. Best suited for weight-sensitive applications where you need some solar input but maximum output isn't critical.</div>
+            <div class="type-desc">Thin-film panels use a manufacturing process that allows them to bend and flex. They're extremely lightweight and can conform to curved surfaces like vehicle roofs or backpacks. Efficiency is lower, usually 10 to 15%, and long-term durability is a concern. Best for weight-sensitive applications where you need some solar input but maximum output isn't critical.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>10–16%</strong> efficiency</span>
-              <span class="type-spec"><strong>Best use:</strong> curved surfaces, vans</span>
-              <span class="type-spec"><strong>360° bendable</strong></span>
+              <span class="type-spec"><strong>10-16%</strong> efficiency</span>
+              <span class="type-spec"><strong>Best use:</strong> curved surfaces, vehicles</span>
+              <span class="type-spec"><strong>Flexible</strong> form factor</span>
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">EcoFlow 160W Portable Solar Panel</div>
-                <div class="featured-desc">Foldable monocrystalline panel with a kickstand case that doubles as a carrying bag. 22% efficiency, IP68 waterproof, chainable for faster charging. The portable panel most power stations pair best with.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>160W</strong> output</span>
-                  <span class="featured-spec"><strong class="u" data-imperial="15.4 lbs" data-metric="7.0 kg">15.4 lbs</strong></span>
-                  <span class="featured-spec"><strong>22%</strong> efficiency</span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$209</span>
-                  <a href="https://amzn.to/3NqztO3" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">BougeRV Yuma 200W CIGS Thin-Film</div>
-                <div class="featured-desc">Rolls up like a poster, weighs <span class="u" data-imperial="7 lbs" data-metric="3.2 kg">7 lbs</span>, bends 360° to fit curved surfaces. CIGS cells perform 38% better than monocrystalline in shade. Adhesive backing — no drilling, no brackets. Built for RV roofs, boats, and unconventional setups.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>200W</strong> output</span>
-                  <span class="featured-spec"><strong class="u" data-imperial="7.05 lbs" data-metric="3.2 kg">7.05 lbs</strong></span>
-                  <span class="featured-spec"><strong>16%</strong> efficiency</span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$530</span>
-                  <a href="https://amzn.to/4upnd19" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Foldable monocrystalline panel, 100-200W</span>
+                <span class="own-why">Match it to your power station. Most major brands (EcoFlow, Jackery, Bluetti) publish compatible panel specs.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">MC4 or DC5525 adapter cables</span>
+                <span class="own-why">Often not included with the panel. Check your station's input port and order cables before you need them.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Flexible thin-film panel (optional)</span>
+                <span class="own-why">Only if you have a vehicle or van with curved roof space. Otherwise monocrystalline covers all use cases.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
 
-    <!-- ========== FUEL GENERATORS ========== -->
+    <!-- FUEL GENERATORS -->
     <div class="subcat-item">
       <button class="subcat-trigger" onclick="toggleSubcat(this)">
         <span class="subcat-name">Fuel Generators</span>
@@ -1077,17 +776,16 @@
       </button>
       <div class="subcat-body">
         <div class="subcat-content">
-
-          <p class="type-intro">Fuel generators convert gasoline, propane, or dual fuel into electricity via a combustion engine. They produce significantly more sustained power than battery stations — enough to run major appliances, sump pumps, or even partial home circuits. The trade-offs are noise, exhaust (outdoor use only), fuel dependency, and maintenance. When the power goes out for days, generators are what keep houses running.</p>
+          <p class="type-intro">Fuel generators convert gasoline, propane, or dual fuel into electricity via a combustion engine. They produce significantly more sustained power than battery stations: enough to run major appliances, sump pumps, or even partial home circuits. The trade-offs are noise, exhaust fumes (outdoor use only), fuel dependency, and regular maintenance. When the power goes out for days, generators are what keep houses running.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Inverter Generators (Gasoline)</div>
-              <div class="type-tag">Quiet & Clean Power</div>
+              <div class="type-tag">Quiet + Clean Power</div>
             </div>
-            <div class="type-desc">Inverter generators produce "clean" sine-wave power that's safe for sensitive electronics like laptops and medical devices. They adjust engine speed to match the electrical load, which saves fuel and reduces noise significantly — most run at 48–58 dB, roughly the volume of a normal conversation. Lighter and more portable than conventional generators, but typically limited to 1,000–3,000W. The best choice when you need reliable power without waking the neighborhood.</div>
+            <div class="type-desc">Inverter generators produce "clean" sine-wave power that's safe for sensitive electronics like laptops and medical devices. They adjust engine speed to match the load, saving fuel and reducing noise significantly. Most run at 48 to 58 dB, roughly the volume of a normal conversation. Lighter and more portable than conventional generators, but typically limited to 1,000 to 3,000W output.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>48–58 dB</strong> noise level</span>
+              <span class="type-spec"><strong>48-58 dB</strong> noise level</span>
               <span class="type-spec"><strong>Safe for</strong> electronics</span>
               <span class="type-spec"><strong>Price:</strong> highest</span>
             </div>
@@ -1098,10 +796,10 @@
               <div class="type-name">Conventional Generators (Gasoline)</div>
               <div class="type-tag">Raw Power, Low Cost</div>
             </div>
-            <div class="type-desc">Conventional generators run at a constant speed regardless of load, which makes them louder and less fuel-efficient than inverter models. But they compensate with sheer output — 3,000W to 10,000W+ is standard. They're the right tool when you need to power multiple large appliances simultaneously: fridge, freezer, well pump, space heater. Not suitable for sensitive electronics without a separate surge protector.</div>
+            <div class="type-desc">Conventional generators run at a constant speed regardless of load, making them louder and less fuel-efficient than inverter models. They compensate with sheer output: 3,000W to 10,000W+ is standard. The right tool when you need to run multiple large appliances simultaneously, such as a fridge, freezer, and sump pump. Not suitable for sensitive electronics without a separate surge protector.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>3,000–10,000W+</strong> output</span>
-              <span class="type-spec"><strong>65–75 dB</strong> noise level</span>
+              <span class="type-spec"><strong>3,000-10,000W+</strong> output</span>
+              <span class="type-spec"><strong>65-75 dB</strong> noise level</span>
               <span class="type-spec"><strong>Price:</strong> lowest per watt</span>
             </div>
           </div>
@@ -1111,7 +809,7 @@
               <div class="type-name">Dual-Fuel Generators (Gasoline + Propane)</div>
               <div class="type-tag">Fuel Flexibility</div>
             </div>
-            <div class="type-desc">Dual-fuel generators can run on gasoline or propane, which is a genuine advantage in emergencies. Gasoline goes stale in 3–6 months and gas stations need power to pump — propane stores indefinitely and is widely available. Switching fuels is usually a simple dial or valve. You get slightly less output on propane (roughly 10–15% reduction), but the fuel flexibility is worth it. A smart hedge for extended outages.</div>
+            <div class="type-desc">Dual-fuel generators can run on gasoline or propane. Gasoline goes stale in 3 to 6 months and gas stations need power to pump. Propane stores indefinitely and is widely available. Switching fuels is usually a simple dial or valve. Output drops roughly 10 to 15% on propane, but the flexibility more than justifies it for extended outages.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Gasoline + propane</strong></span>
               <span class="type-spec"><strong>Propane</strong> stores indefinitely</span>
@@ -1124,7 +822,7 @@
               <div class="type-name">Propane-Only Generators</div>
               <div class="type-tag">Clean Burning</div>
             </div>
-            <div class="type-desc">Propane-only generators eliminate the headaches of gasoline entirely — no stale fuel, no carburetors to clean, no ethanol damage. Propane burns cleaner, which means less engine wear and longer intervals between maintenance. The downside is fewer consumer options and slightly higher fuel consumption rates. If you already have a large propane tank on your property, this is the simplest long-term generator strategy.</div>
+            <div class="type-desc">Propane-only generators eliminate the headaches of gasoline entirely: no stale fuel, no carburetors to clean, no ethanol damage. Propane burns cleaner, meaning less engine wear and longer intervals between maintenance. Fewer consumer options and slightly higher fuel consumption are the main downsides. If you already have a large propane tank on your property, this is the simplest long-term generator strategy.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>No fuel</strong> degradation</span>
               <span class="type-spec"><strong>Maintenance:</strong> minimal</span>
@@ -1132,64 +830,36 @@
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">Honda EU2200i</div>
-                <div class="featured-desc">The gold standard in inverter generators. Whisper-quiet at 48 dB, clean sine-wave power safe for all electronics. Honda engines last decades with basic maintenance. Parallel-ready if you need more output.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>2,200W</strong> surge</span>
-                  <span class="featured-spec"><strong>Gasoline</strong></span>
-                  <span class="featured-spec"><strong>48 dB</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$1,149</span>
-                  <a href="https://amzn.to/4syfRGK" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">Champion 3500W Generator</div>
-                <div class="featured-desc">4,375 starting watts, 3,500 running. Enough to run a fridge, freezer, and sump pump simultaneously. Cold Start Technology for reliable ignition in any weather. 12-hour runtime on a full tank. No-frills power at a no-frills price.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>3,500W</strong> running</span>
-                  <span class="featured-spec"><strong>Gasoline</strong></span>
-                  <span class="featured-spec"><strong>68 dB</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$313</span>
-                  <a href="https://amzn.to/3NqoXX6" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">EcoFlow Smart Generator (Dual Fuel)</div>
-                <div class="featured-desc">1,800W output on gasoline or propane. Smart integration — auto-starts when paired with EcoFlow power stations, app monitoring, CO detection. A 20 lb propane tank gives you up to 12.5 hours of runtime. The smart hedge for long outages.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>1,800W</strong> output</span>
-                  <span class="featured-spec"><strong>Dual Fuel</strong></span>
-                  <span class="featured-spec"><strong>App control</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$799</span>
-                  <a href="https://amzn.to/3OODdJM" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Dual-fuel or inverter generator</span>
+                <span class="own-why">Size to your actual load. Add up the wattage of appliances you'd run at once. Most households need 3,000 to 5,000W to cover a fridge, lights, and a few outlets.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Fuel stabilizer</span>
+                <span class="own-why">Untreated gasoline goes stale in 3 to 6 months. Stabilizer extends that to 24 months. Add it every time you store fuel.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Approved fuel cans (<span data-imperial="5-10 gallon" data-metric="20-40 litre">5-10 gallon</span>)</span>
+                <span class="own-why">Store at least one full tank's worth at all times. Rotate stock every 12-18 months.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Heavy-gauge generator extension cords</span>
+                <span class="own-why">Standard household cords overheat under generator loads and are a fire risk. Use cords rated for the output wattage.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Transfer switch or interlock kit</span>
+                <span class="own-why">Required to safely connect to your home's panel. Prevents dangerous backfeed into the grid. Requires a licensed electrician to install.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
 
-    <!-- ========== POWER BANKS ========== -->
+    <!-- POWER BANKS -->
     <div class="subcat-item">
       <button class="subcat-trigger" onclick="toggleSubcat(this)">
         <span class="subcat-name">Power Banks</span>
@@ -1197,32 +867,31 @@
       </button>
       <div class="subcat-body">
         <div class="subcat-content">
-
-          <p class="type-intro">Power banks are portable batteries designed to charge phones, tablets, and small electronics via USB. They're the most accessible form of backup power — small enough to carry daily, cheap enough to stock multiples. In an emergency, a charged power bank means communication stays alive. The key specs are capacity (mAh), output wattage (how fast it charges), and whether it has USB-C Power Delivery.</p>
+          <p class="type-intro">Power banks are portable batteries designed to charge phones, tablets, and small electronics via USB. They're the most accessible form of backup power: small enough to carry daily, cheap enough to stock multiples. In an emergency, a charged power bank keeps communication alive. The key specs to look for are capacity (mAh), output wattage (how fast it charges), and whether it supports USB-C Power Delivery.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Pocket / EDC Power Banks</div>
-              <div class="type-tag">5,000–10,000 mAh</div>
+              <div class="type-tag">5,000-10,000 mAh</div>
             </div>
-            <div class="type-desc">Small enough to carry in a pocket or clip to a keychain. These deliver 1–2 full phone charges and are designed for daily carry — the power bank you have on you when something goes wrong, not the one you dig out of a closet. Some models have built-in connectors that plug directly into your phone, eliminating the need for cables entirely. At $15–50, there's no reason not to have one in every bag.</div>
+            <div class="type-desc">Small enough to carry in a pocket or clip to a keychain. These deliver 1 to 2 full phone charges and are designed for daily carry. Some models have built-in connectors that plug directly into your phone, eliminating loose cables. At $15 to $50, there's no reason not to have one in every bag. This is the power bank you have on you when something goes wrong, not the one you dig out of a closet after the fact.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>1–3</strong> phone charges</span>
+              <span class="type-spec"><strong>1-3</strong> phone charges</span>
               <span class="type-spec"><strong>Best use:</strong> daily carry</span>
-              <span class="type-spec"><strong>Price:</strong> $15–50</span>
+              <span class="type-spec"><strong>Price:</strong> $15-50</span>
             </div>
           </div>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">High-Capacity Power Banks</div>
-              <div class="type-tag">20,000–30,000 mAh</div>
+              <div class="type-tag">20,000-30,000 mAh</div>
             </div>
-            <div class="type-desc">These are the workhorses. 20,000–30,000mAh is enough to charge a phone 5–7 times or fast-charge a laptop. Models with 100W+ USB-C PD can charge a MacBook at full speed. Heavier than pocket models — usually <span class="u" data-imperial="1–1.5 lbs" data-metric="0.5–0.7 kg">1–1.5 lbs</span> — but still compact enough for a backpack or bedside drawer. The right choice for a go-bag or home emergency kit where you need multiple days of phone power.</div>
+            <div class="type-desc">20,000 to 30,000mAh is enough to charge a phone 5 to 7 times or fast-charge a laptop. Models with 100W+ USB-C PD can charge a MacBook at full speed. Heavier than pocket models, usually <span class="u" data-imperial="1-1.5 lbs" data-metric="0.5-0.7 kg">1-1.5 lbs</span>, but still compact enough for a backpack or bedside drawer. The right choice for a go-bag or home emergency kit where you need multiple days of phone power.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>5–7</strong> phone charges</span>
+              <span class="type-spec"><strong>5-7</strong> phone charges</span>
               <span class="type-spec"><strong>Best use:</strong> go-bags, laptops</span>
-              <span class="type-spec"><strong>Price:</strong> $50–120</span>
+              <span class="type-spec"><strong>Price:</strong> $50-120</span>
             </div>
           </div>
 
@@ -1231,105 +900,59 @@
               <div class="type-name">Solar Power Banks</div>
               <div class="type-tag">Self-Charging</div>
             </div>
-            <div class="type-desc">Power banks with built-in solar panels. Sounds great in theory — and they do work — but the built-in panels are tiny, typically generating 5–10W at best. A full solar charge can take 20–40+ hours of direct sunlight. They're best used as standard power banks that happen to have a slow solar trickle as a last-resort backup. Don't buy one expecting to charge it primarily from the sun — buy it as a power bank that can also absorb a bit of solar over time.</div>
+            <div class="type-desc">Power banks with a built-in solar panel. The panel is small, typically generating 5 to 10W at best. A full solar charge can take 20 to 40+ hours of direct sunlight. Think of them as standard power banks that happen to offer a slow solar trickle as a last-resort option. Don't buy one expecting to charge it primarily from the sun.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>5–10W</strong> solar input</span>
+              <span class="type-spec"><strong>5-10W</strong> solar input</span>
               <span class="type-spec"><strong>Solar:</strong> last-resort trickle</span>
-              <span class="type-spec"><strong>Best as</strong> regular bank + backup</span>
+              <span class="type-spec"><strong>Best as:</strong> bank + solar backup</span>
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">Anker Nano Power Bank (10,000mAh)</div>
-                <div class="featured-desc">Built-in USB-C cable — no loose cords to forget. 10,000mAh gives you 2–3 full phone charges. Small enough for a pocket, reliable enough for a go-bag. The one you carry every day.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>10,000mAh</strong></span>
-                  <span class="featured-spec"><strong>30W</strong> PD</span>
-                  <span class="featured-spec"><strong>Built-in</strong> USB-C</span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$26</span>
-                  <a href="https://amzn.to/4rnaxoC" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">Anker 737 Power Bank (24K)</div>
-                <div class="featured-desc">140W USB-C charges a MacBook Pro at full speed. LED screen shows exact wattage and time remaining. 24,000mAh — enough for a laptop charge plus 5+ phone charges. The best battery pack you can buy.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>24,000mAh</strong></span>
-                  <span class="featured-spec"><strong>140W</strong> USB-C</span>
-                  <span class="featured-spec"><strong>LED</strong> display</span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$110</span>
-                  <a href="https://amzn.to/4szWwVD" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">Blavor Solar Power Bank</div>
-                <div class="featured-desc">A power bank that actually delivers on the solar promise — better than most in its class. Built-in panel for slow trickle charging, plus USB output for when you need it. Rugged build with wireless charging. Buy it as a bank that happens to catch sun.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>20,000mAh</strong></span>
-                  <span class="featured-spec"><strong>Solar</strong> panel</span>
-                  <span class="featured-spec"><strong>Qi</strong> wireless</span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$40</span>
-                  <a href="https://amzn.to/4sBYtkA" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Pocket bank, 10,000mAh, always carried</span>
+                <span class="own-why">Your first line of defense. It needs to be in your bag, not on a shelf. Buy one, keep it charged, carry it daily.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">High-capacity bank with USB-C PD, in go-bag</span>
+                <span class="own-why">Covers a laptop charge plus several phone charges. Real staying power in a multi-day outage.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Multi-cable kit (USB-C, Lightning, Micro-USB)</span>
+                <span class="own-why">Store them with your banks. A bank with no matching cable is useless.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">One pocket bank per household member</span>
+                <span class="own-why">In an emergency everyone needs a charged phone. Sharing one bank between four people is not a backup plan.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
 
-    <!-- ========== LANTERNS & LIGHTING ========== -->
+    <!-- LANTERNS & LIGHTING -->
     <div class="subcat-item">
       <button class="subcat-trigger" onclick="toggleSubcat(this)">
-        <span class="subcat-name">Lanterns <span class="cat-amp">&amp;</span> Lighting</span>
+        <span class="subcat-name">Lanterns AND Lighting</span>
         <span class="subcat-icon">+</span>
       </button>
       <div class="subcat-body">
         <div class="subcat-content">
-
-          <p class="type-intro">Light is one of the first things you notice when the power goes out — and one of the easiest problems to solve. Emergency lighting ranges from battery-powered lanterns that last hundreds of hours to fuel-based options that work with no charging at all. The right choice depends on runtime needs, portability, and whether you want something rechargeable or something that runs on fuel you can store indefinitely.</p>
+          <p class="type-intro">Light is one of the first things you notice when the power goes out, and one of the easiest problems to solve. Emergency lighting ranges from battery-powered lanterns that last hundreds of hours to fuel-based options that work with no charging at all. The right answer depends on runtime, portability, and whether you want something rechargeable or something that runs on fuel you can store indefinitely.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Battery / USB Lanterns</div>
               <div class="type-tag">Most Practical</div>
             </div>
-            <div class="type-desc">The modern default. Battery-powered LED lanterns are bright, safe, and efficient. Rechargeable models charge via USB and can double as phone chargers. Disposable-battery models (AA, D-cell) offer long shelf life and instant readiness. LED technology means a set of D batteries can power a lantern for 50–100+ hours on low settings. Safe for indoor use, no fire risk, kid-friendly.</div>
+            <div class="type-desc">LED lanterns powered by AA/D batteries or rechargeable via USB-C are the most practical general-purpose emergency light. Modern LED technology means even small units can run 50 to 200+ hours on low mode. USB-rechargeable models can be topped off from a power bank or power station. Look for multiple brightness modes, a low-battery indicator, and a hanging hook for hands-free use.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>50–100+ hrs</strong> runtime</span>
-              <span class="type-spec"><strong>100–1,000</strong> lumens</span>
-              <span class="type-spec"><strong>Indoor</strong> safe</span>
-            </div>
-          </div>
-
-          <div class="type-section">
-            <div class="type-header">
-              <div class="type-name">Solar Lanterns</div>
-              <div class="type-tag">Renewable</div>
-            </div>
-            <div class="type-desc">Solar lanterns charge during the day and provide light at night — a self-sustaining cycle that doesn't depend on batteries or fuel. Some models are inflatable and pack completely flat, making them ideal for go-bags. Output tends to be lower than battery lanterns (50–200 lumens typical), and you're dependent on daytime sun exposure. Best as a complement to battery lanterns, not a replacement.</div>
-            <div class="type-specs">
-              <span class="type-spec"><strong>50–200</strong> lumens typical</span>
-              <span class="type-spec"><strong>Solar</strong> rechargeable</span>
-              <span class="type-spec"><strong>Some</strong> pack flat</span>
+              <span class="type-spec"><strong>50-200+ hrs</strong> runtime</span>
+              <span class="type-spec"><strong>USB-C</strong> rechargeable options</span>
+              <span class="type-spec"><strong>Room-filling</strong> light</span>
             </div>
           </div>
 
@@ -1338,9 +961,9 @@
               <div class="type-name">Fuel Lanterns (Oil / Candle)</div>
               <div class="type-tag">No Electricity Needed</div>
             </div>
-            <div class="type-desc">Oil lanterns, candle lanterns, and similar fuel-based options have worked for centuries and still do. They require no batteries, no charging, no technology. Lamp oil stores for years, candles store indefinitely. Output is modest — enough to light a room, not flood it — and they produce heat and open flame, which means ventilation and fire safety matter. A Dietz-style hurricane lantern is the classic choice: windproof, cheap, and nearly indestructible.</div>
+            <div class="type-desc">Oil lanterns, candle lanterns, and similar fuel-based options have worked for centuries and still do. They require no batteries, no charging, no technology. Lamp oil stores for years; candles store indefinitely. Output is modest, enough to light a room but not flood it. They produce heat and open flame, which means ventilation and fire safety matter. A Dietz-style hurricane lantern is the classic choice: windproof, inexpensive, and nearly indestructible.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>7–12 hrs</strong> per fill</span>
+              <span class="type-spec"><strong>7-12 hrs</strong> per fill</span>
               <span class="type-spec"><strong>Fuel</strong> stores for years</span>
               <span class="type-spec"><strong>Ventilation</strong> required</span>
             </div>
@@ -1348,75 +971,47 @@
 
           <div class="type-section">
             <div class="type-header">
-              <div class="type-name">Headlamps & Flashlights</div>
+              <div class="type-name">Headlamps + Flashlights</div>
               <div class="type-tag">Hands-Free / Focused</div>
             </div>
-            <div class="type-desc">Headlamps free your hands for tasks — cooking, repairs, navigation, reading. Modern USB-rechargeable headlamps deliver 300–800+ lumens with multiple modes including red light for preserving night vision. Flashlights serve a different role: focused beams for distance and inspection. In an emergency, having both a room-filling lantern and a personal headlamp covers all your lighting needs.</div>
+            <div class="type-desc">Headlamps free your hands for tasks: cooking, repairs, navigation, reading. Modern USB-rechargeable headlamps deliver 300 to 800+ lumens with multiple modes, including a red light that preserves night vision without blinding everyone in the room. Flashlights produce focused beams for distance and inspection. A room-filling lantern and a personal headlamp together cover all lighting needs in any emergency.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>100–800+</strong> lumens</span>
+              <span class="type-spec"><strong>100-800+</strong> lumens</span>
               <span class="type-spec"><strong>USB-C</strong> rechargeable</span>
-              <span class="type-spec"><strong>Red mode</strong> for night vision</span>
+              <span class="type-spec"><strong>Red mode</strong> preserves night vision</span>
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">UST 30-Day Duro 1000</div>
-                <div class="featured-desc">1,000 lumens on high, 30 days of runtime on low. Impact-resistant rubberized housing, IPX4 water resistance, glow-in-the-dark power button. Runs on 3 D batteries — stash extras and you've got months of light.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>1,000 lumens</strong></span>
-                  <span class="featured-spec"><strong>3×D</strong> batteries</span>
-                  <span class="featured-spec"><strong>30 day</strong> runtime</span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$30</span>
-                  <a href="https://amzn.to/4rYXVFv" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">LuminAID PackLite Max 2-in-1</div>
-                <div class="featured-desc">Inflatable solar lantern that packs flat. Waterproof, 50-hour runtime, doubles as a phone charger. Used by disaster relief organizations worldwide. Sounds gimmicky — it's not.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>150 lumens</strong></span>
-                  <span class="featured-spec"><strong>Solar</strong> rechargeable</span>
-                  <span class="featured-spec"><strong>50 hrs</strong> runtime</span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$25</span>
-                  <a href="https://amzn.to/47vHecg" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">Stansport 12" Hurricane Lantern</div>
-                <div class="featured-desc">The classic oil lantern. Metal construction, glass globe, adjustable wick. Burns standard lamp oil for hours. Zero technology required — no batteries, no charging, no moving parts. Under $16.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>Lamp oil</strong></span>
-                  <span class="featured-spec"><strong>Ventilation</strong> required</span>
-                  <span class="featured-spec"><strong>No electricity</strong> needed</span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$16</span>
-                  <a href="https://amzn.to/4rg5Nkv" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">LED lantern, 300+ lm, per main room</span>
+                <span class="own-why">Battery or USB rechargeable, with a hanging hook. This is what lights a room when the grid goes down.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Hurricane oil lantern + lamp oil</span>
+                <span class="own-why">Zero technology required. No batteries, no charging, no grid dependence. Reliable for 150+ years and still works.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Headlamp per person, with red-light mode</span>
+                <span class="own-why">Hands-free light is essential the moment you need to do anything useful in the dark. One per person, always charged.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Spare batteries (AA, D-cell)</span>
+                <span class="own-why">Match to your lanterns. Keep at least two full sets. Rotate stock every two to three years.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Glow sticks (approx. 12)</span>
+                <span class="own-why">Cheap, single-use, no batteries. Useful for marking exits or doorways in total darkness without draining a lantern.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
 
-    <!-- ========== SMALL ESSENTIALS ========== -->
+    <!-- SMALL ESSENTIALS -->
     <div class="subcat-item">
       <button class="subcat-trigger" onclick="toggleSubcat(this)">
         <span class="subcat-name">Small Essentials</span>
@@ -1424,19 +1019,18 @@
       </button>
       <div class="subcat-body">
         <div class="subcat-content">
-
-          <p class="type-intro">The small items that round out an energy kit. Stormproof matches, EDC flashlights, hand-crank chargers — individually minor, collectively critical. These are the things that fill gaps between your major power sources and ensure you're never caught completely without light, fire, or a way to charge a phone.</p>
+          <p class="type-intro">The small items that round out an energy kit. Stormproof matches, EDC flashlights, hand-crank chargers: individually minor, collectively critical. These are the things that fill gaps between your major power sources and ensure you're never caught completely without light, fire, or a way to charge a phone.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Fire Starters</div>
               <div class="type-tag">Fundamental</div>
             </div>
-            <div class="type-desc">Stormproof matches, ferrocerium rods, and windproof lighters. These are redundancy items — you should have at least two different fire-starting methods in any kit. Stormproof matches burn in rain, wind, and brief submersion. Ferro rods produce sparks at <span class="u" data-imperial="3,000°F" data-metric="1,650°C">3,000°F</span> and last for thousands of strikes. Windproof lighters work in conditions that kill regular Bics. At $5–15 each, stockpile them.</div>
+            <div class="type-desc">The core principle here is redundancy: have at least two independent methods to start a fire in any conditions. Stormproof matches burn in rain, wind, and brief submersion. Ferrocerium (ferro) rods are metallic sticks that produce extremely hot sparks when struck with a striker blade, typically reaching around <span class="u" data-imperial="3,000°F" data-metric="1,650°C">3,000°F</span>. They work wet, cold, and windswept, and a single rod lasts for thousands of strikes. Windproof arc lighters work in conditions that kill regular lighters. At $5 to $15 each, there's no excuse not to have all three types.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>Multiple</strong> methods recommended</span>
-              <span class="type-spec"><strong>Waterproof</strong> options</span>
-              <span class="type-spec"><strong>Price:</strong> $5–30</span>
+              <span class="type-spec"><strong>Multiple methods</strong> recommended</span>
+              <span class="type-spec"><strong>Waterproof</strong> options available</span>
+              <span class="type-spec"><strong>Price:</strong> $5-30</span>
             </div>
           </div>
 
@@ -1445,93 +1039,69 @@
               <div class="type-name">EDC Flashlights</div>
               <div class="type-tag">Every Day Carry</div>
             </div>
-            <div class="type-desc">Pen-sized flashlights designed to clip to a pocket or bag and stay there permanently. Modern EDC lights deliver 200–500 lumens in a package the size of a marker. USB-rechargeable models eliminate battery swaps. The whole point is having a light on you at all times — not in a kit, not in a drawer, but in your pocket when the lights go out or you're walking to your car at night.</div>
+            <div class="type-desc">Pen-sized flashlights designed to clip to a pocket or bag and stay there permanently. Modern EDC lights deliver 200 to 500 lumens in a package the size of a marker. USB-rechargeable models eliminate battery swaps. The whole point is having a light on you at all times: not in a kit, not in a drawer, but in your pocket when the lights go out or you're walking to your car at night.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>200–500</strong> lumens</span>
-              <span class="type-spec"><strong>Best use:</strong> always on you</span>
+              <span class="type-spec"><strong>200-500</strong> lumens</span>
               <span class="type-spec"><strong>USB-C</strong> rechargeable</span>
+              <span class="type-spec"><strong>Pocket-clip</strong> design</span>
             </div>
           </div>
 
           <div class="type-section">
             <div class="type-header">
-              <div class="type-name">Hand-Crank & Dynamo Devices</div>
-              <div class="type-tag">Zero Dependency</div>
+              <div class="type-name">Hand-Crank Chargers</div>
+              <div class="type-tag">Last Resort</div>
             </div>
-            <div class="type-desc">Hand-crank radios, flashlights, and phone chargers convert physical effort into electricity. They're slow and tiring to use — a minute of cranking might give you a few minutes of phone time — but they have zero dependencies. No batteries, no fuel, no sun. They work when everything else is dead. Best kept as a last-resort option alongside better primary sources. Emergency crank radios that combine AM/FM/NOAA with a flashlight and USB output are the most practical form.</div>
+            <div class="type-desc">Hand-crank generators convert physical effort into electricity. They're slow: 10 minutes of cranking yields roughly 1 to 3% of a phone battery. Not a primary power solution by any measure. Emergency crank radios that combine AM/FM/NOAA weather alerts with a flashlight and USB output are the most practical form. You buy these not because they're powerful, but because they have zero dependencies and work when everything else is dead.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>No</strong> dependencies</span>
-              <span class="type-spec"><strong>Output:</strong> slow</span>
-              <span class="type-spec"><strong>Best use:</strong> last resort</span>
+              <span class="type-spec"><strong>1-3%</strong> per 10 min cranking</span>
+              <span class="type-spec"><strong>No dependencies</strong> whatsoever</span>
+              <span class="type-spec"><strong>Best use:</strong> last resort only</span>
             </div>
           </div>
 
           <div class="type-section">
             <div class="type-header">
-              <div class="type-name">Battery Supply (AA & AAA)</div>
-              <div class="type-tag">Stockpile Essential</div>
+              <div class="type-name">Battery Supply (AA, AAA, D-cell)</div>
+              <div class="type-tag">Stock Up</div>
             </div>
-            <div class="type-desc">Most emergency gear runs on AA or AAA batteries — lanterns, radios, flashlights, remote controls, clocks. Having a deep stockpile of fresh alkaline batteries is one of the simplest and cheapest preparedness moves you can make. Alkaline batteries have a 10-year shelf life and cost pennies per unit in bulk. Buy them in quantity, store them cool and dry, and rotate stock every few years. They're not exciting, but when everything else is dead, batteries are currency.</div>
+            <div class="type-desc">Most emergency gear runs on AA or AAA batteries: lanterns, radios, flashlights, clocks. A stockpile of fresh batteries is one of the simplest and cheapest preparedness moves available. Alkaline batteries carry a 10-year shelf life and cost pennies each in bulk. Rechargeable NiMH batteries are more economical long-term and work in any device that accepts the same size. Modern NiMH holds a charge for 2 to 5 years in storage.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>10-year</strong> shelf life</span>
-              <span class="type-spec"><strong>Best use:</strong> stockpile in bulk</span>
-              <span class="type-spec"><strong>Price:</strong> pennies per cell</span>
+              <span class="type-spec"><strong>AA, AAA, D-cell</strong> cover most gear</span>
+              <span class="type-spec"><strong>Alkaline:</strong> 10-year shelf life</span>
+              <span class="type-spec"><strong>NiMH:</strong> 2-5 yrs stored charge</span>
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">Exotac fireROD V2</div>
-                <div class="featured-desc">CNC machined aluminum body with a replaceable ferrocerium rod and waterproof tinder capsule. Sparks at 3,000°F, fits in a knife sheath ferro loop. Includes quickLIGHT tinder tabs. Made in the USA — buy it once, replace the rod when it wears out.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>Ferro rod</strong></span>
-                  <span class="featured-spec"><strong>Waterproof</strong></span>
-                  <span class="featured-spec"><strong class="u" data-imperial="1.1 oz" data-metric="31 g">1.1 oz</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$30</span>
-                  <a href="https://amzn.to/4aZeD1t" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">WUBEN G5 EDC Flashlight</div>
-                <div class="featured-desc">400 lumens from something the size of a lighter. 180° rotating head, magnetic base, pocket clip. USB-C rechargeable with up to 65 hours of battery life. IP65 waterproof. The EDC light you'll actually carry every day.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>400 lumens</strong></span>
-                  <span class="featured-spec"><strong>USB-C</strong></span>
-                  <span class="featured-spec"><strong class="u" data-imperial="1.8 oz" data-metric="52 g">1.8 oz</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$25</span>
-                  <a href="https://amzn.to/4uhquPZ" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">Energizer AA & AAA Battery Pack</div>
-                <div class="featured-desc">Bulk alkaline batteries with a 10-year shelf life. Most emergency gear — lanterns, radios, flashlights — runs on AA or AAA. Not glamorous, but when the power's out and your rechargeable died, these are what keep everything running.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>AA + AAA</strong> combo</span>
-                  <span class="featured-spec"><strong>10-year</strong> shelf life</span>
-                  <span class="featured-spec"><strong>Alkaline</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$23</span>
-                  <a href="https://amzn.to/4uj8aFU" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Stormproof matches (2+ boxes)</span>
+                <span class="own-why">Burns in rain and wind where regular matches fail immediately. Store in a waterproof container.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Ferrocerium rod with striker</span>
+                <span class="own-why">As described in Fire Starters above: sparks at <span data-imperial="3,000°F" data-metric="1,650°C">3,000°F</span>, works in any weather, lasts thousands of strikes. Buy one and it will outlast your kit.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Windproof arc lighter (1-2)</span>
+                <span class="own-why">USB-C rechargeable. The electric arc ignites in conditions that extinguish flame-based lighters.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">EDC flashlight, pocket-clip</span>
+                <span class="own-why">200+ lumens. Not stored in a kit. Always clipped to a pocket or bag, always on you.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Hand-crank emergency radio with USB</span>
+                <span class="own-why">Receives NOAA weather alerts with no power source at all. The USB port gives you a last-resort charge option when everything else is dead.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Battery stock (AA, AAA, D-cell)</span>
+                <span class="own-why">Stock to match your gear. NiMH rechargeables are the better long-term choice; alkaline works fine for rotation stock.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
@@ -1539,63 +1109,16 @@
   </div>
 </div>
 
-<!-- GIFTS FOR THE PARANOID -->
-<section class="guide">
+<!-- CTA -->
+<section class="cta-section">
   <div class="container">
-    <div class="guide-header">
-      <div class="guide-title">Gifts for the Paranoid</div>
-    </div>
-    <div class="guide-content">Buying for someone who takes preparedness seriously? These energy & power picks make practical, thoughtful gifts — from stocking stuffers to serious hardware.</div>
-    <div class="gift-grid">
-
-      <div class="gift-card">
-        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
-        <div class="gift-info">
-          <div class="gift-name">LuminAID PackLite Max 2-in-1</div>
-          <div class="gift-desc">Inflatable solar lantern + phone charger. Packs flat, waterproof, 50-hour runtime. The perfect "I actually put thought into this" gift.</div>
-          <div class="gift-bottom">
-            <span class="gift-price">$25</span>
-            <a href="https://amzn.to/47vHecg" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-          </div>
-        </div>
+    <hr class="divider" style="margin-bottom: 64px;">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Shop for the Paranoid</h2>
+        <p>You, your dad, your slightly intense coworker. Whoever it is, we picked the gear worth actually buying. Organized by category, no filler, links straight to Amazon.</p>
       </div>
-
-      <div class="gift-card">
-        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
-        <div class="gift-info">
-          <div class="gift-name">Exotac fireROD V2</div>
-          <div class="gift-desc">CNC machined ferro rod with waterproof tinder capsule. Made in the USA, replaceable rod, fits in a knife sheath. A premium fire starter that lasts a lifetime.</div>
-          <div class="gift-bottom">
-            <span class="gift-price">$30</span>
-            <a href="https://amzn.to/4aZeD1t" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="gift-card">
-        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
-        <div class="gift-info">
-          <div class="gift-name">Anker Nano Power Bank (10,000mAh)</div>
-          <div class="gift-desc">Built-in USB-C cable, 2–3 phone charges, fits in a pocket. Useful enough that even non-preppers appreciate it.</div>
-          <div class="gift-bottom">
-            <span class="gift-price">$26</span>
-            <a href="https://amzn.to/4rnaxoC" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="gift-card">
-        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
-        <div class="gift-info">
-          <div class="gift-name">WUBEN G5 EDC Flashlight</div>
-          <div class="gift-desc">400 lumens from something the size of a lighter. Rotating head, magnetic base, USB-C rechargeable. A great stocking stuffer for the prepared mind.</div>
-          <div class="gift-bottom">
-            <span class="gift-price">$25</span>
-            <a href="https://amzn.to/4uhquPZ" target="_blank" rel="nofollow noopener" class="featured-btn">Amazon</a>
-          </div>
-        </div>
-      </div>
-
+      <a href="#" class="cta-btn">Browse Gift Picks +</a>
     </div>
   </div>
 </section>
@@ -1603,9 +1126,8 @@
 <!-- RELATED GUIDES -->
 <section class="related">
   <div class="container">
-    <div class="related-header">
-      <div class="guide-title">Related Guides</div>
-    </div>
+    <hr class="divider" style="margin-bottom: 56px;">
+    <div class="section-label">Related Guides</div>
     <div class="article-list">
       <div class="article-row">
         <div class="article-meta">
@@ -1615,7 +1137,7 @@
         <div class="article-content">
           <div class="article-title">Solar vs Generator: Which Emergency Power Source Is Right for You?</div>
           <div class="article-excerpt">A practical breakdown of when solar makes sense, when a generator is the move, and when you need both. Covers cost, noise, maintenance, and fuel dependency.</div>
-          <div class="article-read">Read →</div>
+          <div class="article-read">Read +</div>
         </div>
       </div>
       <div class="article-row">
@@ -1625,8 +1147,8 @@
         </div>
         <div class="article-content">
           <div class="article-title">How to Build a Complete Home Backup Power System Under $1,000</div>
-          <div class="article-excerpt">Step-by-step guide to assembling a reliable power setup that covers your essentials — fridge, lights, phone, and internet — during a multi-day outage.</div>
-          <div class="article-read">Read →</div>
+          <div class="article-excerpt">Step-by-step guide to assembling a reliable power setup: fridge, lights, phone, and internet, during a multi-day outage.</div>
+          <div class="article-read">Read +</div>
         </div>
       </div>
       <div class="article-row">
@@ -1635,9 +1157,9 @@
           <span class="article-time">6 min read</span>
         </div>
         <div class="article-content">
-          <div class="article-title">Energy & Power Gifts: What to Buy the Person Who Worries About Blackouts</div>
-          <div class="article-excerpt">From a $16 oil lantern to a $1,879 solar generator — thoughtful, practical gift ideas organized by budget for the prepper in your life.</div>
-          <div class="article-read">Read →</div>
+          <div class="article-title">Energy + Power Gifts: What to Buy the Person Who Worries About Blackouts</div>
+          <div class="article-excerpt">From a $16 oil lantern to a $1,000+ solar generator: practical gift ideas organized by budget for the prepper in your life.</div>
+          <div class="article-read">Read +</div>
         </div>
       </div>
     </div>
@@ -1646,76 +1168,61 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
+  <div class="container">
+    <hr class="divider" style="margin-bottom: 40px;">
     <div class="footer-top">
-      <div class="footer-brand">PARANOID<span class="logo-and">AND</span>READY</div>
+      <div class="footer-brand">PARANOID <span class="logo-and">AND</span> READY</div>
       <ul class="footer-nav">
-        <li><a href="/#about">About</a></li>
-        <li><a href="/#contact">Contact</a></li>
-        <li><a href="/#disclosure">Affiliate Disclosure</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
       </ul>
     </div>
     <div class="footer-bottom">
       <div class="footer-tagline">Stay prepared. Not surprised.</div>
-      <div class="footer-disclaimer">As an Amazon Associate, rawlist.org earns from qualifying purchases. Prices and availability are subject to change. © 2025</div>
+      <div class="footer-copyright">2025 paranoidandready.com</div>
     </div>
   </div>
 </footer>
 
 <script>
-  // ---- Subcategory accordion ----
+  /* ---- Accordion ---- */
   function toggleSubcat(trigger) {
     const item = trigger.parentElement;
     const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.subcat-item.open').forEach(el => {
-      el.classList.remove('open');
-    });
+    document.querySelectorAll('.subcat-item.open').forEach(el => el.classList.remove('open'));
     if (!isOpen) {
       item.classList.add('open');
-      setTimeout(() => {
-        trigger.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+      setTimeout(() => trigger.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 350);
     }
   }
 
-  // ---- Unit system: imperial / metric ----
+  /* ---- Unit toggle ---- */
+  var currentSystem = 'imperial';
+
+  function applyUnits(sys) {
+    currentSystem = sys;
+    document.querySelectorAll('[data-imperial][data-metric]').forEach(function(el) {
+      el.textContent = el.getAttribute('data-' + sys);
+    });
+    document.querySelectorAll('.u-opt').forEach(function(btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-system') === sys);
+    });
+  }
+
+  function setUnits(sys) {
+    try { localStorage.setItem('pr-units', sys); } catch(e) {}
+    applyUnits(sys);
+  }
+
+  /* Initialise on load */
   (function() {
-    const IMPERIAL_LOCALES = ['en-US', 'en-LR', 'en-MM'];
-
-    function detectSystem() {
-      const lang = navigator.language || navigator.userLanguage || 'en-US';
-      return IMPERIAL_LOCALES.some(l => lang.startsWith(l)) ? 'imperial' : 'metric';
+    var saved;
+    try { saved = localStorage.getItem('pr-units'); } catch(e) {}
+    if (!saved) {
+      var lang = (navigator.language || 'en-US');
+      saved = (lang === 'en-US' || lang === 'en-LR' || lang === 'en-MM') ? 'imperial' : 'metric';
     }
-
-    function getSystem() {
-      try {
-        return localStorage.getItem('pr-units') || detectSystem();
-      } catch(e) {
-        return detectSystem();
-      }
-    }
-
-    function saveSystem(sys) {
-      try { localStorage.setItem('pr-units', sys); } catch(e) {}
-    }
-
-    function applyUnits(sys) {
-      document.querySelectorAll('.u, [data-imperial][data-metric]').forEach(el => {
-        el.textContent = el.getAttribute('data-' + sys);
-      });
-      document.querySelectorAll('.u-opt').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-system') === sys);
-      });
-      document.documentElement.setAttribute('data-units', sys);
-    }
-
-    const initial = getSystem();
-    applyUnits(initial);
-
-    window.setUnits = function(sys) {
-      saveSystem(sys);
-      applyUnits(sys);
-    };
+    applyUnits(saved);
   })();
 </script>
 

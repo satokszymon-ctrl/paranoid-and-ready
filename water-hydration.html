@@ -3,177 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Water & Hydration — Paranoid & Ready</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Water AND Hydration — Paranoid AND Ready</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  /* ---- PALETTE: Cold Bureaucracy / Classified Document / Concrete Bunker ---- */
   :root {
-    --bg: #0a0a0a;
-    --bg-card: #0f0f0f;
-    --bg-card-hover: #161616;
-    --red: #e02020;
-    --red-dim: #c01818;
-    --red-glow: #e0202010;
-    --red-glow-strong: #e0202020;
-    --text: #ffffff;
-    --text-secondary: #e0e0e0;
-    --text-muted: #b0b0b0;
-    --text-dim: #787878;
-    --border: #e02020;
-    --border-subtle: #1a1a1a;
-    --border-muted: #222222;
-    --surface-1: #0e0e0e;
-    --surface-2: #131313;
+    --bg:          #C5C5C5;
+    --bg-surface:  #b8b8b8;
+    --bg-raised:   #aeaeae;
+    --red:         #8B0000;
+    --red-glow:    rgba(139, 0, 0, 0.07);
+    --ink:         #1A1A1A;
+    --ink-mid:     #3a3a3a;
+    --ink-light:   #555555;
+    --white:       #ffffff;
+    --border:      #1A1A1A;
+    --border-mid:  #888888;
+    --max-w:       1000px;
+    --pad:         48px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     background: var(--bg);
-    color: var(--text);
+    color: var(--ink);
+    font-size: 16px;
     line-height: 1.6;
+    letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
-    position: relative;
   }
 
+  /* Paper grain noise */
   body::before {
     content: '';
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.4;
+    opacity: 0.6;
   }
 
   a { color: inherit; text-decoration: none; }
 
   .container {
-    max-width: 1100px;
+    max-width: var(--max-w);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--pad);
   }
 
   /* ---- NAV ---- */
-  nav { padding: 28px 24px 0; }
-
-  .nav-inner {
-    max-width: 1100px;
+  nav {
+    max-width: var(--max-w);
     margin: 0 auto;
+    padding: 28px var(--pad) 0;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
   }
 
-  .nav-left {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
+  .nav-left { display: flex; align-items: center; }
 
   .logo {
-    font-family: 'Space Mono', monospace;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--red);
-    text-align: center;
   }
+
+  .logo-and { color: var(--ink); }
+
+  .nav-links { list-style: none; display: flex; gap: 28px; }
+
+  .nav-links a {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
 
   .nav-right {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 24px;
+    gap: 16px;
   }
-
-  .nav-links {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--text); }
 
   .nav-search {
     background: transparent;
-    border: 1px solid var(--border-muted);
-    padding: 7px 14px;
-    color: var(--text);
-    font-size: 12px;
-    font-family: 'Space Mono', monospace;
-    width: 180px;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    width: 150px;
     outline: none;
     transition: border-color 0.2s;
-    letter-spacing: 0.5px;
   }
 
-  .nav-search::placeholder { color: var(--text-dim); }
+  .nav-search::placeholder { color: var(--ink-light); }
   .nav-search:focus { border-color: var(--red); }
 
+  /* ---- HEADER LINE ---- */
   .header-line {
-    max-width: 1100px;
+    max-width: var(--max-w);
     margin: 20px auto 0;
-    padding: 0 24px;
+    padding: 0 var(--pad);
   }
 
   .header-line hr {
     border: none;
-    height: 1px;
-    background: var(--red);
+    border-top: 2px solid var(--ink);
+  }
+
+  /* ---- DIVIDER ---- */
+  .divider {
+    border: none;
+    border-top: 2px solid var(--ink);
   }
 
   /* ---- BREADCRUMB ---- */
   .breadcrumb {
-    padding: 28px 0 0;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
+    padding: 16px 0 0;
+    font-size: 10px;
+    font-weight: 500;
     letter-spacing: 1px;
-    color: var(--text-dim);
+    color: var(--ink-light);
+    text-transform: uppercase;
   }
 
-  .breadcrumb a {
-    color: var(--text-muted);
-    transition: color 0.2s;
-  }
-
+  .breadcrumb a { color: var(--ink-mid); transition: color 0.2s; }
   .breadcrumb a:hover { color: var(--red); }
-  .breadcrumb .sep { color: var(--text-dim); margin: 0 6px; }
+  .breadcrumb .sep { margin: 0 8px; color: var(--border-mid); }
   .breadcrumb .current { color: var(--red); }
 
-  /* ---- CATEGORY HERO ---- */
+  /* ---- HERO ---- */
   .cat-hero {
     padding: 48px 0 56px;
-    animation: fadeIn 0.4s ease-out;
+    animation: fadeIn 0.4s ease-out both;
   }
 
   .cat-hero h1 {
-    font-family: 'Space Mono', monospace;
-    font-size: clamp(24px, 4vw, 42px);
-    font-weight: 700;
+    font-size: clamp(22px, 3.5vw, 38px);
+    font-weight: 800;
     color: var(--red);
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 20px;
-    line-height: 1.2;
+    line-height: 1.15;
   }
 
   .cat-hero-desc {
-    font-size: 15px;
-    color: var(--text-secondary);
+    font-size: 14px;
+    color: var(--ink);
     line-height: 1.75;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   /* ---- SUBCATEGORY ACCORDION ---- */
@@ -182,9 +174,8 @@
     animation: fadeIn 0.4s ease-out 0.05s both;
   }
 
-  .subcat-item {
-    border-bottom: 1px solid var(--red);
-  }
+  .subcat-item { border-bottom: 2px solid var(--ink); }
+  .subcat-item:first-child { border-top: 2px solid var(--ink); }
 
   .subcat-trigger {
     width: 100%;
@@ -196,43 +187,31 @@
     padding: 22px 0;
     cursor: pointer;
     gap: 24px;
+    font-family: 'JetBrains Mono', monospace;
     transition: background 0.2s;
   }
 
-  .subcat-trigger:hover {
-    background: var(--red-glow);
-  }
+  .subcat-trigger:hover { background: var(--red-glow); }
 
   .subcat-name {
-    font-family: 'Space Mono', monospace;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 800;
     color: var(--red);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-align: left;
   }
 
-  .subcat-count {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-    flex-shrink: 0;
-  }
-
   .subcat-icon {
-    font-family: 'Space Mono', monospace;
     font-size: 18px;
-    color: var(--red);
+    color: var(--ink);
     flex-shrink: 0;
     transition: transform 0.3s ease;
     line-height: 1;
+    font-weight: 800;
   }
 
-  .subcat-item.open .subcat-icon {
-    transform: rotate(45deg);
-  }
+  .subcat-item.open .subcat-icon { transform: rotate(45deg); }
 
   .subcat-body {
     max-height: 0;
@@ -245,459 +224,265 @@
     transition: max-height 0.8s ease;
   }
 
-  .subcat-content {
-    padding: 8px 0 56px;
-  }
+  .subcat-content { padding: 8px 0 56px; }
 
-  /* ---- TYPE SECTIONS (within subcategory) ---- */
+  /* ---- TYPE INTRO ---- */
   .type-intro {
     font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    font-weight: 300;
-    margin-bottom: 36px;
+    color: var(--ink);
+    line-height: 1.75;
+    font-weight: 400;
+    margin-bottom: 32px;
   }
 
+  /* ---- TYPE SECTIONS ---- */
   .type-section {
-    margin-bottom: 36px;
-    padding: 28px;
-    border: 1px solid var(--border-muted);
-    transition: border-color 0.3s;
+    margin-bottom: 16px;
+    padding: 22px 26px;
+    border: 1px solid var(--border);
+    background: rgba(197, 197, 197, 0.3);
+    transition: background 0.3s;
   }
 
-  .type-section:hover {
-    border-color: #444;
-  }
-
-  .type-section:last-of-type {
-    margin-bottom: 48px;
-  }
+  .type-section:hover { background: rgba(184, 184, 184, 0.6); }
 
   .type-header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-bottom: 16px;
     gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
   }
 
   .type-name {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--text);
+    letter-spacing: 2px;
+    color: var(--ink);
   }
 
   .type-tag {
-    font-family: 'Space Mono', monospace;
     font-size: 9px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--text-dim);
-    border: 1px solid var(--border-muted);
-    padding: 3px 10px;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 2px 9px;
     flex-shrink: 0;
   }
 
   .type-desc {
     font-size: 14px;
-    color: var(--text-secondary);
+    color: var(--ink);
     line-height: 1.75;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   .type-specs {
     display: flex;
     gap: 24px;
-    margin-top: 16px;
+    margin-top: 12px;
     flex-wrap: wrap;
   }
 
   .type-spec {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-  }
-
-  .type-spec strong {
-    color: var(--text-muted);
-  }
-
-  /* ---- FEATURED PICKS ---- */
-  .featured-label {
-    font-family: 'Space Mono', monospace;
     font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .featured-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border-muted);
-  }
-
-  .featured-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  .featured-card {
-    border: 1px solid var(--border-muted);
-    background: var(--bg);
-    transition: all 0.25s;
-    cursor: pointer;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .featured-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--red);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-    z-index: 1;
-  }
-
-  .featured-card:hover::before { transform: scaleX(1); }
-
-  .featured-card:hover {
-    border-color: #444;
-    background: var(--surface-1);
-  }
-
-  .featured-img {
-    width: 100%;
-    height: 140px;
-    background: var(--surface-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid var(--border-muted);
-  }
-
-  .featured-img-placeholder {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  .featured-info {
-    padding: 22px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .featured-name {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-
-  .featured-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.55;
-    font-weight: 300;
-    margin-bottom: 14px;
-    flex: 1;
-  }
-
-  .featured-specs {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-  }
-
-  .featured-spec {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-  }
-
-  .featured-spec strong {
-    color: var(--text-muted);
-  }
-
-  .featured-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 16px;
-    border-top: 1px solid var(--border-subtle);
-    margin-top: auto;
-  }
-
-  .featured-price {
-    font-family: 'Space Mono', monospace;
-    font-size: 16px;
-    font-weight: 700;
-  }
-
-  .featured-btn {
-    background: transparent;
-    border: 1px solid var(--red);
     color: var(--red);
+    letter-spacing: 0.5px;
+  }
+
+  .type-spec strong { color: var(--red); }
+
+  /* ---- WHAT TO OWN ---- */
+  .own-section {
+    margin-top: 28px;
+    border-left: 3px solid var(--red);
+    background: var(--bg-surface);
+    padding: 24px 28px;
+  }
+
+  .own-label {
     font-size: 9px;
-    font-weight: 700;
-    padding: 7px 16px;
-    font-family: 'Space Mono', monospace;
-    letter-spacing: 1.5px;
+    font-weight: 800;
     text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    display: inline-block;
+    letter-spacing: 3px;
+    color: var(--red);
+    margin-bottom: 20px;
   }
 
-  .featured-btn:hover {
-    background: var(--red);
-    color: var(--bg);
+  .own-list {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 0;
+    list-style: none;
   }
 
-  /* ---- HOW TO CHOOSE ---- */
-  .guide {
-    padding: 56px 0;
-    border-top: 1px solid var(--border-muted);
+  .own-item { display: contents; }
+
+  .own-what {
+    padding: 10px 20px 10px 0;
+    border-bottom: 1px solid var(--border-mid);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .own-why {
+    padding: 10px 0 10px 20px;
+    border-bottom: 1px solid var(--border-mid);
+    border-left: 1px solid var(--border-mid);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+
+  .own-item:last-child .own-what,
+  .own-item:last-child .own-why {
+    border-bottom: none;
+  }
+
+  /* ---- CTA ---- */
+  .cta-section {
+    padding: 64px 0;
     animation: fadeIn 0.4s ease-out 0.1s both;
   }
 
-  .guide-header {
-    margin-bottom: 24px;
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
   }
 
-  .guide-title {
-    font-family: 'Space Mono', monospace;
+  .cta-text h2 {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ink);
+  }
+
+  .cta-text p {
+    font-size: 14px;
+    color: var(--ink-mid);
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    color: var(--white);
+    font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .cta-btn:hover { background: var(--red); border-color: var(--red); }
+
+  /* ---- SECTION LABEL ---- */
+  .section-label {
+    font-size: 10px;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 3px;
     color: var(--red);
     display: flex;
     align-items: center;
     gap: 16px;
+    margin-bottom: 24px;
   }
 
-  .guide-title::after {
+  .section-label::after {
     content: '';
     flex: 1;
     height: 1px;
-    background: var(--border-muted);
-  }
-
-  .guide-content {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.8;
-    font-weight: 300;
-    margin-bottom: 28px;
-  }
-
-  .gift-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-
-  .gift-card {
-    border: 1px solid var(--border-muted);
-    background: var(--bg);
-    transition: all 0.25s;
-    cursor: pointer;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .gift-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--red);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-    z-index: 1;
-  }
-
-  .gift-card:hover::before { transform: scaleX(1); }
-
-  .gift-card:hover {
-    border-color: #444;
-    background: var(--surface-1);
-  }
-
-  .gift-img {
-    width: 100%;
-    height: 140px;
-    background: var(--surface-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid var(--border-muted);
-  }
-
-  .gift-img-placeholder {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  .gift-info {
-    padding: 22px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .gift-name {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-
-  .gift-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.55;
-    font-weight: 300;
-    margin-bottom: 18px;
-    flex: 1;
-  }
-
-  .gift-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 16px;
-    border-top: 1px solid var(--border-subtle);
-    margin-top: auto;
-  }
-
-  .gift-price {
-    font-family: 'Space Mono', monospace;
-    font-size: 16px;
-    font-weight: 700;
+    background: var(--ink);
   }
 
   /* ---- RELATED GUIDES ---- */
   .related {
     padding: 56px 0;
-    border-top: 1px solid var(--border-muted);
   }
 
-  .related-header {
-    margin-bottom: 8px;
-  }
-
-  .article-list {
-    display: flex;
-    flex-direction: column;
-  }
+  .article-list { display: flex; flex-direction: column; }
 
   .article-row {
     display: flex;
-    align-items: baseline;
+    align-items: flex-start;
     gap: 32px;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--border-subtle);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-mid);
     cursor: pointer;
-    transition: background 0.15s;
+    transition: opacity 0.2s;
   }
 
-  .article-row:last-child { border-bottom: none; }
-  .article-row:hover { background: var(--red-glow); }
+  .article-row:hover { opacity: 0.6; }
+  .article-row:first-child { border-top: 1px solid var(--border-mid); }
 
   .article-meta {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     flex-shrink: 0;
-    min-width: 100px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.5px;
+    width: 90px;
   }
 
   .article-tag {
-    color: var(--red);
+    font-size: 9px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--red);
   }
 
-  .article-time { color: var(--text-dim); }
-
-  .article-content { flex: 1; }
+  .article-time {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ink-light);
+  }
 
   .article-title {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 600;
-    line-height: 1.35;
-    margin-bottom: 8px;
-    transition: color 0.2s;
+    margin-bottom: 6px;
+    line-height: 1.4;
+    color: var(--ink);
   }
-
-  .article-row:hover .article-title { color: var(--red); }
 
   .article-excerpt {
     font-size: 13px;
-    color: var(--text-secondary);
+    color: var(--ink-mid);
+    font-weight: 400;
     line-height: 1.6;
-    font-weight: 300;
+    margin-bottom: 10px;
   }
 
   .article-read {
-    margin-top: 10px;
-    font-family: 'Space Mono', monospace;
     font-size: 10px;
     font-weight: 700;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    transition: color 0.2s;
+    color: var(--red);
+    letter-spacing: 1px;
   }
-
-  .article-row:hover .article-read { color: var(--red); }
 
   /* ---- FOOTER ---- */
-  footer {
-    padding: 40px 24px 48px;
-    border-top: 1px solid var(--border-muted);
-  }
-
-  .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+  footer { padding: 40px 0; }
 
   .footer-top {
     display: flex;
@@ -707,124 +492,99 @@
   }
 
   .footer-brand {
-    font-family: 'Space Mono', monospace;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--red);
     letter-spacing: 2px;
     text-transform: uppercase;
   }
 
-  .footer-nav {
-    display: flex;
-    gap: 28px;
-    list-style: none;
-  }
+  .footer-nav { display: flex; gap: 28px; list-style: none; }
 
   .footer-nav a {
-    font-family: 'Space Mono', monospace;
     font-size: 10px;
-    font-weight: 400;
-    color: var(--text-muted);
+    font-weight: 500;
+    color: var(--ink-mid);
     text-transform: uppercase;
     letter-spacing: 1.5px;
     transition: color 0.2s;
   }
 
-  .footer-nav a:hover { color: var(--text); }
+  .footer-nav a:hover { color: var(--ink); }
 
   .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     padding-top: 24px;
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--border-mid);
   }
 
   .footer-tagline {
-    font-family: 'DM Sans', sans-serif;
     font-size: 13px;
-    color: var(--text-muted);
-    font-weight: 300;
+    color: var(--ink-mid);
+    font-weight: 400;
     font-style: italic;
   }
 
-  .footer-disclaimer {
-    font-size: 11px;
-    color: var(--text-dim);
-    max-width: 480px;
-    text-align: right;
-    line-height: 1.5;
-  }
+  .footer-copyright { font-size: 11px; color: var(--ink-light); text-align: right; }
 
   /* ---- UNIT TOGGLE ---- */
   .unit-toggle {
     display: flex;
-    border: 1px solid var(--border-muted);
-    flex-shrink: 0;
+    border: 1px solid var(--border);
     overflow: hidden;
+    flex-shrink: 0;
   }
 
   .unit-toggle .u-opt {
-    font-family: 'Space Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     letter-spacing: 1px;
     text-transform: uppercase;
     background: transparent;
     border: none;
-    color: var(--text-dim);
+    color: var(--ink-light);
     padding: 5px 10px;
     cursor: pointer;
     transition: all 0.2s;
   }
 
-  .unit-toggle .u-opt.active {
-    background: var(--red);
-    color: var(--bg);
-  }
+  .unit-toggle .u-opt.active { background: var(--ink); color: var(--white); }
+  .unit-toggle .u-opt:not(.active):hover { color: var(--ink); }
 
-  .unit-toggle .u-opt:not(.active):hover {
-    color: var(--text);
-  }
-
-  /* ---- LOGO AND ---- */
-  .logo-and {
-    color: #ffffff;
-  }
-
-  /* ---- CATEGORY AMPERSAND ---- */
-  .cat-amp {
-    font-family: 'Georgia', 'Times New Roman', serif;
-    font-style: italic;
-  }
-
-  /* ---- ANIMATIONS ---- */
+  /* ---- MISC ---- */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   nav { animation: fadeIn 0.5s ease-out; }
 
   /* ---- RESPONSIVE ---- */
-  @media (max-width: 900px) {
-    .featured-grid { grid-template-columns: 1fr; }
-    .gift-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
   @media (max-width: 768px) {
+    :root { --pad: 24px; }
     .nav-left { display: none; }
-    .nav-inner { grid-template-columns: auto 1fr; }
-    .nav-right { gap: 12px; }
+    nav { grid-template-columns: auto 1fr; }
     .type-specs { gap: 12px; }
     .article-row { flex-direction: column; gap: 8px; }
     .footer-top { flex-direction: column; gap: 20px; }
     .footer-bottom { flex-direction: column; gap: 12px; }
-    .footer-disclaimer { text-align: left; }
+    .footer-copyright { text-align: left; }
+    .cta-inner { flex-direction: column; }
+    .own-list { grid-template-columns: 1fr; }
+    .own-item { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+    .own-item:last-child { margin-bottom: 0; }
+    .own-what { border-bottom: none; padding-bottom: 2px; }
+    .own-why { border-left: none; border-bottom: 1px solid var(--border-mid); padding-top: 0; padding-left: 0; padding-bottom: 14px; }
+    .own-item:last-child .own-why { border-bottom: none; }
   }
 
   @media (max-width: 480px) {
-    .gift-grid { grid-template-columns: 1fr; }
+    .subcat-name { font-size: 11px; letter-spacing: 0.5px; }
+    .type-header { flex-direction: column; gap: 8px; }
+    .type-section { padding: 16px 18px; }
+    .own-section { padding: 18px 20px; }
   }
 </style>
 </head>
@@ -832,41 +592,37 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-inner">
     <div class="nav-left">
       <ul class="nav-links">
-        <li><a href="/">Categories</a></li>
-        <li><a href="/#guides">Guides</a></li>
-        <li><a href="/#gifts">Gifts</a></li>
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">Guides</a></li>
       </ul>
     </div>
-    <a href="/" class="logo">PARANOID<span class="logo-and">AND</span>READY</a>
+    <a href="#" class="logo">PARANOID <span class="logo-and">AND</span> READY</a>
     <div class="nav-right">
-      <input type="text" class="nav-search" placeholder="Search gear...">
+      <input type="text" class="nav-search" placeholder="Search...">
       <div class="unit-toggle">
         <button class="u-opt active" data-system="imperial" onclick="setUnits('imperial')">LB</button>
         <button class="u-opt" data-system="metric" onclick="setUnits('metric')">KG</button>
       </div>
     </div>
-  </div>
 </nav>
 <div class="header-line"><hr></div>
 
 <!-- BREADCRUMB -->
 <div class="container">
   <div class="breadcrumb">
-    <a href="/">Home</a><span class="sep">/</span><span class="current">Water <span class="cat-amp">&amp;</span> Hydration</span>
+    <a href="#">Home</a><span class="sep">/</span><span class="current">Water AND Hydration</span>
   </div>
 </div>
 
 <!-- CATEGORY HERO -->
 <section class="cat-hero">
   <div class="container">
-    <h1>Water <span class="cat-amp">&amp;</span> Hydration</h1>
-    <p class="cat-hero-desc">Clean water is the single most critical resource in any emergency. You can survive weeks without food — you'll last about three days without water. This section covers every approach to finding, filtering, purifying, and storing water — from personal straw filters you can carry in a pocket to 55-gallon drums that keep a household supplied for weeks.</p>
+    <h1>Water AND Hydration</h1>
+    <p class="cat-hero-desc">You can go weeks without food. Water gives you about three days. This section covers every way to find it, clean it, and store it: pocket-sized straw filters, gravity systems that do the work for you, chemical purifiers that weigh nothing, and storage solutions from stackable bricks to <span data-imperial="55-gallon drums" data-metric="208-litre drums">55-gallon drums</span>. Figure out what fits your situation before you're thirsty.</p>
   </div>
 </section>
-
 
 <!-- SUBCATEGORIES -->
 <div class="subcategories">
@@ -881,18 +637,18 @@
       <div class="subcat-body">
         <div class="subcat-content">
 
-          <p class="type-intro">Portable water filters remove bacteria, protozoa, and sediment from water using physical filtration — typically hollow-fiber membranes or ceramic elements. They're the core of any water preparedness setup: lightweight, require no power or chemicals, and produce drinkable water immediately. The key variables are filtration level (measured in microns), flow rate, filter lifespan, and how versatile the system is across different scenarios.</p>
+          <p class="type-intro">Portable water filters remove bacteria, protozoa, and sediment using physical filtration: hollow-fiber membranes or ceramic elements. They're the core of any water kit. Lightweight, no power, no chemicals, drinkable water immediately. The key variables are filtration level (measured in microns), flow rate, filter lifespan, and how many situations the system covers.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Straw Filters</div>
-              <div class="type-tag">Lightest & Simplest</div>
+              <div class="type-tag">Lightest Backup</div>
             </div>
-            <div class="type-desc">The most basic portable filter — a tube with a built-in filtration element. You drink directly from the water source by sucking through the straw. No containers, no setup, no moving parts. The trade-off is that you can only drink in the moment — you can't fill a container with filtered water for later or for cooking. Best as a last-resort backup or an ultralight addition to a go-bag. At $15–25, worth having in every kit even if you have better primary filtration.</div>
+            <div class="type-desc">The simplest portable filter: a tube with a built-in filtration element. You drink directly from the water source by sucking through the straw. No containers, no setup, no moving parts. The trade-off is that you can only drink in the moment. You can't fill a bottle for later or use it for cooking. Best as a last-resort backup or an ultralight go-bag addition. At $15 to $25, toss one in every kit even if you have something better.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>0.2 micron</strong> typical</span>
               <span class="type-spec"><strong>Best use:</strong> personal backup</span>
-              <span class="type-spec"><strong>Price:</strong> $15–25</span>
+              <span class="type-spec"><strong>Price:</strong> $15-25</span>
             </div>
           </div>
 
@@ -901,7 +657,7 @@
               <div class="type-name">Squeeze / Inline Filters</div>
               <div class="type-tag">Most Versatile</div>
             </div>
-            <div class="type-desc">The Swiss Army knife of water filtration. Squeeze filters attach to soft pouches or standard bottles — fill the pouch, squeeze it, and clean water comes out the other end. Most can also be used as a straw, connected inline to a hydration bladder, or hung as a gravity setup with the right bags. Backflushable for easy maintenance in the field. The Sawyer Squeeze is the benchmark in this category — 0.1 micron filtration, rated for 100,000 gallons, practically forever.</div>
+            <div class="type-desc">The Swiss Army knife of water filtration. Squeeze filters attach to soft pouches or standard bottles: fill the pouch, squeeze it, clean water comes out the other end. Most can also be used as a straw, connected inline to a hydration bladder, or hung as a gravity setup with the right bags. Backflushable for easy field maintenance. The Sawyer Squeeze is the benchmark: 0.1 micron filtration, <span data-imperial="rated for 100,000 gallons" data-metric="rated for 378,000 litres">rated for 100,000 gallons</span>. Practically forever.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>0.1 micron</strong> typical</span>
               <span class="type-spec"><strong>Best use:</strong> go-bags, hiking, all-around</span>
@@ -914,11 +670,11 @@
               <div class="type-name">Press Bottle Purifiers</div>
               <div class="type-tag">Filters + Purifies</div>
             </div>
-            <div class="type-desc">All-in-one bottles where you fill the outer container with dirty water and press an inner filter down through it — like a French press for water. What sets press bottles apart from standard filters is that the best models (like the Grayl GeoPress) are purifiers: they remove viruses in addition to bacteria and protozoa, plus chemicals and heavy metals. That makes them effective in flood zones, developing countries, and urban water contamination scenarios where most filters fall short. The downside is cost per liter — replacement cartridges are needed every 250–300 presses.</div>
+            <div class="type-desc">All-in-one bottles where you fill the outer container with dirty water and press an inner filter down through it, like a French press for water. What sets press bottles apart is that the best models (like the Grayl GeoPress) are true purifiers: they remove viruses in addition to bacteria and protozoa, plus chemicals and heavy metals. That makes them effective in flood zones, developing countries, and urban contamination scenarios where most filters fall short. The downside is cost per liter: replacement cartridges every 250 to 300 presses.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Removes</strong> viruses</span>
               <span class="type-spec"><strong>Best use:</strong> travel, urban contamination</span>
-              <span class="type-spec"><strong>Price:</strong> $90–100</span>
+              <span class="type-spec"><strong>Price:</strong> $90-100</span>
             </div>
           </div>
 
@@ -927,61 +683,31 @@
               <div class="type-name">Pump Filters</div>
               <div class="type-tag">Heavy Duty</div>
             </div>
-            <div class="type-desc">Hand-pump filters use mechanical pressure to force water through a filtration element. They're heavier and more effort than squeeze or gravity systems, but they can draw water from shallow sources that other filters can't reach — puddles, shallow streams, seepage. The best pump filters (like the MSR Guardian) are military-grade purifiers that self-clean on every stroke and remove viruses. Pump filters are the right choice when you need reliability in the worst conditions and don't mind the extra weight and effort.</div>
+            <div class="type-desc">Hand-pump filters use mechanical pressure to force water through a filtration element. Heavier and more effort than squeeze or gravity systems, but they can draw water from shallow sources that other filters can't reach: puddles, shallow streams, seepage. The best pump filters (like the MSR Guardian) are military-grade purifiers that self-clean on every stroke and remove viruses. The right choice when you need reliability in the worst conditions and don't mind the extra weight.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Draws from</strong> shallow sources</span>
               <span class="type-spec"><strong>Durability:</strong> high</span>
-              <span class="type-spec"><strong>Price:</strong> $50–350</span>
+              <span class="type-spec"><strong>Price:</strong> $50-350</span>
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Straw / Squeeze Filter]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Squeeze / Inline Filter]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Press Bottle Purifier]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Squeeze / inline filter (primary)</span>
+                <span class="own-why">0.1 micron, backflushable, <span data-imperial="rated for 100,000 gallons" data-metric="rated for 378,000 litres">rated for 100,000 gallons</span>. Attaches to bottles, pouches, or inline to a hydration bladder. The one filter that does everything.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Straw filter (backup)</span>
+                <span class="own-why">Weighs nothing, costs $15 to $25, works as a last resort if your primary breaks. One in every kit, every bag, every vehicle.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Press bottle purifier (situational)</span>
+                <span class="own-why">For travel or urban contamination where viruses, chemicals, and heavy metals are the concern. Standard filters miss those threats. Replacement cartridges needed every 250 to 300 presses.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
@@ -995,16 +721,16 @@
       <div class="subcat-body">
         <div class="subcat-content">
 
-          <p class="type-intro">Gravity filters let physics do the work — fill a dirty-water reservoir, hang it or set it up above the clean container, and gravity pulls water through the filter. No pumping, no squeezing, no effort. They're ideal for families, groups, and base-camp scenarios where you need to filter large volumes of water with minimal hands-on time. The trade-off is setup time and portability — these aren't grab-and-go solutions.</p>
+          <p class="type-intro">Gravity filters let physics do the work. Fill a dirty-water reservoir, hang it or set it up above the clean container, and gravity pulls water through the filter. No pumping, no squeezing, no effort. Ideal for families, groups, and base-camp scenarios where you need volume without the workout. The trade-off is setup time and portability: these aren't grab-and-go.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Portable Gravity Bags</div>
               <div class="type-tag">Group / Camp Use</div>
             </div>
-            <div class="type-desc">Lightweight systems with a dirty-water bag, an inline filter, and a clean-water bag or hose. Hang the dirty bag from a tree or hook, and filtered water drips into your clean container. Flow rates of 1–2 liters per minute are typical. Most pack down small and weigh under a pound — far lighter than pump systems with comparable output. The weak point is the bags themselves: cheaper models develop leaks over time. Look for systems with durable bags and easy-to-clean filters.</div>
+            <div class="type-desc">Lightweight systems with a dirty-water bag, an inline filter, and a clean-water bag or hose. Hang the dirty bag from a tree or hook, and filtered water drips into your clean container. Flow rates of 1 to 2 liters per minute are typical. Most pack down small and <span data-imperial="weigh under a pound" data-metric="weigh under half a kilo">weigh under a pound</span>, far lighter than pump systems with comparable output. The weak point is the bags themselves: cheaper models develop leaks over time. Look for durable bags and easy-to-clean filters.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>1–2 L/min</strong> flow rate</span>
+              <span class="type-spec"><strong>1-2 L/min</strong> flow rate</span>
               <span class="type-spec"><strong>Best use:</strong> groups, base camp</span>
               <span class="type-spec"><strong>Hands-free</strong> filtration</span>
             </div>
@@ -1015,61 +741,27 @@
               <div class="type-name">Countertop Gravity Systems</div>
               <div class="type-tag">Home Emergency</div>
             </div>
-            <div class="type-desc">Stainless steel or BPA-free containers with internal filter elements — fill the top chamber with unfiltered water and it drips through to the bottom chamber. Think Berkey-style systems. These filter 4–6 gallons per day and handle everything from tap water to creek water. No electricity, no plumbing, no pressure required. Filter elements last thousands of gallons. The downside is size and weight — they live on your kitchen counter, not in a go-bag. The right choice for home-based emergency water independence.</div>
+            <div class="type-desc">Stainless steel or BPA-free containers with internal filter elements. Fill the top chamber with unfiltered water and it drips through to the bottom chamber. Think Berkey-style systems. These <span data-imperial="filter 4 to 6 gallons per day" data-metric="filter 15 to 23 litres per day">filter 4 to 6 gallons per day</span> and handle everything from tap water to creek water. No electricity, no plumbing, no pressure required. Filter elements <span data-imperial="last thousands of gallons" data-metric="last thousands of litres">last thousands of gallons</span>. The downside is size and weight: they live on your kitchen counter, not in a go-bag. The right choice for home water independence.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>3,000–6,000 gal</strong> filter life</span>
+              <span class="type-spec"><strong data-imperial="3,000-6,000 gal" data-metric="11,000-23,000 L">3,000-6,000 gal</strong> filter life</span>
               <span class="type-spec"><strong>Best use:</strong> home, extended outages</span>
               <span class="type-spec"><strong>No electricity</strong> required</span>
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Portable Gravity System]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Countertop Gravity Filter]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Budget / Alternative]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Portable gravity bag system</span>
+                <span class="own-why">Hands-free filtration for groups or base camp. Hang the bag, walk away, come back to clean water. 1 to 2 liters per minute.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Countertop gravity filter (home)</span>
+                <span class="own-why">No electricity, no plumbing, filter elements <span data-imperial="last thousands of gallons" data-metric="last thousands of litres">last thousands of gallons</span>. Your home water supply runs through this when the tap stops being trustworthy.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
@@ -1077,23 +769,23 @@
     <!-- ========== CHEMICAL & UV PURIFICATION ========== -->
     <div class="subcat-item">
       <button class="subcat-trigger" onclick="toggleSubcat(this)">
-        <span class="subcat-name">Chemical <span class="cat-amp">&amp;</span> UV Purification</span>
+        <span class="subcat-name">Chemical AND UV Purification</span>
         <span class="subcat-icon">+</span>
       </button>
       <div class="subcat-body">
         <div class="subcat-content">
 
-          <p class="type-intro">Filters remove physical contaminants. Purifiers kill or deactivate biological threats — including viruses, which most portable filters can't touch. Chemical and UV purification methods are lightweight, compact, and serve as essential backups to mechanical filtration. They don't remove sediment or improve taste, so they work best on visually clear water or as a second step after filtering. Every emergency water kit should include at least one purification method alongside its primary filter.</p>
+          <p class="type-intro">Filters remove physical contaminants. Purifiers kill or deactivate biological threats, including viruses, which most portable filters can't touch. Chemical and UV methods are lightweight, compact, and serve as essential backups to mechanical filtration. They don't remove sediment or improve taste, so they work best on visually clear water or as a second step after filtering. Every kit should include at least one purification method alongside its primary filter. Redundancy is the whole point.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Purification Tablets</div>
               <div class="type-tag">Lightest Backup</div>
             </div>
-            <div class="type-desc">Small tablets — typically chlorine dioxide or iodine-based — that you drop into water and wait. Chlorine dioxide tablets kill bacteria, viruses, and protozoa including Cryptosporidium, which iodine can't handle. Wait times range from 30 minutes to 4 hours depending on the contaminant. They weigh almost nothing, last 4–5 years sealed, and cost pennies per liter. The taste ranges from tolerable to unpleasant. Carry them as a backup even if you have a filter — they're your insurance policy when gear fails.</div>
+            <div class="type-desc">Small tablets, typically chlorine dioxide or iodine-based, that you drop into water and wait. Chlorine dioxide tablets kill bacteria, viruses, and protozoa including Cryptosporidium, which iodine can't handle. Wait times range from 30 minutes to 4 hours depending on the contaminant. They weigh almost nothing, last 4 to 5 years sealed, and cost pennies per liter. The taste is tolerable to unpleasant. Carry them as a backup even if you have a filter: they're your insurance policy when gear fails.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Kills</strong> viruses</span>
-              <span class="type-spec"><strong>Shelf life:</strong> 4–5 years</span>
+              <span class="type-spec"><strong>Shelf life:</strong> 4-5 years</span>
               <span class="type-spec"><strong>Price:</strong> pennies per liter</span>
             </div>
           </div>
@@ -1103,11 +795,11 @@
               <div class="type-name">Chlorine Dioxide Drops</div>
               <div class="type-tag">Flexible Dosing</div>
             </div>
-            <div class="type-desc">Liquid purifiers that work the same way as tablets but let you adjust dosing for different water volumes. Two-part systems (like Aquamira) mix an activator with a purifier to create chlorine dioxide on demand. More flexible than tablets for larger containers — you can treat a gallon or 5 gallons with the same bottle. Shelf life is shorter once opened (about a year), but sealed bottles last 4+ years. A smart complement to tablets for home water storage.</div>
+            <div class="type-desc">Liquid purifiers that work the same way as tablets but let you adjust dosing for different water volumes. Two-part systems (like Aquamira) mix an activator with a purifier to create chlorine dioxide on demand. More flexible than tablets for larger containers: you can treat <span data-imperial="a gallon or 5 gallons" data-metric="4 litres or 19 litres">a gallon or 5 gallons</span> with the same bottle. Shelf life is shorter once opened (about a year), but sealed bottles last 4+ years. A smart complement to tablets for home water storage.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Adjustable</strong> dosing</span>
               <span class="type-spec"><strong>Best use:</strong> large containers</span>
-              <span class="type-spec"><strong>30 gal</strong> per bottle typical</span>
+              <span class="type-spec"><strong data-imperial="30 gal" data-metric="114 L">30 gal</strong> per bottle typical</span>
             </div>
           </div>
 
@@ -1116,61 +808,31 @@
               <div class="type-name">UV Purifiers</div>
               <div class="type-tag">Fast, No Chemicals</div>
             </div>
-            <div class="type-desc">Handheld UV-C light wands that sterilize water in 60–90 seconds by destroying the DNA of bacteria, viruses, and protozoa. No chemical taste, no wait time, no residue. The catch is they require batteries or USB charging, they don't work on turbid (cloudy) water, and if the battery dies you have no purification. Best as a fast, chemical-free primary purifier in scenarios where you have access to visually clear water and can keep the device charged. Always carry a chemical backup.</div>
+            <div class="type-desc">Handheld UV-C light wands that sterilize water in 60 to 90 seconds by destroying the DNA of bacteria, viruses, and protozoa. No chemical taste, no wait time, no residue. The catch: they require batteries or USB charging, they don't work on turbid (cloudy) water, and if the battery dies you have no purification. Best as a fast, chemical-free primary purifier when you have visually clear water and can keep the device charged. Always carry a chemical backup alongside one of these.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>60–90 sec</strong> per liter</span>
+              <span class="type-spec"><strong>60-90 sec</strong> per liter</span>
               <span class="type-spec"><strong>No chemical</strong> taste</span>
               <span class="type-spec"><strong>Requires</strong> battery / USB</span>
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Purification Tablets]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Chlorine Dioxide Drops]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[UV Purifier]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Chlorine dioxide tablets (2+ packs)</span>
+                <span class="own-why">Lightest backup possible. Kill viruses, bacteria, and protozoa. 4 to 5 year shelf life, pennies per liter. Carry them alongside every filter you own.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Chlorine dioxide drops</span>
+                <span class="own-why">Adjustable dosing for larger volumes. One bottle <span data-imperial="treats about 30 gallons" data-metric="treats about 114 litres">treats about 30 gallons</span>. Use for storage containers and bulk treatment at home.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">UV purifier pen (optional)</span>
+                <span class="own-why">60 to 90 seconds, no chemical taste. But it requires power and clear water. Convenient when conditions are right, useless when they're not. Never your only method.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
@@ -1184,16 +846,16 @@
       <div class="subcat-body">
         <div class="subcat-content">
 
-          <p class="type-intro">You can't filter water you don't have. In arid climates, urban apartments, or any scenario where you can't reach a natural water source, stored water is what keeps you alive. The general guideline is 1 gallon per person per day — for drinking and basic hygiene. A family of four needs 28 gallons just to cover one week. Storage options range from small stackable containers for apartments to 55-gallon drums for houses with space.</p>
+          <p class="type-intro">You can't filter water you don't have. In arid climates, urban apartments, or any scenario where you can't reach a natural water source, stored water is what keeps you alive. The general guideline is <span data-imperial="1 gallon" data-metric="3.8 litres">1 gallon</span> per person per day for drinking and basic hygiene. A family of four needs <span data-imperial="28 gallons" data-metric="106 litres">28 gallons</span> just to cover one week. That sounds like a lot until you start looking at containers.</p>
 
           <div class="type-section">
             <div class="type-header">
-              <div class="type-name">Rigid Containers (5–7 Gallon)</div>
-              <div class="type-tag">Portable & Practical</div>
+              <div class="type-name">Rigid Containers (<span data-imperial="5-7 Gallon" data-metric="19-26 Litre">5-7 Gallon</span>)</div>
+              <div class="type-tag">Portable + Practical</div>
             </div>
-            <div class="type-desc">BPA-free plastic jugs with handles and spigots in the 5–7 gallon range. Heavy when full — a 7-gallon container weighs about <span class="u" data-imperial="58 lbs" data-metric="26 kg">58 lbs</span> — but manageable for one person to carry short distances. Stackable models let you store multiple containers efficiently. The right size for apartments, vehicles, and scenarios where you might need to move your water supply. Fill them with tap water, add water preserver concentrate, and they'll stay fresh for up to 5 years.</div>
+            <div class="type-desc">BPA-free plastic jugs with handles and spigots in the <span data-imperial="5 to 7 gallon range" data-metric="19 to 26 litre range">5 to 7 gallon range</span>. Heavy when full: a 7-gallon container weighs about <span data-imperial="58 lbs" data-metric="26 kg">58 lbs</span>. Manageable for one person to carry short distances. Stackable models let you store multiple containers efficiently. The right size for apartments, vehicles, and scenarios where you might need to move your water supply. Fill with tap water, add water preserver concentrate, and they'll stay fresh for up to 5 years.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>5–7 gal</strong> capacity</span>
+              <span class="type-spec"><strong data-imperial="5-7 gal" data-metric="19-26 L">5-7 gal</strong> capacity</span>
               <span class="type-spec"><strong>Best use:</strong> apartments, vehicles</span>
               <span class="type-spec"><strong>Portable</strong> when full</span>
             </div>
@@ -1204,22 +866,22 @@
               <div class="type-name">Stackable / Modular (WaterBrick-style)</div>
               <div class="type-tag">Space-Efficient</div>
             </div>
-            <div class="type-desc">Interlocking rectangular containers — typically 3.5 gallons each — that stack like building blocks. Their shape eliminates the wasted space between round jugs. You can build a wall of them in a closet, garage, or under a bed. They're BPA-free, UV-resistant, and designed for long-term storage. At 3.5 gallons each they stay liftable when full (about <span class="u" data-imperial="29 lbs" data-metric="13 kg">29 lbs</span>). More expensive per gallon than simple jugs, but the modularity and space efficiency can justify the cost in tight living situations.</div>
+            <div class="type-desc">Interlocking rectangular containers, typically <span data-imperial="3.5 gallons each" data-metric="13 litres each">3.5 gallons each</span>, that stack like building blocks. Their shape eliminates the wasted space between round jugs. Build a wall of them in a closet, garage, or under a bed. BPA-free, UV-resistant, designed for long-term storage. At <span data-imperial="3.5 gallons" data-metric="13 litres">3.5 gallons</span> each they stay liftable when full (about <span data-imperial="29 lbs" data-metric="13 kg">29 lbs</span>). More expensive <span data-imperial="per gallon" data-metric="per litre">per gallon</span> than simple jugs, but the modularity and space efficiency justify the cost in tight living situations.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>3.5 gal</strong> per brick typical</span>
-              <span class="type-spec"><strong>Stackable</strong> & modular</span>
+              <span class="type-spec"><strong data-imperial="3.5 gal" data-metric="13 L">3.5 gal</strong> per brick typical</span>
+              <span class="type-spec"><strong>Stackable</strong> + modular</span>
               <span class="type-spec"><strong>Best use:</strong> tight spaces</span>
             </div>
           </div>
 
           <div class="type-section">
             <div class="type-header">
-              <div class="type-name">Large Drums (55 Gallon)</div>
+              <div class="type-name">Large Drums (<span data-imperial="55 Gallon" data-metric="208 Litre">55 Gallon</span>)</div>
               <div class="type-tag">Maximum Capacity</div>
             </div>
-            <div class="type-desc">Food-grade 55-gallon polyethylene drums. One drum holds nearly two weeks of water for a family of four. They're the most cost-effective storage per gallon, but they weigh about <span class="u" data-imperial="460 lbs" data-metric="209 kg">460 lbs</span> full — once you fill them, they don't move. You'll need a siphon or pump to get water out. Best for houses with garage or basement space. Treat the water with preserver concentrate at fill time and it stays drinkable for 5 years without rotation.</div>
+            <div class="type-desc">Food-grade <span data-imperial="55-gallon" data-metric="208-litre">55-gallon</span> polyethylene drums. One drum holds nearly two weeks of water for a family of four. Most cost-effective storage <span data-imperial="per gallon" data-metric="per litre">per gallon</span>, but they weigh about <span data-imperial="460 lbs" data-metric="209 kg">460 lbs</span> full. Once you fill them, they don't move. You'll need a siphon or pump to get water out. Best for houses with garage or basement space. Treat the water with preserver concentrate at fill time and it stays drinkable for 5 years without rotation.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>55 gal</strong> capacity</span>
+              <span class="type-spec"><strong data-imperial="55 gal" data-metric="208 L">55 gal</strong> capacity</span>
               <span class="type-spec"><strong>Best use:</strong> houses, garages</span>
               <span class="type-spec"><strong>Not portable</strong> when full</span>
             </div>
@@ -1230,61 +892,39 @@
               <div class="type-name">Emergency Bathtub Bladders</div>
               <div class="type-tag">Last-Minute Backup</div>
             </div>
-            <div class="type-desc">Plastic bladders (like the WaterBOB) that line your bathtub and fill from the faucet — giving you up to 100 gallons of fresh water stored in minutes. Designed for the window between hearing a storm warning and losing water pressure. They keep the water clean and separated from whatever's in your tub. Single-use typically, and they require advance notice to fill. Not a replacement for permanent storage, but an excellent "oh no" backup that stores flat until needed.</div>
+            <div class="type-desc">Plastic bladders (like the WaterBOB) that line your bathtub and fill from the faucet, giving you <span data-imperial="up to 100 gallons" data-metric="up to 380 litres">up to 100 gallons</span> of fresh water stored in minutes. Designed for the window between hearing a storm warning and losing water pressure. They keep the water clean and separated from whatever's in your tub. Single-use typically, and they require advance notice to fill. Not a replacement for permanent storage, but an excellent backup that stores flat until the moment arrives.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>65–100 gal</strong> capacity</span>
+              <span class="type-spec"><strong data-imperial="65-100 gal" data-metric="246-380 L">65-100 gal</strong> capacity</span>
               <span class="type-spec"><strong>Best use:</strong> storm prep, short notice</span>
               <span class="type-spec"><strong>Stores flat</strong> until needed</span>
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Rigid Container / Jug]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Stackable / WaterBrick]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Bathtub Bladder or Drum]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Rigid containers, <span data-imperial="5-7 gallon" data-metric="19-26 litre">5-7 gallon</span> (2+)</span>
+                <span class="own-why">Portable enough for one person. Stackable, spigoted, fills from the tap. Treat with preserver concentrate and forget for 5 years.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Stackable modular containers</span>
+                <span class="own-why">If you're in an apartment or tight on space. Interlock like building blocks, fit in closets and under beds. <span data-imperial="More per gallon" data-metric="More per litre">More per gallon</span>, but the space efficiency pays off.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what"><span data-imperial="55-gallon" data-metric="208-litre">55-gallon</span> drum (if you have the space)</span>
+                <span class="own-why">One drum covers a family of four for nearly two weeks. Fill once, treat, forget. You'll need a siphon or pump to get the water out.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Bathtub bladder</span>
+                <span class="own-why"><span data-imperial="65 to 100 gallons" data-metric="246 to 380 litres">65 to 100 gallons</span> from your faucet in minutes. Stores flat in a closet until you hear the warning. The backup you hope you never need to inflate.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Water preserver concentrate</span>
+                <span class="own-why">Treats stored water for a 5-year shelf life. Add it at fill time. Essential for any container-based storage: without it, you're rotating water every 6 months.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
@@ -1297,17 +937,16 @@
       </button>
       <div class="subcat-body">
         <div class="subcat-content">
-
-          <p class="type-intro">The supporting items that round out a water kit. Collapsible containers for transport, durable water bottles, emergency water rations, and treatment chemicals for long-term storage. Individually small — collectively, they fill the gaps between your primary filter and your stored supply.</p>
+          <p class="type-intro">The supporting items that round out a water kit. Collapsible containers for transport, durable bottles that double as purification tools, emergency rations that require zero thought, and treatment chemicals for long-term storage. Individually small. Collectively, they fill every gap between your primary filter and your stored supply.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Collapsible Water Containers</div>
               <div class="type-tag">Pack Flat, Carry Full</div>
             </div>
-            <div class="type-desc">Soft-sided containers — typically 1–5 gallons — that fold or roll flat when empty. Essential for go-bags where space matters: they weigh almost nothing until filled. Some have handles and spigots; others are simple bladders. Useful for transporting water from a source to your campsite or shelter. Less durable than rigid containers — treat them as consumables rather than permanent storage. At $8–15, they're cheap enough to pack multiples.</div>
+            <div class="type-desc">Soft-sided containers, typically <span data-imperial="1 to 5 gallons" data-metric="4 to 19 litres">1 to 5 gallons</span>, that fold or roll flat when empty. Essential for go-bags where space matters: they weigh almost nothing until filled. Some have handles and spigots; others are simple bladders. Useful for transporting water from a source to your campsite or shelter. Less durable than rigid containers, so treat them as consumables rather than permanent storage. At $8 to $15, they're cheap enough to pack multiples.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>1–5 gal</strong> capacity</span>
+              <span class="type-spec"><strong data-imperial="1-5 gal" data-metric="4-19 L">1-5 gal</strong> capacity</span>
               <span class="type-spec"><strong>Best use:</strong> go-bags, transport</span>
               <span class="type-spec"><strong>Folds flat</strong> when empty</span>
             </div>
@@ -1316,11 +955,11 @@
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Water Bottles (Nalgene / Steel)</div>
-              <div class="type-tag">Durable & Dual-Use</div>
+              <div class="type-tag">Durable + Dual-Use</div>
             </div>
-            <div class="type-desc">A quality water bottle does more than hold water — Nalgene bottles are virtually indestructible, have measurement markings for mixing purification tablets, and fit standard squeeze filters. Single-wall stainless steel bottles can be placed directly over a fire to boil water for purification when all other methods fail. Having at least one steel bottle in your kit gives you a backup purification method that requires zero technology. These are the containers your filters attach to and your treated water lives in.</div>
+            <div class="type-desc">A quality water bottle does more than hold water. Nalgene bottles are virtually indestructible, have measurement markings for mixing purification tablets, and fit standard squeeze filters. Single-wall stainless steel bottles can be placed directly over a fire to boil water when all other methods fail. Having at least one steel bottle in your kit gives you a backup purification method that requires zero technology. These are the containers your filters attach to and your treated water lives in.</div>
             <div class="type-specs">
-              <span class="type-spec"><strong>32 oz</strong> standard</span>
+              <span class="type-spec"><strong data-imperial="32 oz" data-metric="1 L">32 oz</strong> standard</span>
               <span class="type-spec"><strong>Steel:</strong> boil-safe</span>
               <span class="type-spec"><strong>Filter</strong> compatible</span>
             </div>
@@ -1331,7 +970,7 @@
               <div class="type-name">Emergency Water Pouches</div>
               <div class="type-tag">Zero Maintenance</div>
             </div>
-            <div class="type-desc">Factory-sealed individual water pouches (4.2 oz each, typically) with a 5-year shelf life. Coast Guard-approved brands like Datrex and SOS are the standard. They're designed for lifeboats, go-bags, and vehicle kits — situations where you need guaranteed drinkable water with zero prep and zero maintenance. Not a replacement for bulk storage, but perfect for the first 24–72 hours before you set up filtration. Compact, lightweight, and you never have to rotate them.</div>
+            <div class="type-desc">Factory-sealed individual water pouches <span data-imperial="(4.2 oz each, typically)" data-metric="(125 ml each, typically)">(4.2 oz each, typically)</span> with a 5-year shelf life. Coast Guard-approved brands like Datrex and SOS are the standard. Designed for lifeboats, go-bags, and vehicle kits: situations where you need guaranteed drinkable water with zero prep and zero maintenance. Not a replacement for bulk storage, but perfect for the first 24 to 72 hours before you set up filtration. Compact, lightweight, and you never have to rotate them.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>5-year</strong> shelf life</span>
               <span class="type-spec"><strong>Best use:</strong> go-bags, vehicles</span>
@@ -1344,61 +983,35 @@
               <div class="type-name">Water Preserver Concentrate</div>
               <div class="type-tag">Long-Term Storage Treatment</div>
             </div>
-            <div class="type-desc">Liquid concentrate that treats tap water for long-term storage — typically extending shelf life from 6 months to 5 years. Add a measured amount to your storage containers when you fill them and forget about it. No rotation, no refilling, no maintenance for half a decade. Works in containers from 5 gallons to 55-gallon drums. The active ingredient is usually sodium hypochlorite (stabilized chlorine) at a concentration formulated for storage rather than purification. Essential if you're building any kind of stored water supply.</div>
+            <div class="type-desc">Liquid concentrate that treats tap water for long-term storage, typically extending shelf life from 6 months to 5 years. Add a measured amount to your storage containers when you fill them and forget about it. No rotation, no refilling, no maintenance for half a decade. Works in containers from <span data-imperial="5 gallons" data-metric="19 litres">5 gallons</span> to <span data-imperial="55-gallon" data-metric="208-litre">55-gallon</span> drums. The active ingredient is usually sodium hypochlorite (stabilized chlorine) at a concentration formulated for storage rather than purification. Essential if you're building any kind of stored water supply.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Extends to</strong> 5-year storage</span>
               <span class="type-spec"><strong>Best use:</strong> drums, jugs</span>
-              <span class="type-spec"><strong>Treats</strong> up to 55 gal</span>
+              <span class="type-spec"><strong>Treats</strong> up to <strong data-imperial="55 gal" data-metric="208 L">55 gal</strong></span>
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Collapsible Container]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Steel Water Bottle]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Emergency Water Pouches]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs">
-                  <span class="featured-spec"><strong>—</strong></span>
-                </div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Collapsible containers (2+)</span>
+                <span class="own-why">Pack flat, fill when needed. <span data-imperial="1 to 5 gallons each" data-metric="4 to 19 litres each">1 to 5 gallons each</span>. For hauling water between source and shelter. Cheap enough to keep spares.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Single-wall steel water bottle</span>
+                <span class="own-why">Dual-use: daily carry and emergency boiling. Place it directly over a fire when every other purification method has failed. The most primitive backup available.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Emergency water pouches (1 case)</span>
+                <span class="own-why">Coast Guard-approved, 5-year shelf life, zero maintenance. For go-bags and vehicles. The water you never have to think about until you need it.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Water preserver concentrate</span>
+                <span class="own-why">Treats stored water for 5-year shelf life. Add at fill time to any container. Without it, you're rotating water every 6 months. With it, you set and forget.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
@@ -1406,63 +1019,16 @@
   </div>
 </div>
 
-<!-- GIFTS FOR THE PARANOID -->
-<section class="guide">
+<!-- CTA -->
+<section class="cta-section">
   <div class="container">
-    <div class="guide-header">
-      <div class="guide-title">Gifts for the Paranoid</div>
-    </div>
-    <div class="guide-content">Buying for someone who takes preparedness seriously? These water & hydration picks make practical, thoughtful gifts — from pocket-sized filters to premium purifier bottles.</div>
-    <div class="gift-grid">
-
-      <div class="gift-card">
-        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
-        <div class="gift-info">
-          <div class="gift-name">[Gift Pick 1]</div>
-          <div class="gift-desc">Product to be selected.</div>
-          <div class="gift-bottom">
-            <span class="gift-price">$—</span>
-            <span class="featured-btn" style="opacity:0.3">Amazon</span>
-          </div>
-        </div>
+    <hr class="divider" style="margin-bottom: 64px;">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Shop for the Paranoid</h2>
+        <p>You, your dad, your slightly intense coworker. Whoever it is, we picked the gear worth actually buying. Organized by category, no filler, links straight to Amazon.</p>
       </div>
-
-      <div class="gift-card">
-        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
-        <div class="gift-info">
-          <div class="gift-name">[Gift Pick 2]</div>
-          <div class="gift-desc">Product to be selected.</div>
-          <div class="gift-bottom">
-            <span class="gift-price">$—</span>
-            <span class="featured-btn" style="opacity:0.3">Amazon</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="gift-card">
-        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
-        <div class="gift-info">
-          <div class="gift-name">[Gift Pick 3]</div>
-          <div class="gift-desc">Product to be selected.</div>
-          <div class="gift-bottom">
-            <span class="gift-price">$—</span>
-            <span class="featured-btn" style="opacity:0.3">Amazon</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="gift-card">
-        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
-        <div class="gift-info">
-          <div class="gift-name">[Gift Pick 4]</div>
-          <div class="gift-desc">Product to be selected.</div>
-          <div class="gift-bottom">
-            <span class="gift-price">$—</span>
-            <span class="featured-btn" style="opacity:0.3">Amazon</span>
-          </div>
-        </div>
-      </div>
-
+      <a href="#" class="cta-btn">Browse Gift Picks +</a>
     </div>
   </div>
 </section>
@@ -1470,9 +1036,8 @@
 <!-- RELATED GUIDES -->
 <section class="related">
   <div class="container">
-    <div class="related-header">
-      <div class="guide-title">Related Guides</div>
-    </div>
+    <hr class="divider" style="margin-bottom: 56px;">
+    <div class="section-label">Related Guides</div>
     <div class="article-list">
       <div class="article-row">
         <div class="article-meta">
@@ -1482,7 +1047,7 @@
         <div class="article-content">
           <div class="article-title">Filter vs Purifier: What's the Difference and When Does It Matter?</div>
           <div class="article-excerpt">Most portable filters don't remove viruses. Most situations don't require it. A practical guide to understanding when filtration is enough and when you need full purification.</div>
-          <div class="article-read">Read →</div>
+          <div class="article-read">Read +</div>
         </div>
       </div>
       <div class="article-row">
@@ -1492,8 +1057,8 @@
         </div>
         <div class="article-content">
           <div class="article-title">How to Build a Complete Home Water Storage System for Under $200</div>
-          <div class="article-excerpt">Step-by-step guide to storing 2–4 weeks of water for a family of four. Covers containers, treatment, rotation schedules, and common mistakes.</div>
-          <div class="article-read">Read →</div>
+          <div class="article-excerpt">Step-by-step guide to storing 2 to 4 weeks of water for a family of four. Covers containers, treatment, rotation schedules, and common mistakes.</div>
+          <div class="article-read">Read +</div>
         </div>
       </div>
       <div class="article-row">
@@ -1502,9 +1067,9 @@
           <span class="article-time">6 min read</span>
         </div>
         <div class="article-content">
-          <div class="article-title">Water & Hydration Gifts: Practical Picks for the Prepared</div>
-          <div class="article-excerpt">From a $15 straw filter to a $100 purifier bottle — gift ideas that are actually useful, organized by budget and recipient type.</div>
-          <div class="article-read">Read →</div>
+          <div class="article-title">Water + Hydration Gifts: Practical Picks for the Prepared</div>
+          <div class="article-excerpt">From a $15 straw filter to a $100 purifier bottle: gift ideas that are actually useful, organized by budget and recipient type.</div>
+          <div class="article-read">Read +</div>
         </div>
       </div>
     </div>
@@ -1513,76 +1078,61 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
+  <div class="container">
+    <hr class="divider" style="margin-bottom: 40px;">
     <div class="footer-top">
-      <div class="footer-brand">PARANOID<span class="logo-and">AND</span>READY</div>
+      <div class="footer-brand">PARANOID <span class="logo-and">AND</span> READY</div>
       <ul class="footer-nav">
-        <li><a href="/#about">About</a></li>
-        <li><a href="/#contact">Contact</a></li>
-        <li><a href="/#disclosure">Affiliate Disclosure</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
       </ul>
     </div>
     <div class="footer-bottom">
       <div class="footer-tagline">Stay prepared. Not surprised.</div>
-      <div class="footer-disclaimer">As an Amazon Associate, rawlist.org earns from qualifying purchases. Prices and availability are subject to change. © 2025</div>
+      <div class="footer-copyright">2025 paranoidandready.com</div>
     </div>
   </div>
 </footer>
 
 <script>
-  // ---- Subcategory accordion ----
+  /* ---- Accordion ---- */
   function toggleSubcat(trigger) {
     const item = trigger.parentElement;
     const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.subcat-item.open').forEach(el => {
-      el.classList.remove('open');
-    });
+    document.querySelectorAll('.subcat-item.open').forEach(el => el.classList.remove('open'));
     if (!isOpen) {
       item.classList.add('open');
-      setTimeout(() => {
-        trigger.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+      setTimeout(() => trigger.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 350);
     }
   }
 
-  // ---- Unit system: imperial / metric ----
+  /* ---- Unit toggle ---- */
+  var currentSystem = 'imperial';
+
+  function applyUnits(sys) {
+    currentSystem = sys;
+    document.querySelectorAll('[data-imperial][data-metric]').forEach(function(el) {
+      el.textContent = el.getAttribute('data-' + sys);
+    });
+    document.querySelectorAll('.u-opt').forEach(function(btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-system') === sys);
+    });
+  }
+
+  function setUnits(sys) {
+    try { localStorage.setItem('pr-units', sys); } catch(e) {}
+    applyUnits(sys);
+  }
+
+  /* Initialise on load */
   (function() {
-    const IMPERIAL_LOCALES = ['en-US', 'en-LR', 'en-MM'];
-
-    function detectSystem() {
-      const lang = navigator.language || navigator.userLanguage || 'en-US';
-      return IMPERIAL_LOCALES.some(l => lang.startsWith(l)) ? 'imperial' : 'metric';
+    var saved;
+    try { saved = localStorage.getItem('pr-units'); } catch(e) {}
+    if (!saved) {
+      var lang = (navigator.language || 'en-US');
+      saved = (lang === 'en-US' || lang === 'en-LR' || lang === 'en-MM') ? 'imperial' : 'metric';
     }
-
-    function getSystem() {
-      try {
-        return localStorage.getItem('pr-units') || detectSystem();
-      } catch(e) {
-        return detectSystem();
-      }
-    }
-
-    function saveSystem(sys) {
-      try { localStorage.setItem('pr-units', sys); } catch(e) {}
-    }
-
-    function applyUnits(sys) {
-      document.querySelectorAll('.u, [data-imperial][data-metric]').forEach(el => {
-        el.textContent = el.getAttribute('data-' + sys);
-      });
-      document.querySelectorAll('.u-opt').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-system') === sys);
-      });
-      document.documentElement.setAttribute('data-units', sys);
-    }
-
-    const initial = getSystem();
-    applyUnits(initial);
-
-    window.setUnits = function(sys) {
-      saveSystem(sys);
-      applyUnits(sys);
-    };
+    applyUnits(saved);
   })();
 </script>
 

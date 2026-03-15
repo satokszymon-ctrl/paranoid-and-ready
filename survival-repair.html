@@ -3,177 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Survival & Repair — Paranoid & Ready</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Survival AND Repair — PARANOID AND READY</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  /* ---- PALETTE: Cold Bureaucracy / Classified Document / Concrete Bunker ---- */
   :root {
-    --bg: #0a0a0a;
-    --bg-card: #0f0f0f;
-    --bg-card-hover: #161616;
-    --red: #e02020;
-    --red-dim: #c01818;
-    --red-glow: #e0202010;
-    --red-glow-strong: #e0202020;
-    --text: #ffffff;
-    --text-secondary: #e0e0e0;
-    --text-muted: #b0b0b0;
-    --text-dim: #787878;
-    --border: #e02020;
-    --border-subtle: #1a1a1a;
-    --border-muted: #222222;
-    --surface-1: #0e0e0e;
-    --surface-2: #131313;
+    --bg:          #C5C5C5;
+    --bg-surface:  #b8b8b8;
+    --bg-raised:   #aeaeae;
+    --red:         #8B0000;
+    --red-glow:    rgba(139, 0, 0, 0.07);
+    --ink:         #1A1A1A;
+    --ink-mid:     #3a3a3a;
+    --ink-light:   #555555;
+    --white:       #ffffff;
+    --border:      #1A1A1A;
+    --border-mid:  #888888;
+    --max-w:       1000px;
+    --pad:         48px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     background: var(--bg);
-    color: var(--text);
+    color: var(--ink);
+    font-size: 16px;
     line-height: 1.6;
+    letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
-    position: relative;
   }
 
+  /* Paper grain noise */
   body::before {
     content: '';
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.4;
+    opacity: 0.6;
   }
 
   a { color: inherit; text-decoration: none; }
 
   .container {
-    max-width: 1100px;
+    max-width: var(--max-w);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--pad);
   }
 
   /* ---- NAV ---- */
-  nav { padding: 28px 24px 0; }
-
-  .nav-inner {
-    max-width: 1100px;
+  nav {
+    max-width: var(--max-w);
     margin: 0 auto;
+    padding: 28px var(--pad) 0;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
   }
 
-  .nav-left {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
+  .nav-left { display: flex; align-items: center; }
 
   .logo {
-    font-family: 'Space Mono', monospace;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--red);
-    text-align: center;
   }
+
+  .logo-and { color: var(--ink); }
+
+  .nav-links { list-style: none; display: flex; gap: 28px; }
+
+  .nav-links a {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
 
   .nav-right {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 24px;
+    gap: 16px;
   }
-
-  .nav-links {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--text); }
 
   .nav-search {
     background: transparent;
-    border: 1px solid var(--border-muted);
-    padding: 7px 14px;
-    color: var(--text);
-    font-size: 12px;
-    font-family: 'Space Mono', monospace;
-    width: 180px;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    width: 150px;
     outline: none;
     transition: border-color 0.2s;
-    letter-spacing: 0.5px;
   }
 
-  .nav-search::placeholder { color: var(--text-dim); }
+  .nav-search::placeholder { color: var(--ink-light); }
   .nav-search:focus { border-color: var(--red); }
 
+  /* ---- HEADER LINE ---- */
   .header-line {
-    max-width: 1100px;
+    max-width: var(--max-w);
     margin: 20px auto 0;
-    padding: 0 24px;
+    padding: 0 var(--pad);
   }
 
   .header-line hr {
     border: none;
-    height: 1px;
-    background: var(--red);
+    border-top: 2px solid var(--ink);
+  }
+
+  /* ---- DIVIDER ---- */
+  .divider {
+    border: none;
+    border-top: 2px solid var(--ink);
   }
 
   /* ---- BREADCRUMB ---- */
   .breadcrumb {
-    padding: 28px 0 0;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
+    padding: 16px 0 0;
+    font-size: 10px;
+    font-weight: 500;
     letter-spacing: 1px;
-    color: var(--text-dim);
+    color: var(--ink-light);
+    text-transform: uppercase;
   }
 
-  .breadcrumb a {
-    color: var(--text-muted);
-    transition: color 0.2s;
-  }
-
+  .breadcrumb a { color: var(--ink-mid); transition: color 0.2s; }
   .breadcrumb a:hover { color: var(--red); }
-  .breadcrumb .sep { color: var(--text-dim); margin: 0 6px; }
+  .breadcrumb .sep { margin: 0 8px; color: var(--border-mid); }
   .breadcrumb .current { color: var(--red); }
 
-  /* ---- CATEGORY HERO ---- */
+  /* ---- HERO ---- */
   .cat-hero {
     padding: 48px 0 56px;
-    animation: fadeIn 0.4s ease-out;
+    animation: fadeIn 0.4s ease-out both;
   }
 
   .cat-hero h1 {
-    font-family: 'Space Mono', monospace;
-    font-size: clamp(24px, 4vw, 42px);
-    font-weight: 700;
+    font-size: clamp(22px, 3.5vw, 38px);
+    font-weight: 800;
     color: var(--red);
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 20px;
-    line-height: 1.2;
+    line-height: 1.15;
   }
 
   .cat-hero-desc {
-    font-size: 15px;
-    color: var(--text-secondary);
+    font-size: 14px;
+    color: var(--ink);
     line-height: 1.75;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   /* ---- SUBCATEGORY ACCORDION ---- */
@@ -182,9 +174,8 @@
     animation: fadeIn 0.4s ease-out 0.05s both;
   }
 
-  .subcat-item {
-    border-bottom: 1px solid var(--red);
-  }
+  .subcat-item { border-bottom: 2px solid var(--ink); }
+  .subcat-item:first-child { border-top: 2px solid var(--ink); }
 
   .subcat-trigger {
     width: 100%;
@@ -196,43 +187,31 @@
     padding: 22px 0;
     cursor: pointer;
     gap: 24px;
+    font-family: 'JetBrains Mono', monospace;
     transition: background 0.2s;
   }
 
-  .subcat-trigger:hover {
-    background: var(--red-glow);
-  }
+  .subcat-trigger:hover { background: var(--red-glow); }
 
   .subcat-name {
-    font-family: 'Space Mono', monospace;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 800;
     color: var(--red);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-align: left;
   }
 
-  .subcat-count {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-    flex-shrink: 0;
-  }
-
   .subcat-icon {
-    font-family: 'Space Mono', monospace;
     font-size: 18px;
-    color: var(--red);
+    color: var(--ink);
     flex-shrink: 0;
     transition: transform 0.3s ease;
     line-height: 1;
+    font-weight: 800;
   }
 
-  .subcat-item.open .subcat-icon {
-    transform: rotate(45deg);
-  }
+  .subcat-item.open .subcat-icon { transform: rotate(45deg); }
 
   .subcat-body {
     max-height: 0;
@@ -245,459 +224,265 @@
     transition: max-height 0.8s ease;
   }
 
-  .subcat-content {
-    padding: 8px 0 56px;
-  }
+  .subcat-content { padding: 8px 0 56px; }
 
-  /* ---- TYPE SECTIONS (within subcategory) ---- */
+  /* ---- TYPE INTRO ---- */
   .type-intro {
     font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    font-weight: 300;
-    margin-bottom: 36px;
+    color: var(--ink);
+    line-height: 1.75;
+    font-weight: 400;
+    margin-bottom: 32px;
   }
 
+  /* ---- TYPE SECTIONS ---- */
   .type-section {
-    margin-bottom: 36px;
-    padding: 28px;
-    border: 1px solid var(--border-muted);
-    transition: border-color 0.3s;
+    margin-bottom: 16px;
+    padding: 22px 26px;
+    border: 1px solid var(--border);
+    background: rgba(197, 197, 197, 0.3);
+    transition: background 0.3s;
   }
 
-  .type-section:hover {
-    border-color: #444;
-  }
-
-  .type-section:last-of-type {
-    margin-bottom: 48px;
-  }
+  .type-section:hover { background: rgba(184, 184, 184, 0.6); }
 
   .type-header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-bottom: 16px;
     gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
   }
 
   .type-name {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--text);
+    letter-spacing: 2px;
+    color: var(--ink);
   }
 
   .type-tag {
-    font-family: 'Space Mono', monospace;
     font-size: 9px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--text-dim);
-    border: 1px solid var(--border-muted);
-    padding: 3px 10px;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 2px 9px;
     flex-shrink: 0;
   }
 
   .type-desc {
     font-size: 14px;
-    color: var(--text-secondary);
+    color: var(--ink);
     line-height: 1.75;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   .type-specs {
     display: flex;
     gap: 24px;
-    margin-top: 16px;
+    margin-top: 12px;
     flex-wrap: wrap;
   }
 
   .type-spec {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-  }
-
-  .type-spec strong {
-    color: var(--text-muted);
-  }
-
-  /* ---- FEATURED PICKS ---- */
-  .featured-label {
-    font-family: 'Space Mono', monospace;
     font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .featured-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border-muted);
-  }
-
-  .featured-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  .featured-card {
-    border: 1px solid var(--border-muted);
-    background: var(--bg);
-    transition: all 0.25s;
-    cursor: pointer;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .featured-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--red);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-    z-index: 1;
-  }
-
-  .featured-card:hover::before { transform: scaleX(1); }
-
-  .featured-card:hover {
-    border-color: #444;
-    background: var(--surface-1);
-  }
-
-  .featured-img {
-    width: 100%;
-    height: 140px;
-    background: var(--surface-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid var(--border-muted);
-  }
-
-  .featured-img-placeholder {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  .featured-info {
-    padding: 22px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .featured-name {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-
-  .featured-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.55;
-    font-weight: 300;
-    margin-bottom: 14px;
-    flex: 1;
-  }
-
-  .featured-specs {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-  }
-
-  .featured-spec {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-  }
-
-  .featured-spec strong {
-    color: var(--text-muted);
-  }
-
-  .featured-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 16px;
-    border-top: 1px solid var(--border-subtle);
-    margin-top: auto;
-  }
-
-  .featured-price {
-    font-family: 'Space Mono', monospace;
-    font-size: 16px;
-    font-weight: 700;
-  }
-
-  .featured-btn {
-    background: transparent;
-    border: 1px solid var(--red);
     color: var(--red);
+    letter-spacing: 0.5px;
+  }
+
+  .type-spec strong { color: var(--red); }
+
+  /* ---- WHAT TO OWN ---- */
+  .own-section {
+    margin-top: 28px;
+    border-left: 3px solid var(--red);
+    background: var(--bg-surface);
+    padding: 24px 28px;
+  }
+
+  .own-label {
     font-size: 9px;
-    font-weight: 700;
-    padding: 7px 16px;
-    font-family: 'Space Mono', monospace;
-    letter-spacing: 1.5px;
+    font-weight: 800;
     text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    display: inline-block;
+    letter-spacing: 3px;
+    color: var(--red);
+    margin-bottom: 20px;
   }
 
-  .featured-btn:hover {
-    background: var(--red);
-    color: var(--bg);
+  .own-list {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 0;
+    list-style: none;
   }
 
-  /* ---- HOW TO CHOOSE ---- */
-  .guide {
-    padding: 56px 0;
-    border-top: 1px solid var(--border-muted);
+  .own-item { display: contents; }
+
+  .own-what {
+    padding: 10px 20px 10px 0;
+    border-bottom: 1px solid var(--border-mid);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .own-why {
+    padding: 10px 0 10px 20px;
+    border-bottom: 1px solid var(--border-mid);
+    border-left: 1px solid var(--border-mid);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+
+  .own-item:last-child .own-what,
+  .own-item:last-child .own-why {
+    border-bottom: none;
+  }
+
+  /* ---- CTA ---- */
+  .cta-section {
+    padding: 64px 0;
     animation: fadeIn 0.4s ease-out 0.1s both;
   }
 
-  .guide-header {
-    margin-bottom: 24px;
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
   }
 
-  .guide-title {
-    font-family: 'Space Mono', monospace;
+  .cta-text h2 {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ink);
+  }
+
+  .cta-text p {
+    font-size: 14px;
+    color: var(--ink-mid);
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    color: var(--white);
+    font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .cta-btn:hover { background: var(--red); border-color: var(--red); }
+
+  /* ---- SECTION LABEL ---- */
+  .section-label {
+    font-size: 10px;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 3px;
     color: var(--red);
     display: flex;
     align-items: center;
     gap: 16px;
+    margin-bottom: 24px;
   }
 
-  .guide-title::after {
+  .section-label::after {
     content: '';
     flex: 1;
     height: 1px;
-    background: var(--border-muted);
-  }
-
-  .guide-content {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.8;
-    font-weight: 300;
-    margin-bottom: 28px;
-  }
-
-  .gift-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-
-  .gift-card {
-    border: 1px solid var(--border-muted);
-    background: var(--bg);
-    transition: all 0.25s;
-    cursor: pointer;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .gift-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--red);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-    z-index: 1;
-  }
-
-  .gift-card:hover::before { transform: scaleX(1); }
-
-  .gift-card:hover {
-    border-color: #444;
-    background: var(--surface-1);
-  }
-
-  .gift-img {
-    width: 100%;
-    height: 140px;
-    background: var(--surface-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid var(--border-muted);
-  }
-
-  .gift-img-placeholder {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  .gift-info {
-    padding: 22px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .gift-name {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-
-  .gift-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.55;
-    font-weight: 300;
-    margin-bottom: 18px;
-    flex: 1;
-  }
-
-  .gift-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 16px;
-    border-top: 1px solid var(--border-subtle);
-    margin-top: auto;
-  }
-
-  .gift-price {
-    font-family: 'Space Mono', monospace;
-    font-size: 16px;
-    font-weight: 700;
+    background: var(--ink);
   }
 
   /* ---- RELATED GUIDES ---- */
   .related {
     padding: 56px 0;
-    border-top: 1px solid var(--border-muted);
   }
 
-  .related-header {
-    margin-bottom: 8px;
-  }
-
-  .article-list {
-    display: flex;
-    flex-direction: column;
-  }
+  .article-list { display: flex; flex-direction: column; }
 
   .article-row {
     display: flex;
-    align-items: baseline;
+    align-items: flex-start;
     gap: 32px;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--border-subtle);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-mid);
     cursor: pointer;
-    transition: background 0.15s;
+    transition: opacity 0.2s;
   }
 
-  .article-row:last-child { border-bottom: none; }
-  .article-row:hover { background: var(--red-glow); }
+  .article-row:hover { opacity: 0.6; }
+  .article-row:first-child { border-top: 1px solid var(--border-mid); }
 
   .article-meta {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     flex-shrink: 0;
-    min-width: 100px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.5px;
+    width: 90px;
   }
 
   .article-tag {
-    color: var(--red);
+    font-size: 9px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--red);
   }
 
-  .article-time { color: var(--text-dim); }
-
-  .article-content { flex: 1; }
+  .article-time {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ink-light);
+  }
 
   .article-title {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 600;
-    line-height: 1.35;
-    margin-bottom: 8px;
-    transition: color 0.2s;
+    margin-bottom: 6px;
+    line-height: 1.4;
+    color: var(--ink);
   }
-
-  .article-row:hover .article-title { color: var(--red); }
 
   .article-excerpt {
     font-size: 13px;
-    color: var(--text-secondary);
+    color: var(--ink-mid);
+    font-weight: 400;
     line-height: 1.6;
-    font-weight: 300;
+    margin-bottom: 10px;
   }
 
   .article-read {
-    margin-top: 10px;
-    font-family: 'Space Mono', monospace;
     font-size: 10px;
     font-weight: 700;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    transition: color 0.2s;
+    color: var(--red);
+    letter-spacing: 1px;
   }
-
-  .article-row:hover .article-read { color: var(--red); }
 
   /* ---- FOOTER ---- */
-  footer {
-    padding: 40px 24px 48px;
-    border-top: 1px solid var(--border-muted);
-  }
-
-  .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+  footer { padding: 40px 0; }
 
   .footer-top {
     display: flex;
@@ -707,189 +492,155 @@
   }
 
   .footer-brand {
-    font-family: 'Space Mono', monospace;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--red);
     letter-spacing: 2px;
     text-transform: uppercase;
   }
 
-  .footer-nav {
-    display: flex;
-    gap: 28px;
-    list-style: none;
-  }
+  .footer-nav { display: flex; gap: 28px; list-style: none; }
 
   .footer-nav a {
-    font-family: 'Space Mono', monospace;
     font-size: 10px;
-    font-weight: 400;
-    color: var(--text-muted);
+    font-weight: 500;
+    color: var(--ink-mid);
     text-transform: uppercase;
     letter-spacing: 1.5px;
     transition: color 0.2s;
   }
 
-  .footer-nav a:hover { color: var(--text); }
+  .footer-nav a:hover { color: var(--ink); }
 
   .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     padding-top: 24px;
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--border-mid);
   }
 
   .footer-tagline {
-    font-family: 'DM Sans', sans-serif;
     font-size: 13px;
-    color: var(--text-muted);
-    font-weight: 300;
+    color: var(--ink-mid);
+    font-weight: 400;
     font-style: italic;
   }
 
-  .footer-disclaimer {
-    font-size: 11px;
-    color: var(--text-dim);
-    max-width: 480px;
-    text-align: right;
-    line-height: 1.5;
-  }
+  .footer-copyright { font-size: 11px; color: var(--ink-light); text-align: right; }
 
   /* ---- UNIT TOGGLE ---- */
   .unit-toggle {
     display: flex;
-    border: 1px solid var(--border-muted);
-    flex-shrink: 0;
+    border: 1px solid var(--border);
     overflow: hidden;
+    flex-shrink: 0;
   }
 
   .unit-toggle .u-opt {
-    font-family: 'Space Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     letter-spacing: 1px;
     text-transform: uppercase;
     background: transparent;
     border: none;
-    color: var(--text-dim);
+    color: var(--ink-light);
     padding: 5px 10px;
     cursor: pointer;
     transition: all 0.2s;
   }
 
-  .unit-toggle .u-opt.active {
-    background: var(--red);
-    color: var(--bg);
-  }
+  .unit-toggle .u-opt.active { background: var(--ink); color: var(--white); }
+  .unit-toggle .u-opt:not(.active):hover { color: var(--ink); }
 
-  .unit-toggle .u-opt:not(.active):hover {
-    color: var(--text);
-  }
-
-  /* ---- LOGO AND ---- */
-  .logo-and {
-    color: #ffffff;
-  }
-
-  /* ---- CATEGORY AMPERSAND ---- */
-  .cat-amp {
-    font-family: 'Georgia', 'Times New Roman', serif;
-    font-style: italic;
-  }
-
-  /* ---- ANIMATIONS ---- */
+  /* ---- MISC ---- */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   nav { animation: fadeIn 0.5s ease-out; }
 
   /* ---- RESPONSIVE ---- */
-  @media (max-width: 900px) {
-    .featured-grid { grid-template-columns: 1fr; }
-    .gift-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
   @media (max-width: 768px) {
+    :root { --pad: 24px; }
     .nav-left { display: none; }
-    .nav-inner { grid-template-columns: auto 1fr; }
-    .nav-right { gap: 12px; }
+    nav { grid-template-columns: auto 1fr; }
     .type-specs { gap: 12px; }
     .article-row { flex-direction: column; gap: 8px; }
     .footer-top { flex-direction: column; gap: 20px; }
     .footer-bottom { flex-direction: column; gap: 12px; }
-    .footer-disclaimer { text-align: left; }
+    .footer-copyright { text-align: left; }
+    .cta-inner { flex-direction: column; }
+    .own-list { grid-template-columns: 1fr; }
+    .own-item { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+    .own-item:last-child { margin-bottom: 0; }
+    .own-what { border-bottom: none; padding-bottom: 2px; }
+    .own-why { border-left: none; border-bottom: 1px solid var(--border-mid); padding-top: 0; padding-left: 0; padding-bottom: 14px; }
+    .own-item:last-child .own-why { border-bottom: none; }
   }
 
   @media (max-width: 480px) {
-    .gift-grid { grid-template-columns: 1fr; }
+    .subcat-name { font-size: 11px; letter-spacing: 0.5px; }
+    .type-header { flex-direction: column; gap: 8px; }
+    .type-section { padding: 16px 18px; }
+    .own-section { padding: 18px 20px; }
   }
 </style>
-</head>
+
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-inner">
     <div class="nav-left">
       <ul class="nav-links">
-        <li><a href="/">Categories</a></li>
-        <li><a href="/#guides">Guides</a></li>
-        <li><a href="/#gifts">Gifts</a></li>
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">Guides</a></li>
       </ul>
     </div>
-    <a href="/" class="logo">PARANOID<span class="logo-and">AND</span>READY</a>
+    <a href="#" class="logo">PARANOID <span class="logo-and">AND</span> READY</a>
     <div class="nav-right">
-      <input type="text" class="nav-search" placeholder="Search gear...">
+      <input type="text" class="nav-search" placeholder="Search...">
       <div class="unit-toggle">
         <button class="u-opt active" data-system="imperial" onclick="setUnits('imperial')">LB</button>
         <button class="u-opt" data-system="metric" onclick="setUnits('metric')">KG</button>
       </div>
     </div>
-  </div>
 </nav>
-<div class="header-line"><hr></div>
+<div class="header-line"><hr class="divider"></div>
 
-<!-- BREADCRUMB -->
 <div class="container">
   <div class="breadcrumb">
-    <a href="/">Home</a><span class="sep">/</span><span class="current">Survival <span class="cat-amp">&amp;</span> Repair</span>
+    <a href="#">Home</a><span class="sep">/</span><span class="current">Survival AND Repair</span>
   </div>
 </div>
 
-<!-- CATEGORY HERO -->
 <section class="cat-hero">
   <div class="container">
-    <h1>Survival <span class="cat-amp">&amp;</span> Repair</h1>
-    <p class="cat-hero-desc">The tools and materials that let you build, fix, cut, and improvise when nothing else works. From the knife on your belt to the tarp over your head to the duct tape holding it all together — this section covers the physical gear that turns a bad situation into a manageable one. Shelter, cordage, cutting tools, and field repair supplies.</p>
+    <h1>Survival AND Repair</h1>
+    <p class="cat-hero-desc">The tools and materials that let you build, fix, cut, and improvise when nothing else works. From the knife on your belt to the tarp over your head to the duct tape holding it all together: this section covers the physical gear that turns a bad situation into a manageable one. Shelter, cordage, cutting tools, and field repair supplies.</p>
   </div>
 </section>
 
-
-
-<!-- SUBCATEGORIES -->
 <div class="subcategories">
   <div class="container">
 
     <!-- ========== KNIVES & MULTITOOLS ========== -->
     <div class="subcat-item">
       <button class="subcat-trigger" onclick="toggleSubcat(this)">
-        <span class="subcat-name">Knives <span class="cat-amp">&amp;</span> Multitools</span>
+        <span class="subcat-name">Knives AND Multitools</span>
         <span class="subcat-icon">+</span>
       </button>
       <div class="subcat-body">
         <div class="subcat-content">
-
-          <p class="type-intro">A cutting tool is arguably the single most important piece of survival gear after water. It builds shelter, processes firewood, prepares food, repairs equipment, and defends if needed. The debate between fixed blade and folder is secondary to this: have a good knife, keep it sharp, and know how to use it. A multitool adds versatility that a knife alone can't match — pliers, screwdrivers, can openers, wire cutters — in a package that fits on your belt.</p>
+          <p class="type-intro">A cutting tool is arguably the single most important piece of survival gear after water. It builds shelter, processes firewood, prepares food, repairs equipment, and defends if needed. The debate between fixed blade and folder is secondary to this: have a good knife, keep it sharp, and know how to use it. A multitool adds versatility that a knife alone can't match: pliers, screwdrivers, can openers, wire cutters: in a package that fits on your belt.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Fixed Blade Knives</div>
               <div class="type-tag">Strongest & Most Reliable</div>
             </div>
-            <div class="type-desc">No moving parts, no pivot to fail, no lock to break. A full-tang fixed blade can baton wood, pry, dig, and take abuse that would destroy a folder. Blade lengths of 4–6" are the sweet spot for survival — long enough for serious work, short enough for fine tasks. Stainless steel (like 420HC or 8Cr13MoV) resists corrosion; carbon steel (like 1095) holds a sharper edge but rusts without care. Morakniv is the unbeatable value entry; Ka-Bar and ESEE are the serious step-ups. Every go-bag needs a fixed blade.</div>
+            <div class="type-desc">No moving parts, no pivot to fail, no lock to break. A full-tang fixed blade can baton wood, pry, dig, and take abuse that would destroy a folder. Blade lengths of 4–6" are the sweet spot for survival: long enough for serious work, short enough for fine tasks. Stainless steel (like 420HC or 8Cr13MoV) resists corrosion; carbon steel (like 1095) holds a sharper edge but rusts without care. Morakniv is the unbeatable value entry; Ka-Bar and ESEE are the serious step-ups. Every go-bag needs a fixed blade.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Full tang:</strong> no failure point</span>
               <span class="type-spec"><strong>Best use:</strong> go-bags, heavy work</span>
@@ -915,7 +666,7 @@
               <div class="type-name">Multitools</div>
               <div class="type-tag">20 Tools, One Package</div>
             </div>
-            <div class="type-desc">Pliers-based multitools pack 15–20 tools into a belt-carried package: pliers, wire cutters, knife blade, saw, screwdrivers, can opener, bottle opener, file, scissors, and more. In a repair or improvisation scenario, the pliers and screwdrivers alone are worth the weight. The Leatherman Wave+ is the benchmark — 18 tools, one-hand-operable blades, replaceable wire cutters. The Leatherman Signal adds a ferro rod and whistle for survival-specific use. Victorinox Swiss Army Knives are lighter and better for fine work but lack pliers. Keep a multitool in your EDC and a second in your go-bag.</div>
+            <div class="type-desc">Pliers-based multitools pack 15–20 tools into a belt-carried package: pliers, wire cutters, knife blade, saw, screwdrivers, can opener, bottle opener, file, scissors, and more. In a repair or improvisation scenario, the pliers and screwdrivers alone are worth the weight. The Leatherman Wave+ is the benchmark. 18 tools, one-hand-operable blades, replaceable wire cutters. The Leatherman Signal adds a ferro rod and whistle for survival-specific use. Victorinox Swiss Army Knives are lighter and better for fine work but lack pliers. Keep a multitool in your EDC and a second in your go-bag.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>15–20 tools</strong></span>
               <span class="type-spec"><strong>Pliers + screwdrivers</strong></span>
@@ -923,47 +674,23 @@
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Fixed Blade Knife]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Multitool]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Folding Knife / Budget Option]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Fixed blade knife (full tang)</span>
+                <span class="own-why">The workhorse. Batoning wood, processing game, cutting cordage. Full tang means the steel runs through the handle.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Folding knife (EDC)</span>
+                <span class="own-why">Pocket knife for daily carry. Not a survival tool, but the blade you actually have on you.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Multitool (pliers-based)</span>
+                <span class="own-why">Pliers, screwdrivers, blade, can opener, file. Not the best at any one task, but competent at all of them. One per person.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
@@ -971,20 +698,19 @@
     <!-- ========== SHELTER & WARMTH ========== -->
     <div class="subcat-item">
       <button class="subcat-trigger" onclick="toggleSubcat(this)">
-        <span class="subcat-name">Shelter <span class="cat-amp">&amp;</span> Warmth</span>
+        <span class="subcat-name">Shelter AND Warmth</span>
         <span class="subcat-icon">+</span>
       </button>
       <div class="subcat-body">
         <div class="subcat-content">
-
-          <p class="type-intro">Exposure kills faster than dehydration or starvation. In cold, wet, or windy conditions, hypothermia can set in within hours. Shelter and insulation are your first line of defense — from a $5 emergency blanket that fits in a pocket to a full tarp shelter system that keeps a family dry through a storm. Layer your shelter prep the same way you layer clothing: a lightweight emergency option for go-bags, and a more robust system for home and vehicle kits.</p>
+          <p class="type-intro">Exposure kills faster than dehydration or starvation. In cold, wet, or windy conditions, hypothermia can set in within hours. Shelter and insulation are your first line of defense: from a $5 emergency blanket that fits in a pocket to a full tarp shelter system that keeps a family dry through a storm. Layer your shelter prep the same way you layer clothing: a lightweight emergency option for go-bags, and a more robust system for home and vehicle kits.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Emergency Blankets & Bivvies</div>
               <div class="type-tag">Compact Survival Essentials</div>
             </div>
-            <div class="type-desc">Mylar "space blankets" reflect up to 90% of body heat back to you — the cheapest, lightest insurance against hypothermia. The thin foil versions ($2, 2 oz) work in a pinch but tear easily and are single-use. Upgraded versions — like the SOL Heavy Duty Emergency Blanket — use thicker, reinforced material that can be reused and rigged as a shelter. Emergency bivvy sacks take it further: a reflective sleeping bag that traps heat and blocks wind. Carry at least two emergency blankets in every kit — they weigh nothing and can save your life.</div>
+            <div class="type-desc">Mylar "space blankets" reflect up to 90% of body heat back to you: the cheapest, lightest insurance against hypothermia. The thin foil versions ($2, 2 oz) work in a pinch but tear easily and are single-use. Upgraded versions: like the SOL Heavy Duty Emergency Blanket: use thicker, reinforced material that can be reused and rigged as a shelter. Emergency bivvy sacks take it further: a reflective sleeping bag that traps heat and blocks wind. Carry at least two emergency blankets in every kit: they weigh nothing and can save your life.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Reflects 90%</strong> body heat</span>
               <span class="type-spec"><strong>Weight:</strong> 2–8 oz</span>
@@ -997,7 +723,7 @@
               <div class="type-name">Tarps & Shelter Systems</div>
               <div class="type-tag">Versatile Weather Protection</div>
             </div>
-            <div class="type-desc">A quality tarp is one of the most versatile items in any kit — shelter, ground cover, rain fly, wind break, gear protection, water collection, and improvised stretcher. Silnylon and Dyneema tarps are ultralight and pack small; heavy-duty poly tarps are cheaper and more durable. A 10'×10' tarp with grommets or tie-outs, combined with 50 feet of paracord and a few stakes, creates a legitimate shelter in minutes. Practice rigging a few basic configurations (A-frame, lean-to, diamond fly) before you need them. Pair with a ground pad for insulation.</div>
+            <div class="type-desc">A quality tarp is one of the most versatile items in any kit: shelter, ground cover, rain fly, wind break, gear protection, water collection, and improvised stretcher. Silnylon and Dyneema tarps are ultralight and pack small; heavy-duty poly tarps are cheaper and more durable. A 10'×10' tarp with grommets or tie-outs, combined with 50 feet of paracord and a few stakes, creates a legitimate shelter in minutes. Practice rigging a few basic configurations (A-frame, lean-to, diamond fly) before you need them. Pair with a ground pad for insulation.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>10'×10'</strong> minimum useful</span>
               <span class="type-spec"><strong>Multiple</strong> shelter configs</span>
@@ -1010,7 +736,7 @@
               <div class="type-name">Sleeping Bags & Pads</div>
               <div class="type-tag">Overnight Survival</div>
             </div>
-            <div class="type-desc">If you're spending a night outdoors — planned or not — a sleeping bag and insulating pad are what keep you functional the next day. For go-bags: compact synthetic bags rated to 32°F (0°C) compress small and work wet. For home kits: a warmer bag (0°F / -18°C) handles the worst-case winter power outage. The sleeping pad matters as much as the bag — cold ground steals heat faster than cold air. Closed-cell foam pads (like the Therm-a-Rest Z Lite) are indestructible, never leak, and provide solid insulation. Inflatable pads are more comfortable but can puncture.</div>
+            <div class="type-desc">If you're spending a night outdoors: planned or not: a sleeping bag and insulating pad are what keep you functional the next day. For go-bags: compact synthetic bags rated to 32°F (0°C) compress small and work wet. For home kits: a warmer bag (0°F / -18°C) handles the worst-case winter power outage. The sleeping pad matters as much as the bag: cold ground steals heat faster than cold air. Closed-cell foam pads (like the Therm-a-Rest Z Lite) are indestructible, never leak, and provide solid insulation. Inflatable pads are more comfortable but can puncture.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Synthetic:</strong> works wet</span>
               <span class="type-spec"><strong>Pad R-value:</strong> 2+ minimum</span>
@@ -1018,47 +744,23 @@
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Emergency Blanket / Bivvy]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Tarp / Shelter]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Sleeping Bag / Pad]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Emergency blankets / bivvies (2+ per person)</span>
+                <span class="own-why">Reflects 90% of body heat. Weighs nothing, fits in a pocket. Extremely effective at preventing hypothermia.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Tarp with grommet points</span>
+                <span class="own-why">Shelter, rain cover, ground sheet, shade. The most versatile piece of fabric you can carry.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Sleeping bag (rated to your climate)</span>
+                <span class="own-why">Matches your expected low temperature. Synthetic fill works when wet; down packs smaller but fails if soaked.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
@@ -1066,20 +768,19 @@
     <!-- ========== CORDAGE, TAPE & REPAIR ========== -->
     <div class="subcat-item">
       <button class="subcat-trigger" onclick="toggleSubcat(this)">
-        <span class="subcat-name">Cordage, Tape <span class="cat-amp">&amp;</span> Repair</span>
+        <span class="subcat-name">Cordage, Tape AND Repair</span>
         <span class="subcat-icon">+</span>
       </button>
       <div class="subcat-body">
         <div class="subcat-content">
-
-          <p class="type-intro">The materials that hold everything together — literally. Paracord lashes tarps, duct tape patches holes, zip ties secure anything to anything, and a sewing kit repairs gear when replacement isn't an option. These are the consumables of survival: light, cheap, and endlessly useful. The common thread is improvisation — every one of these items has dozens of applications beyond its intended use.</p>
+          <p class="type-intro">The materials that hold everything together: literally. Paracord lashes tarps, duct tape patches holes, zip ties secure anything to anything, and a sewing kit repairs gear when replacement isn't an option. These are the consumables of survival: light, cheap, and endlessly useful. The common thread is improvisation: every one of these items has dozens of applications beyond its intended use.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Paracord (550)</div>
               <div class="type-tag">The Universal Cordage</div>
             </div>
-            <div class="type-desc">Military-spec Type III 550 paracord — 550 lb tensile strength, 7 inner strands, nylon kernmantle construction. Used for shelter building, gear lashing, clotheslines, boot laces, fishing line (inner strands), snares, tourniquets, and hundreds of other applications. Carry at least 50 feet in every kit, 100 feet is better. Inner strands can be separated for fine work — sewing, fishing, trap triggers. SurvivorCord variants add fishing line, waxed jute tinder, and copper wire to the inner strands. At $8–12 per 100 feet, weight is the only cost.</div>
+            <div class="type-desc">Military-spec Type III 550 paracord. 550 lb tensile strength, 7 inner strands, nylon kernmantle construction. Used for shelter building, gear lashing, clotheslines, boot laces, fishing line (inner strands), snares, tourniquets, and hundreds of other applications. Carry at least 50 feet in every kit, 100 feet is better. Inner strands can be separated for fine work: sewing, fishing, trap triggers. SurvivorCord variants add fishing line, waxed jute tinder, and copper wire to the inner strands. At $8–12 per 100 feet, weight is the only cost.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>550 lb</strong> tensile strength</span>
               <span class="type-spec"><strong>7 inner strands</strong></span>
@@ -1092,7 +793,7 @@
               <div class="type-name">Duct Tape & Repair Tape</div>
               <div class="type-tag">Fixes Everything (Temporarily)</div>
             </div>
-            <div class="type-desc">Duct tape repairs gear, seals leaks, patches tarps, splints bones, removes splinters, covers blisters, and creates improvised tools. Wrap 10–20 feet around a water bottle or pencil to save space — no need to carry a full roll. Gear-specific repair tapes like Tenacious Tape (McNett) are thinner, stronger, and more adhesive than standard duct tape on nylon, Cordura, and ripstop fabrics. Gorilla Tape is the heavy-duty option for structural repairs. Carry both: duct tape for everything, repair tape for gear-specific fixes.</div>
+            <div class="type-desc">Duct tape repairs gear, seals leaks, patches tarps, splints bones, removes splinters, covers blisters, and creates improvised tools. Wrap 10–20 feet around a water bottle or pencil to save space: no need to carry a full roll. Gear-specific repair tapes like Tenacious Tape (McNett) are thinner, stronger, and more adhesive than standard duct tape on nylon, Cordura, and ripstop fabrics. Gorilla Tape is the heavy-duty option for structural repairs. Carry both: duct tape for everything, repair tape for gear-specific fixes.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Wrap around</strong> a bottle to save space</span>
               <span class="type-spec"><strong>Tenacious Tape</strong> for gear</span>
@@ -1105,7 +806,7 @@
               <div class="type-name">Zip Ties, Wire & Clamps</div>
               <div class="type-tag">Quick Fixes</div>
             </div>
-            <div class="type-desc">Heavy-duty zip ties (8" and 12" lengths) fasten, secure, and bind faster than knots. They hold gear to packs, create improvised handles, secure tarp grommets, and bundle cables. Carry 20–30 in various sizes. Baling wire or snare wire (brass or stainless) fills the gap between cordage and structural fastening — it holds shape, wraps tightly, and doesn't stretch. Hose clamps are useful for pipe and hose repairs. All of these weigh almost nothing and take up negligible space.</div>
+            <div class="type-desc">Heavy-duty zip ties (8" and 12" lengths) fasten, secure, and bind faster than knots. They hold gear to packs, create improvised handles, secure tarp grommets, and bundle cables. Carry 20–30 in various sizes. Baling wire or snare wire (brass or stainless) fills the gap between cordage and structural fastening: it holds shape, wraps tightly, and doesn't stretch. Hose clamps are useful for pipe and hose repairs. All of these weigh almost nothing and take up negligible space.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>20–30 zip ties</strong> per kit</span>
               <span class="type-spec"><strong>Weight:</strong> negligible</span>
@@ -1118,7 +819,7 @@
               <div class="type-name">Sewing & Gear Repair Kits</div>
               <div class="type-tag">Extend Gear Life</div>
             </div>
-            <div class="type-desc">A compact sewing kit — heavy needles, waxed thread, buttons, safety pins, and fabric patches — lets you repair clothing, packs, tarps, and sleeping bags in the field. Speedy Stitcher-style awls handle heavy materials like canvas, leather, and webbing that regular needles can't penetrate. Iron-on patches and Seam Grip adhesive round out a comprehensive gear repair setup. In a long-term scenario, the ability to repair rather than replace gear becomes increasingly important. A decent kit fits in an Altoids tin.</div>
+            <div class="type-desc">A compact sewing kit: heavy needles, waxed thread, buttons, safety pins, and fabric patches: lets you repair clothing, packs, tarps, and sleeping bags in the field. Speedy Stitcher-style awls handle heavy materials like canvas, leather, and webbing that regular needles can't penetrate. Iron-on patches and Seam Grip adhesive round out a comprehensive gear repair setup. In a long-term scenario, the ability to repair rather than replace gear becomes increasingly important. A decent kit fits in an Altoids tin.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Heavy needles</strong> + waxed thread</span>
               <span class="type-spec"><strong>Fits in</strong> an Altoids tin</span>
@@ -1126,47 +827,27 @@
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Paracord 550]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Duct / Repair Tape]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Sewing / Repair Kit]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Paracord 550 (100 ft minimum)</span>
+                <span class="own-why">550 lb tensile strength. Shelter building, gear repair, lashing, clothesline. Stock more than you think.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Duct tape (full roll + flat wrap)</span>
+                <span class="own-why">Repairs gear, seals wounds temporarily, patches tarps, marks trails. Wrap a flat section around a water bottle.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Zip ties, wire, and clamps (assorted)</span>
+                <span class="own-why">Fast mechanical fastening. A small assortment covers dozens of scenarios.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Sewing and gear repair kit</span>
+                <span class="own-why">Needles, heavy thread, patches, adhesive nylon. For clothing, packs, tents, and tarps.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
@@ -1179,15 +860,14 @@
       </button>
       <div class="subcat-body">
         <div class="subcat-content">
-
-          <p class="type-intro">When power tools are dead and hardware stores are closed, hand tools are what let you build, demolish, clear, and repair. A hatchet processes firewood, a folding saw clears debris, a pry bar forces open jammed doors, and an entrenching tool digs drainage and latrines. These are heavier than the other items in this section — they live in vehicle kits and home emergency supplies rather than go-bags.</p>
+          <p class="type-intro">When power tools are dead and hardware stores are closed, hand tools are what let you build, demolish, clear, and repair. A hatchet processes firewood, a folding saw clears debris, a pry bar forces open jammed doors, and an entrenching tool digs drainage and latrines. These are heavier than the other items in this section: they live in vehicle kits and home emergency supplies rather than go-bags.</p>
 
           <div class="type-section">
             <div class="type-header">
               <div class="type-name">Hatchets & Axes</div>
               <div class="type-tag">Chopping & Splitting</div>
             </div>
-            <div class="type-desc">A hatchet handles the tasks a knife can't — splitting kindling, chopping small trees, driving stakes, and processing firewood. A 14–16" handle gives enough leverage for serious work while keeping weight under <span class="u" data-imperial="2 lbs" data-metric="0.9 kg">2 lbs</span>. Fiskars X7 is the value benchmark — virtually indestructible composite handle, sharp out of the box. Hults Bruk and Gransfors Bruk are the premium hand-forged Swedish options that last generations. For vehicles and home kits, a full-size axe (24–28" handle) is worth the extra weight. Always carry a sheath — an exposed hatchet blade in a pack is a recipe for injury.</div>
+            <div class="type-desc">A hatchet handles the tasks a knife can't: splitting kindling, chopping small trees, driving stakes, and processing firewood. A 14–16" handle gives enough leverage for serious work while keeping weight under <span class="u" data-imperial="2 lbs" data-metric="0.9 kg">2 lbs</span>. Fiskars X7 is the value benchmark: virtually indestructible composite handle, sharp out of the box. Hults Bruk and Gransfors Bruk are the premium hand-forged Swedish options that last generations. For vehicles and home kits, a full-size axe (24–28" handle) is worth the extra weight. Always carry a sheath: an exposed hatchet blade in a pack is a recipe for injury.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>14–16"</strong> hatchet handle</span>
               <span class="type-spec"><strong>Best use:</strong> firewood, stakes</span>
@@ -1200,7 +880,7 @@
               <div class="type-name">Folding Saws</div>
               <div class="type-tag">Efficient Wood Processing</div>
             </div>
-            <div class="type-desc">A folding saw cuts faster and more precisely than a hatchet with far less effort and noise. Blade lengths of 7–10" handle branches up to 4–5" diameter. The Silky Gomboy and Bahco Laplander are the most recommended — aggressive teeth that cut on the pull stroke, lockable handles, and blades that fold safely into the handle. Lighter and safer to carry than an axe, and often more useful in camp: cutting poles for shelter, processing firewood to length, clearing brush. A folding saw + a fixed blade knife covers most wood processing needs.</div>
+            <div class="type-desc">A folding saw cuts faster and more precisely than a hatchet with far less effort and noise. Blade lengths of 7–10" handle branches up to 4–5" diameter. The Silky Gomboy and Bahco Laplander are the most recommended: aggressive teeth that cut on the pull stroke, lockable handles, and blades that fold safely into the handle. Lighter and safer to carry than an axe, and often more useful in camp: cutting poles for shelter, processing firewood to length, clearing brush. A folding saw + a fixed blade knife covers most wood processing needs.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>7–10"</strong> blade length</span>
               <span class="type-spec"><strong>Cuts on pull</strong> stroke</span>
@@ -1213,7 +893,7 @@
               <div class="type-name">Shovels & Entrenching Tools</div>
               <div class="type-tag">Dig, Pry, Chop</div>
             </div>
-            <div class="type-desc">A military-style folding entrenching tool (E-tool) digs latrines, drainage ditches, fire pits, and snow shelters. It clears debris, chops roots, and can serve as a makeshift pry bar. The tri-fold design collapses small enough for a vehicle kit or large pack. The USGI-issue E-tool is the standard; Chinese copies vary wildly in quality. Gerber and SOG make good civilian versions with serrated edges and pick configurations. For home emergency kits, a standard garden spade may be more practical — easier to use for extended digging, which is what you'll actually be doing.</div>
+            <div class="type-desc">A military-style folding entrenching tool (E-tool) digs latrines, drainage ditches, fire pits, and snow shelters. It clears debris, chops roots, and can serve as a makeshift pry bar. The tri-fold design collapses small enough for a vehicle kit or large pack. The USGI-issue E-tool is the standard; Chinese copies vary wildly in quality. Gerber and SOG make good civilian versions with serrated edges and pick configurations. For home emergency kits, a standard garden spade may be more practical: easier to use for extended digging, which is what you'll actually be doing.</div>
             <div class="type-specs">
               <span class="type-spec"><strong>Tri-fold</strong> compact design</span>
               <span class="type-spec"><strong>Best use:</strong> vehicle kits, home</span>
@@ -1234,47 +914,23 @@
             </div>
           </div>
 
-          <!-- Featured Picks -->
-          <div class="featured-label">Featured Picks</div>
-          <div class="featured-grid">
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Hatchet / Axe]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Folding Saw]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
-            <div class="featured-card">
-              <div class="featured-img"><span class="featured-img-placeholder">Photo</span></div>
-              <div class="featured-info">
-                <div class="featured-name">[Entrenching Tool / Pry Bar]</div>
-                <div class="featured-desc">Product to be selected.</div>
-                <div class="featured-specs"><span class="featured-spec"><strong>—</strong></span></div>
-                <div class="featured-bottom">
-                  <span class="featured-price">$—</span>
-                  <span class="featured-btn" style="opacity:0.3">Amazon</span>
-                </div>
-              </div>
-            </div>
+          <div class="own-section">
+            <div class="own-label">What to own</div>
+            <ul class="own-list">
+              <li class="own-item">
+                <span class="own-what">Hatchet or camp axe</span>
+                <span class="own-why">Splits kindling, processes firewood, clears brush. A good hatchet replaces several tools. Keep it sharp.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Folding saw</span>
+                <span class="own-why">Cleaner cuts than a hatchet, less effort for larger branches. Lighter and safer to carry in a pack.</span>
+              </li>
+              <li class="own-item">
+                <span class="own-what">Folding shovel / entrenching tool</span>
+                <span class="own-why">Digging fire pits, latrines, drainage, snow. Military-style tri-fold shovels pack small.</span>
+              </li>
+            </ul>
           </div>
-
         </div>
       </div>
     </div>
@@ -1282,58 +938,16 @@
   </div>
 </div>
 
-<!-- GIFTS FOR THE PARANOID -->
-<section class="guide">
+<!-- CTA -->
+<section class="cta-section">
   <div class="container">
-    <div class="guide-header">
-      <div class="guide-title">Gifts for the Paranoid</div>
-    </div>
-    <div class="guide-content">Buying for someone who takes preparedness seriously? These survival & repair picks make practical, thoughtful gifts — from premium multitools to quality fixed blades and camp gear.</div>
-    <div class="gift-grid">
-      <div class="gift-card">
-        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
-        <div class="gift-info">
-          <div class="gift-name">[Gift Pick 1]</div>
-          <div class="gift-desc">Product to be selected.</div>
-          <div class="gift-bottom">
-            <span class="gift-price">$—</span>
-            <span class="featured-btn" style="opacity:0.3">Amazon</span>
-          </div>
-        </div>
+    <hr class="divider" style="margin-bottom: 64px;">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Shop for the Paranoid</h2>
+        <p>You, your dad, your slightly intense coworker. Whoever it is, we picked the gear worth actually buying. Organized by category, no filler, links straight to Amazon.</p>
       </div>
-      <div class="gift-card">
-        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
-        <div class="gift-info">
-          <div class="gift-name">[Gift Pick 2]</div>
-          <div class="gift-desc">Product to be selected.</div>
-          <div class="gift-bottom">
-            <span class="gift-price">$—</span>
-            <span class="featured-btn" style="opacity:0.3">Amazon</span>
-          </div>
-        </div>
-      </div>
-      <div class="gift-card">
-        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
-        <div class="gift-info">
-          <div class="gift-name">[Gift Pick 3]</div>
-          <div class="gift-desc">Product to be selected.</div>
-          <div class="gift-bottom">
-            <span class="gift-price">$—</span>
-            <span class="featured-btn" style="opacity:0.3">Amazon</span>
-          </div>
-        </div>
-      </div>
-      <div class="gift-card">
-        <div class="gift-img"><span class="gift-img-placeholder">Photo</span></div>
-        <div class="gift-info">
-          <div class="gift-name">[Gift Pick 4]</div>
-          <div class="gift-desc">Product to be selected.</div>
-          <div class="gift-bottom">
-            <span class="gift-price">$—</span>
-            <span class="featured-btn" style="opacity:0.3">Amazon</span>
-          </div>
-        </div>
-      </div>
+      <a href="#" class="cta-btn">Browse Gift Picks +</a>
     </div>
   </div>
 </section>
@@ -1341,9 +955,8 @@
 <!-- RELATED GUIDES -->
 <section class="related">
   <div class="container">
-    <div class="related-header">
-      <div class="guide-title">Related Guides</div>
-    </div>
+    <hr class="divider" style="margin-bottom: 56px;">
+    <div class="section-label">Related Guides</div>
     <div class="article-list">
       <div class="article-row">
         <div class="article-meta">
@@ -1352,8 +965,8 @@
         </div>
         <div class="article-content">
           <div class="article-title">Fixed Blade vs Folder vs Multitool: What Belongs in Your Kit?</div>
-          <div class="article-excerpt">Each cutting tool has strengths and limits. A practical breakdown of when you need each one — and the minimum kit that covers all your bases.</div>
-          <div class="article-read">Read →</div>
+          <div class="article-excerpt">Each cutting tool has strengths and limits. A practical breakdown of when you need each one: and the minimum kit that covers all your bases.</div>
+          <div class="article-read">Read +</div>
         </div>
       </div>
       <div class="article-row">
@@ -1363,8 +976,8 @@
         </div>
         <div class="article-content">
           <div class="article-title">5 Tarp Shelter Configurations Every Prepper Should Know</div>
-          <div class="article-excerpt">A-frame, lean-to, diamond fly, C-fly, and plough point — step-by-step instructions for rigging each one with just a tarp, paracord, and stakes.</div>
-          <div class="article-read">Read →</div>
+          <div class="article-excerpt">A-frame, lean-to, diamond fly, C-fly, and plough point: step-by-step instructions for rigging each one with just a tarp, paracord, and stakes.</div>
+          <div class="article-read">Read +</div>
         </div>
       </div>
       <div class="article-row">
@@ -1374,8 +987,8 @@
         </div>
         <div class="article-content">
           <div class="article-title">The $50 Field Repair Kit That Fixes Almost Anything</div>
-          <div class="article-excerpt">Duct tape, paracord, zip ties, a sewing kit, and a few other items — how to build a compact repair kit that handles 90% of gear failures in the field.</div>
-          <div class="article-read">Read →</div>
+          <div class="article-excerpt">Duct tape, paracord, zip ties, a sewing kit, and a few other items: how to build a compact repair kit that handles 90% of gear failures in the field.</div>
+          <div class="article-read">Read +</div>
         </div>
       </div>
     </div>
@@ -1384,76 +997,55 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
+  <div class="container">
+    <hr class="divider" style="margin-bottom: 40px;">
     <div class="footer-top">
-      <div class="footer-brand">PARANOID<span class="logo-and">AND</span>READY</div>
+      <div class="footer-brand">PARANOID <span class="logo-and">AND</span> READY</div>
       <ul class="footer-nav">
-        <li><a href="/#about">About</a></li>
-        <li><a href="/#contact">Contact</a></li>
-        <li><a href="/#disclosure">Affiliate Disclosure</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
       </ul>
     </div>
     <div class="footer-bottom">
       <div class="footer-tagline">Stay prepared. Not surprised.</div>
-      <div class="footer-disclaimer">As an Amazon Associate, rawlist.org earns from qualifying purchases. Prices and availability are subject to change. © 2025</div>
+      <div class="footer-copyright">2025 paranoidandready.com</div>
     </div>
   </div>
 </footer>
 
 <script>
-  // ---- Subcategory accordion ----
   function toggleSubcat(trigger) {
     const item = trigger.parentElement;
     const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.subcat-item.open').forEach(el => {
-      el.classList.remove('open');
-    });
+    document.querySelectorAll('.subcat-item.open').forEach(el => el.classList.remove('open'));
     if (!isOpen) {
       item.classList.add('open');
-      setTimeout(() => {
-        trigger.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+      setTimeout(() => trigger.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 350);
     }
   }
 
-  // ---- Unit system: imperial / metric ----
+  var currentSystem = 'imperial';
+  function applyUnits(sys) {
+    currentSystem = sys;
+    document.querySelectorAll('[data-imperial][data-metric]').forEach(function(el) {
+      el.textContent = el.getAttribute('data-' + sys);
+    });
+    document.querySelectorAll('.u-opt').forEach(function(btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-system') === sys);
+    });
+  }
+  function setUnits(sys) {
+    try { localStorage.setItem('pr-units', sys); } catch(e) {}
+    applyUnits(sys);
+  }
   (function() {
-    const IMPERIAL_LOCALES = ['en-US', 'en-LR', 'en-MM'];
-
-    function detectSystem() {
-      const lang = navigator.language || navigator.userLanguage || 'en-US';
-      return IMPERIAL_LOCALES.some(l => lang.startsWith(l)) ? 'imperial' : 'metric';
+    var saved;
+    try { saved = localStorage.getItem('pr-units'); } catch(e) {}
+    if (!saved) {
+      var lang = (navigator.language || 'en-US');
+      saved = (lang === 'en-US' || lang === 'en-LR' || lang === 'en-MM') ? 'imperial' : 'metric';
     }
-
-    function getSystem() {
-      try {
-        return localStorage.getItem('pr-units') || detectSystem();
-      } catch(e) {
-        return detectSystem();
-      }
-    }
-
-    function saveSystem(sys) {
-      try { localStorage.setItem('pr-units', sys); } catch(e) {}
-    }
-
-    function applyUnits(sys) {
-      document.querySelectorAll('.u, [data-imperial][data-metric]').forEach(el => {
-        el.textContent = el.getAttribute('data-' + sys);
-      });
-      document.querySelectorAll('.u-opt').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-system') === sys);
-      });
-      document.documentElement.setAttribute('data-units', sys);
-    }
-
-    const initial = getSystem();
-    applyUnits(initial);
-
-    window.setUnits = function(sys) {
-      saveSystem(sys);
-      applyUnits(sys);
-    };
+    applyUnits(saved);
   })();
 </script>
 
