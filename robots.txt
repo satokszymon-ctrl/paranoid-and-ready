@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rawlis.org/sitemap.xml
+Sitemap: https://rawlist.org/sitemap.xml
