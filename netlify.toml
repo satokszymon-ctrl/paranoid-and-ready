@@ -5,48 +5,24 @@
   publish = "."
 
 # ── Redirects ──────────────────────────────────────────────
-# Old landing page filename → root
+# Old filenames from earlier uploads → proper pages
 [[redirects]]
   from = "/paranoidandreadynew.html"
   to = "/"
   status = 301
   force = true
 
-# Clean URLs (optional): /energy-power → /energy-power.html
 [[redirects]]
-  from = "/energy-power"
-  to = "/energy-power.html"
-  status = 200
+  from = "/paranoidandreadynew*"
+  to = "/"
+  status = 301
+  force = true
 
 [[redirects]]
-  from = "/water-hydration"
-  to = "/water-hydration.html"
-  status = 200
-
-[[redirects]]
-  from = "/food-supply"
-  to = "/food-supply.html"
-  status = 200
-
-[[redirects]]
-  from = "/medical-hygiene"
-  to = "/medical-hygiene.html"
-  status = 200
-
-[[redirects]]
-  from = "/communication-navigation"
-  to = "/communication-navigation.html"
-  status = 200
-
-[[redirects]]
-  from = "/security-defense"
-  to = "/security-defense.html"
-  status = 200
-
-[[redirects]]
-  from = "/survival-repair"
-  to = "/survival-repair.html"
-  status = 200
+  from = "/paranoidandready*"
+  to = "/"
+  status = 301
+  force = true
 
 # ── Headers ────────────────────────────────────────────────
 [[headers]]
@@ -62,8 +38,3 @@
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
-
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
