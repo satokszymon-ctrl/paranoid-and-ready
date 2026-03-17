@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Food Supply Checklist : PARANOID AND READY</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#C5C5C5;--bg-surface:#b8b8b8;--bg-raised:#aeaeae;--red:#8B0000;--red-glow:rgba(139,0,0,0.07);
+    --ink:#1A1A1A;--ink-mid:#3a3a3a;--ink-light:#555555;--white:#ffffff;--border:#1A1A1A;--border-mid:#888888;
+    --max-w:1000px;--pad:48px;
+  }
+  * { margin:0;padding:0;box-sizing:border-box; }
+  body { font-family:'JetBrains Mono',monospace;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.6;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased; }
+  body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.6; }
+  a { color:inherit;text-decoration:none; }
+  .container { max-width:var(--max-w);margin:0 auto;padding:0 var(--pad); }
+  nav { max-width:var(--max-w);margin:0 auto;padding:28px var(--pad) 0;display:grid;grid-template-columns:1fr auto 1fr;align-items:center; }
+  .nav-left { display:flex;align-items:center; }
+  .logo { font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--red); }
+  .logo-and { color:var(--ink); }
+  .nav-links { list-style:none;display:flex;gap:28px; }
+  .nav-links a { font-size:10px;font-weight:500;color:var(--ink-mid);text-transform:uppercase;letter-spacing:1.5px;transition:color 0.2s; }
+  .nav-links a:hover { color:var(--ink); }
+  .nav-right { display:flex;align-items:center;justify-content:flex-end;gap:16px; }
+  .nav-search { background:transparent;border:1px solid var(--border);color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;padding:6px 12px;width:150px;outline:none;transition:border-color 0.2s; }
+  .nav-search::placeholder { color:var(--ink-light); }
+  .nav-search:focus { border-color:var(--red); }
+  .header-line { max-width:var(--max-w);margin:20px auto 0;padding:0 var(--pad); }
+  .header-line hr { border:none;border-top:2px solid var(--ink); }
+  .divider { border:none;border-top:2px solid var(--ink); }
+  .breadcrumb { padding:16px 0 0;font-size:10px;font-weight:500;letter-spacing:1px;color:var(--ink-light);text-transform:uppercase; }
+  .breadcrumb a { color:var(--ink-mid);transition:color 0.2s; }
+  .breadcrumb a:hover { color:var(--red); }
+  .breadcrumb .sep { margin:0 8px;color:var(--border-mid); }
+  .breadcrumb .current { color:var(--red); }
+
+  .guide-hero { padding:48px 0 56px;animation:fadeIn 0.4s ease-out both; }
+  .guide-tag { font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--red);border:1px solid var(--red);padding:4px 12px;display:inline-block;margin-bottom:20px; }
+  .guide-hero h1 { font-size:clamp(22px,3.5vw,38px);font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:2px;margin-bottom:24px;line-height:1.15; }
+  .guide-brief { font-size:14px;color:var(--ink);line-height:1.85;font-weight:400; }
+  .guide-brief p { margin-bottom:16px; }
+  .guide-brief p:last-child { margin-bottom:0; }
+
+  .section-label { font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:3px;color:var(--red);display:flex;align-items:center;gap:16px;margin-bottom:32px; }
+  .section-label::after { content:'';flex:1;height:1px;background:var(--ink); }
+
+  .guide-section { padding:0 0 56px;animation:fadeIn 0.4s ease-out 0.05s both; }
+  .guide-category { margin-bottom:32px; }
+  .guide-category:last-child { margin-bottom:0; }
+  .guide-cat-header { font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--ink);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border-mid); }
+  .guide-cat-number { color:var(--red);margin-right:8px; }
+
+  .checklist { list-style:none;display:grid;grid-template-columns:240px 1fr;gap:0; }
+  .checklist-item { display:contents; }
+
+  .check-name { padding:10px 20px 10px 0;border-bottom:1px solid var(--border-mid);font-size:13px;font-weight:600;color:var(--ink);line-height:1.5;white-space:nowrap; }
+  .check-note { padding:10px 0 10px 20px;border-bottom:1px solid var(--border-mid);border-left:1px solid var(--border-mid);font-size:13px;color:var(--ink-mid);font-weight:400;line-height:1.6; }
+  .checklist-item:last-child .check-name, .checklist-item:last-child .check-note { border-bottom:none; }
+
+  .guide-note { font-size:14px;color:var(--ink);line-height:1.85;font-weight:400;margin-bottom:32px; }
+
+  .books-section { padding:0 0 56px;animation:fadeIn 0.4s ease-out 0.1s both; }
+  .book-card { display:flex;gap:28px;padding:28px;border:1px solid var(--border);background:rgba(197,197,197,0.3);margin-bottom:16px;transition:background 0.3s; }
+  .book-card:last-child { margin-bottom:0; }
+  .book-card:hover { background:rgba(184,184,184,0.6); }
+  .book-cover { width:100px;min-width:100px;height:150px;background:var(--bg-raised);border:1px solid var(--border-mid);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--ink-light);text-transform:uppercase;letter-spacing:1px;flex-shrink:0; }
+  .book-info { flex:1;display:flex;flex-direction:column;gap:8px; }
+  .book-title { font-size:14px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:1px;line-height:1.3; }
+  .book-author { font-size:11px;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:1px; }
+  .book-desc { font-size:13px;color:var(--ink-mid);font-weight:400;line-height:1.7;flex:1; }
+  .book-btn { display:inline-block;align-self:flex-start;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--white);background:var(--ink);border:1px solid var(--ink);padding:8px 16px;transition:all 0.2s; }
+  .book-btn:hover { background:var(--red);border-color:var(--red); }
+
+  .cta-section { padding:64px 0;animation:fadeIn 0.4s ease-out 0.15s both; }
+  .cta-inner { display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap; }
+  .cta-text h2 { font-size:16px;font-weight:800;line-height:1.3;margin-bottom:10px;text-transform:uppercase;letter-spacing:2px;color:var(--ink); }
+  .cta-text p { font-size:14px;color:var(--ink-mid);font-weight:400;line-height:1.7; }
+  .cta-btn { display:inline-block;background:var(--ink);border:1px solid var(--ink);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:14px 28px;transition:all 0.2s;flex-shrink:0; }
+  .cta-btn:hover { background:var(--red);border-color:var(--red); }
+
+  footer { padding:40px 0; }
+  .footer-top { display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px; }
+  .footer-brand { font-size:11px;font-weight:800;color:var(--red);letter-spacing:2px;text-transform:uppercase; }
+  .footer-nav { display:flex;gap:28px;list-style:none; }
+  .footer-nav a { font-size:10px;font-weight:500;color:var(--ink-mid);text-transform:uppercase;letter-spacing:1.5px;transition:color 0.2s; }
+  .footer-nav a:hover { color:var(--ink); }
+  .footer-bottom { display:flex;justify-content:space-between;align-items:baseline;padding-top:24px;border-top:1px solid var(--border-mid); }
+  .footer-tagline { font-size:13px;color:var(--ink-mid);font-weight:400;font-style:italic; }
+  .footer-copyright { font-size:11px;color:var(--ink-light);text-align:right; }
+
+  @keyframes fadeIn { from { opacity:0;transform:translateY(10px); } to { opacity:1;transform:translateY(0); } }
+  nav { animation:fadeIn 0.5s ease-out; }
+
+  @media (max-width:768px) {
+    :root { --pad:24px; }
+    .nav-left { display:none; }
+    nav { grid-template-columns:auto 1fr; }
+    .checklist { grid-template-columns:1fr; } .checklist-item { display:flex;flex-direction:column;gap:4px;margin-bottom:14px; } .checklist-item:last-child { margin-bottom:0; } .check-name { border-bottom:none;padding-bottom:2px;white-space:normal; } .check-note { border-left:none;border-bottom:1px solid var(--border-mid);padding-top:0;padding-left:0;padding-bottom:14px; } .checklist-item:last-child .check-note { border-bottom:none; }
+
+    .book-card { flex-direction:column;gap:16px; }
+    .book-cover { width:80px;min-width:80px;height:120px; }
+    .footer-top { flex-direction:column;gap:20px; }
+    .footer-bottom { flex-direction:column;gap:12px; }
+    .footer-copyright { text-align:left; }
+    .cta-inner { flex-direction:column; }
+  }
+  @media (max-width:480px) {
+    .guide-hero h1 { letter-spacing:1px; }
+    .book-card { padding:18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <ul class="nav-links">
+      <li><a href="index.html#categories">Categories</a></li>
+      <li><a href="index.html#guides">Guides</a></li>
+    </ul>
+  </div>
+  <a href="index.html" class="logo">PARANOID <span class="logo-and">AND</span> READY</a>
+  <div class="nav-right">
+    <input type="text" class="nav-search" placeholder="Search...">
+  </div>
+</nav>
+<div class="header-line"><hr class="divider"></div>
+
+<div class="container">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a><span class="sep">/</span><span class="current">Food Supplies</span>
+  </div>
+</div>
+
+<section class="guide-hero">
+  <div class="container">
+    <div class="guide-tag">Guide</div>
+    <h1>Emergency Food Supply Checklist</h1>
+    <div class="guide-brief">
+      <p>Building an emergency food supply is not about buying a pallet of freeze-dried meals and hoping for the best. It is about assembling a balanced, rotating stockpile of food your family will actually eat, stored properly, and maintained over time. The most common mistake is buying food you have never tasted and discovering you hate it when you need it most.</p>
+      <p>The second most common mistake is focusing entirely on shelf life and ignoring nutrition. You can survive on rice and canned beans, but after two weeks your body and your morale will suffer. A good food supply includes proteins, fats, carbohydrates, vitamins, and enough variety to keep people eating consistently.</p>
+      <p>This checklist covers what to stock, organized by food category. Specific quantities are not included because they depend on the size of your household and the duration you are preparing for. Use the rule of 2,000 calories per person per day as your baseline and adjust from there. The four books at the bottom of this page cover food preservation and production for anyone who wants to go beyond stockpiling.</p>
+    </div>
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<section class="guide-section">
+  <div class="container">
+    <div class="section-label" style="margin-top:48px;">What to stock</div>
+    <p class="guide-note">The list below covers food categories, not specific quantities. How much you need depends on the number of people in your household, their caloric needs, and the duration you are preparing for. A useful starting rule: aim for 2,000 calories per person per day, then adjust upward for physical labor and cold climates. Start with a 2-week supply and build toward 3 months. Rotate everything by using what you store and replacing what you use.</p>
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">01</span> Grains and starches</div>
+      <ul class="checklist">
+      <li class="checklist-item">
+        <span class="check-name">White rice</span>
+        <span class="check-note">Calorie-dense, long shelf life (up to 30 years if properly sealed), easy to prepare.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Pasta (dried)</span>
+        <span class="check-note">Compact, versatile, 2-3 year shelf life. Pairs with canned sauces and proteins.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Oats</span>
+        <span class="check-note">Breakfast staple. Good shelf life, nutritious, no cooking required if soaked.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Flour</span>
+        <span class="check-note">For baking bread, thickening soups. Shorter shelf life than whole grains: rotate every 6-12 months.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Cornmeal or polenta</span>
+        <span class="check-note">Versatile base for many meals. Stores well sealed.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Crackers</span>
+        <span class="check-note">Ready to eat, pairs with canned goods. Shorter shelf life: rotate every 6 months.</span>
+      </li>
+      </ul>
+    </div>
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">02</span> Proteins</div>
+      <ul class="checklist">
+      <li class="checklist-item">
+        <span class="check-name">Canned fish</span>
+        <span class="check-note">High protein, long shelf life, ready to eat. Stock a variety.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Canned beans</span>
+        <span class="check-note">Protein and fiber. Ready to eat cold if necessary.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Dried lentils</span>
+        <span class="check-note">Compact, nutritious, cook faster than dried beans. Extremely long shelf life.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Peanut butter</span>
+        <span class="check-note">Dense calories, protein, and fat. Shelf-stable for 1-2 years.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Canned meat</span>
+        <span class="check-note">Not gourmet. Extremely calorie-dense, shelf-stable for years, requires no preparation.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Jerky</span>
+        <span class="check-note">High protein, lightweight, ready to eat. Shorter shelf life: rotate every 6-12 months.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Powdered milk</span>
+        <span class="check-note">Calcium and protein source. Long shelf life when sealed. Essential if you have children.</span>
+      </li>
+      </ul>
+    </div>
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">03</span> Fruits and vegetables</div>
+      <ul class="checklist">
+      <li class="checklist-item">
+        <span class="check-name">Canned vegetables</span>
+        <span class="check-note">Vitamins and fiber. Ready to eat. Stock a variety to prevent menu fatigue.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Canned fruit</span>
+        <span class="check-note">Morale food. Sugar content provides quick energy.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Canned tomatoes</span>
+        <span class="check-note">Base for countless meals. Diced, crushed, paste, and sauce all serve different purposes.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Dried fruit</span>
+        <span class="check-note">Concentrated calories and vitamins. Compact storage.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Dehydrated vegetables</span>
+        <span class="check-note">Lightweight, long shelf life, rehydrate in soups and stews.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Freeze-dried fruit</span>
+        <span class="check-note">Lightweight, retains most nutrients, 25+ year shelf life when sealed.</span>
+      </li>
+      </ul>
+    </div>
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">04</span> Fats and oils</div>
+      <ul class="checklist">
+      <li class="checklist-item">
+        <span class="check-name">Cooking oil</span>
+        <span class="check-note">Essential for cooking and calorie density. Coconut oil has the longest shelf life.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Ghee</span>
+        <span class="check-note">Clarified butter. Widely used across South Asian, Middle Eastern, and European cooking. Shelf-stable, no refrigeration needed.</span>
+      </li>
+      </ul>
+    </div>
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">05</span> Seasonings and flavor</div>
+      <ul class="checklist">
+      <li class="checklist-item">
+        <span class="check-name">Salt</span>
+        <span class="check-note">Preservation, flavor, and an essential mineral. Stock more than you think.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Sugar or honey</span>
+        <span class="check-note">Calories, preservation, morale. Honey never expires if stored sealed.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Basic spices</span>
+        <span class="check-note">Basic seasoning prevents menu fatigue. Small investment, big impact.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Bouillon</span>
+        <span class="check-note">Instant soup base. Adds flavor to rice, pasta, and beans.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Soy sauce</span>
+        <span class="check-note">Flavor enhancer with a long shelf life.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Vinegar</span>
+        <span class="check-note">Cooking, cleaning, preservation. Extremely versatile.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Hot sauce</span>
+        <span class="check-note">Morale. Never underestimate the psychological value of flavor.</span>
+      </li>
+      </ul>
+    </div>
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">06</span> Ready-to-eat and no-cook</div>
+      <ul class="checklist">
+      <li class="checklist-item">
+        <span class="check-name">Energy bars</span>
+        <span class="check-note">No preparation, portable, calorie-dense. Rotate every 12 months.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Canned soups</span>
+        <span class="check-note">Complete meals in a can. Heat if you can, eat cold if you must.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">MREs</span>
+        <span class="check-note">Military-standard complete meals with heaters. Expensive but comprehensive.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Freeze-dried meals</span>
+        <span class="check-note">Just add hot water. Lightweight, long shelf life, decent variety.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Cereal</span>
+        <span class="check-note">Quick calories, no cooking. Eat dry or with powdered milk.</span>
+      </li>
+      </ul>
+    </div>
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">07</span> Beverages and hydration</div>
+      <ul class="checklist">
+      <li class="checklist-item">
+        <span class="check-name">Coffee and tea</span>
+        <span class="check-note">Morale and routine. Instant coffee stores well. Tea bags are compact.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Electrolyte sachets</span>
+        <span class="check-note">Critical during illness, heat, or heavy physical work. Oral rehydration salts prevent dehydration faster than water alone.</span>
+      </li>
+      </ul>
+    </div>
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">08</span> Baking and cooking essentials</div>
+      <ul class="checklist">
+      <li class="checklist-item">
+        <span class="check-name">Baking soda</span>
+        <span class="check-note">Leavening, cleaning, deodorizing, fire suppression. Multi-purpose.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Baking powder</span>
+        <span class="check-note">For baking bread and biscuits without yeast.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Yeast</span>
+        <span class="check-note">For bread making. Stores well frozen or vacuum-sealed.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Cornstarch</span>
+        <span class="check-note">Thickener for soups, sauces, and gravies.</span>
+      </li>
+      </ul>
+    </div>
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">09</span> Long-term and specialty</div>
+      <ul class="checklist">
+      <li class="checklist-item">
+        <span class="check-name">Heirloom seed vault</span>
+        <span class="check-note">For growing your own food. Heirloom seeds produce plants that yield viable seeds for next season.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Sprouting seeds</span>
+        <span class="check-note">Fresh nutrition in 3-5 days. No soil needed. Vitamins in a jar.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Vitamins</span>
+        <span class="check-note">Fill nutritional gaps when diet variety is limited. Multi-vitamin, vitamin C, vitamin D.</span>
+      </li>
+      <li class="checklist-item">
+        <span class="check-name">Comfort foods</span>
+        <span class="check-note">Chocolate, candy, cookies. Morale matters more than nutrition when stress is high.</span>
+      </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<section class="books-section">
+  <div class="container">
+    <div class="section-label" style="margin-top:48px;">Essential reading</div>
+    <div class="book-card">
+      <div class="book-cover">Cover</div>
+      <div class="book-info">
+        <div class="book-title">Ball Complete Book of Home Preserving</div>
+        <div class="book-author">Judi Kingry and Lauren Devine</div>
+        <div class="book-desc">The definitive canning reference with 400+ lab-tested recipes. Covers water bath canning, pressure canning, freezing, and fermenting. If you are going to preserve food at home, this is the book every other book references. Often called the Bible of canning.</div>
+        <a href="https://www.amazon.com/dp/0778801314?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="book-btn">Amazon</a>
+      </div>
+    </div>
+    <div class="book-card">
+      <div class="book-cover">Cover</div>
+      <div class="book-info">
+        <div class="book-title">Preserving Food without Freezing or Canning</div>
+        <div class="book-author">Gardeners of Terre Vivante</div>
+        <div class="book-desc">Old-world preservation methods that require no electricity: salt, oil, sugar, alcohol, vinegar, drying, cold storage, and lactic fermentation. Critical knowledge for scenarios where the power grid is unreliable or gone. These techniques sustained humanity for thousands of years before refrigeration existed.</div>
+        <a href="https://www.amazon.com/dp/1933392592?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="book-btn">Amazon</a>
+      </div>
+    </div>
+    <div class="book-card">
+      <div class="book-cover">Cover</div>
+      <div class="book-info">
+        <div class="book-title">The Backyard Homestead</div>
+        <div class="book-author">Carleen Madigan</div>
+        <div class="book-desc">How to produce food on a quarter acre: vegetable gardening, fruit trees, chickens, dairy, food preservation, and more. A practical blueprint for household-level food independence. Useful even if you only implement a fraction of what it covers.</div>
+        <a href="https://www.amazon.com/dp/1603421386?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="book-btn">Amazon</a>
+      </div>
+    </div>
+    <div class="book-card">
+      <div class="book-cover">Cover</div>
+      <div class="book-info">
+        <div class="book-title">The Resilient Gardener</div>
+        <div class="book-author">Carol Deppe</div>
+        <div class="book-desc">Focuses on growing nutrient-rich food in difficult conditions. Deppe identifies five crops (potatoes, corn, beans, squash, and eggs) that can sustain a household through hard times with minimal inputs. Written by a scientist who actually grows her own food. Practical, tested, and unsentimental.</div>
+        <a href="https://www.amazon.com/dp/1603580313?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="book-btn">Amazon</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Browse All Categories</h2>
+        <p>Explore gear and guides across all preparedness categories.</p>
+      </div>
+      <a href="index.html#categories" class="cta-btn">View Categories +</a>
+    </div>
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <a href="index.html" class="footer-brand" style="text-decoration:none;color:inherit;">PARANOID <span class="logo-and">AND</span> READY</a>
+      <ul class="footer-nav">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-tagline">Stay paranoid. Stay ready.</span>
+      <span class="footer-copyright">2025 PARANOID AND READY. As an Amazon Associate we earn from qualifying purchases.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

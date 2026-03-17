@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Natural Disaster : PARANOID AND READY</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #C5C5C5;
+    --bg-surface:  #b8b8b8;
+    --bg-raised:   #aeaeae;
+    --red:         #8B0000;
+    --red-glow:    rgba(139, 0, 0, 0.07);
+    --ink:         #1A1A1A;
+    --ink-mid:     #3a3a3a;
+    --ink-light:   #555555;
+    --white:       #ffffff;
+    --border:      #1A1A1A;
+    --border-mid:  #888888;
+    --max-w:       1000px;
+    --pad:         48px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.6;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad); }
+
+  nav { max-width: var(--max-w); margin: 0 auto; padding: 28px var(--pad) 0; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+  .nav-left { display: flex; align-items: center; }
+  .logo { font-size: 13px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--red); }
+  .logo-and { color: var(--ink); }
+  .nav-links { list-style: none; display: flex; gap: 28px; }
+  .nav-links a { font-size: 10px; font-weight: 500; color: var(--ink-mid); text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-right { display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
+  .nav-search { background: transparent; border: 1px solid var(--border); color: var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; padding: 6px 12px; width: 150px; outline: none; transition: border-color 0.2s; }
+  .nav-search::placeholder { color: var(--ink-light); }
+  .nav-search:focus { border-color: var(--red); }
+
+  .header-line { max-width: var(--max-w); margin: 20px auto 0; padding: 0 var(--pad); }
+  .header-line hr { border: none; border-top: 2px solid var(--ink); }
+  .divider { border: none; border-top: 2px solid var(--ink); }
+
+  .breadcrumb { padding: 16px 0 0; font-size: 10px; font-weight: 500; letter-spacing: 1px; color: var(--ink-light); text-transform: uppercase; }
+  .breadcrumb a { color: var(--ink-mid); transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--red); }
+  .breadcrumb .sep { margin: 0 8px; color: var(--border-mid); }
+  .breadcrumb .current { color: var(--red); }
+
+  .scenario-hero { padding: 48px 0 56px; animation: fadeIn 0.4s ease-out both; }
+  .scenario-tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--red); border: 1px solid var(--red); padding: 4px 12px; display: inline-block; margin-bottom: 20px; }
+  .scenario-hero h1 { font-size: clamp(22px, 3.5vw, 38px); font-weight: 800; color: var(--red); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px; line-height: 1.15; }
+  .scenario-brief { font-size: 14px; color: var(--ink); line-height: 1.85; font-weight: 400; }
+  .scenario-brief p { margin-bottom: 16px; }
+  .scenario-brief p:last-child { margin-bottom: 0; }
+
+  .section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: var(--red); display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--ink); }
+
+  .your-move { padding: 0 0 56px; animation: fadeIn 0.4s ease-out 0.05s both; }
+  .phase { margin-bottom: 36px; }
+  .phase:last-child { margin-bottom: 0; }
+  .phase-header { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--ink); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-mid); }
+  .phase-number { color: var(--red); margin-right: 8px; }
+  .move-item { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--border-mid); }
+  .move-item:last-child { border-bottom: none; }
+  .move-info { flex: 1; }
+  .move-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .move-why { font-size: 13px; color: var(--ink-mid); font-weight: 400; line-height: 1.6; }
+  .move-link { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--white); background: var(--ink); border: 1px solid var(--ink); padding: 8px 16px; white-space: nowrap; flex-shrink: 0; transition: all 0.2s; }
+  .move-link:hover { background: var(--red); border-color: var(--red); }
+
+  .books-section { padding: 0 0 56px; animation: fadeIn 0.4s ease-out 0.1s both; }
+  .book-card { display: flex; gap: 28px; padding: 28px; border: 1px solid var(--border); background: rgba(197, 197, 197, 0.3); margin-bottom: 16px; transition: background 0.3s; }
+  .book-card:last-child { margin-bottom: 0; }
+  .book-card:hover { background: rgba(184, 184, 184, 0.6); }
+  .book-cover { width: 100px; min-width: 100px; height: 150px; background: var(--bg-raised); border: 1px solid var(--border-mid); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--ink-light); text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; }
+  .book-info { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .book-title { font-size: 14px; font-weight: 800; color: var(--ink); text-transform: uppercase; letter-spacing: 1px; line-height: 1.3; }
+  .book-author { font-size: 11px; font-weight: 600; color: var(--red); text-transform: uppercase; letter-spacing: 1px; }
+  .book-desc { font-size: 13px; color: var(--ink-mid); font-weight: 400; line-height: 1.7; flex: 1; }
+  .book-btn { display: inline-block; align-self: flex-start; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--white); background: var(--ink); border: 1px solid var(--ink); padding: 8px 16px; transition: all 0.2s; }
+  .book-btn:hover { background: var(--red); border-color: var(--red); }
+
+  .cta-section { padding: 64px 0; animation: fadeIn 0.4s ease-out 0.15s both; }
+  .cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .cta-text h2 { font-size: 16px; font-weight: 800; line-height: 1.3; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--ink); }
+  .cta-text p { font-size: 14px; color: var(--ink-mid); font-weight: 400; line-height: 1.7; }
+  .cta-btn { display: inline-block; background: var(--ink); border: 1px solid var(--ink); color: var(--white); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 14px 28px; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+  .cta-btn:hover { background: var(--red); border-color: var(--red); }
+
+  footer { padding: 40px 0; }
+  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+  .footer-brand { font-size: 11px; font-weight: 800; color: var(--red); letter-spacing: 2px; text-transform: uppercase; }
+  .footer-nav { display: flex; gap: 28px; list-style: none; }
+  .footer-nav a { font-size: 10px; font-weight: 500; color: var(--ink-mid); text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.2s; }
+  .footer-nav a:hover { color: var(--ink); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: baseline; padding-top: 24px; border-top: 1px solid var(--border-mid); }
+  .footer-tagline { font-size: 13px; color: var(--ink-mid); font-weight: 400; font-style: italic; }
+  .footer-copyright { font-size: 11px; color: var(--ink-light); text-align: right; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  nav { animation: fadeIn 0.5s ease-out; }
+
+  @media (max-width: 768px) {
+    :root { --pad: 24px; }
+    .nav-left { display: none; }
+    nav { grid-template-columns: auto 1fr; }
+    .move-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .book-card { flex-direction: column; gap: 16px; }
+    .book-cover { width: 80px; min-width: 80px; height: 120px; }
+    .footer-top { flex-direction: column; gap: 20px; }
+    .footer-bottom { flex-direction: column; gap: 12px; }
+    .footer-copyright { text-align: left; }
+    .cta-inner { flex-direction: column; }
+  }
+
+  @media (max-width: 480px) {
+    .scenario-hero h1 { letter-spacing: 1px; }
+    .book-card { padding: 18px; }
+  }
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="nav-left">
+      <ul class="nav-links">
+        <li><a href="index.html#categories">Categories</a></li>
+        <li><a href="index.html#guides">Guides</a></li>
+      </ul>
+    </div>
+    <a href="index.html" class="logo">PARANOID <span class="logo-and">AND</span> READY</a>
+    <div class="nav-right">
+      <input type="text" class="nav-search" placeholder="Search...">
+    </div>
+</nav>
+<div class="header-line"><hr class="divider"></div>
+
+<div class="container">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a><span class="sep">/</span><span class="current">Natural Disaster</span>
+  </div>
+</div>
+
+<section class="scenario-hero">
+  <div class="container">
+    <div class="scenario-tag">Scenario</div>
+    <h1>Natural Disaster</h1>
+    <div class="scenario-brief">
+      <p>Earthquakes give no warning. Hurricanes give hours. Wildfires can shift direction in minutes. Floods rise while you sleep. Natural disasters are the one scenario category where preparation is not paranoia: it is basic common sense. Every government agency, every insurance company, every emergency management professional says the same thing: have a plan, have a bag, have supplies.</p>
+      <p>The first lesson of every major natural disaster is that help takes longer to arrive than anyone expected. After Hurricane Katrina, some areas waited over a week for organized relief. After the 2011 Tohoku earthquake and tsunami, entire communities were cut off for days. The people who fared best were not lucky. They were prepared: they had water, food, first aid, documents, and a plan for where to go if they could not stay.</p>
+      <p>Natural disaster preparation splits into two modes: shelter in place and evacuation. You need to be ready for both. A stocked home covers the first. A packed evacuation bag covers the second. The critical items overlap: water, food, medical supplies, documents, light, communication. The difference is portability.</p>
+    </div>
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<section class="your-move">
+  <div class="container">
+    <div class="section-label" style="margin-top:48px;">Your Move</div>
+
+    <div class="phase">
+      <div class="phase-header"><span class="phase-number">01</span> Get out alive</div>
+
+      <div class="move-item">
+        <div class="move-info">
+          <div class="move-name">Evacuation bag (bug out bag)</div>
+          <div class="move-why">A pre-packed bag with 72 hours of essentials: water filtration, food, first aid, documents, light source, phone charger. When you have 15 minutes to leave, this is the difference between prepared and panicked.</div>
+        </div>
+        <a href="survival-repair.html" class="move-link">Survival AND Repair</a>
+      </div>
+
+      <div class="move-item">
+        <div class="move-info">
+          <div class="move-name">First aid and trauma kit</div>
+          <div class="move-why">Injuries happen during disasters, not after. A trauma kit with tourniquets, pressure bandages, and basic wound care buys time before medical help arrives. Train with it before you need it.</div>
+        </div>
+        <a href="medical-hygiene.html" class="move-link">Medical AND Hygiene</a>
+      </div>
+
+      <div class="move-item">
+        <div class="move-info">
+          <div class="move-name">Documents ready to move</div>
+          <div class="move-why">Passports, insurance policies, property deeds, medical records. In a fireproof bag or on an encrypted USB drive. If your house is destroyed, these documents are what let you rebuild.</div>
+        </div>
+        <a href="wealth-documents.html" class="move-link">Wealth AND Documents</a>
+      </div>
+
+    </div>
+
+    <div class="phase">
+      <div class="phase-header"><span class="phase-number">02</span> Shelter in place</div>
+
+      <div class="move-item">
+        <div class="move-info">
+          <div class="move-name">Water storage and filtration</div>
+          <div class="move-why">Municipal water can be contaminated or cut off for days after a disaster. One gallon per person per day is the minimum. A gravity filter handles contamination when bottled water runs out.</div>
+        </div>
+        <a href="water-hydration.html" class="move-link">Water AND Hydration</a>
+      </div>
+
+      <div class="move-item">
+        <div class="move-info">
+          <div class="move-name">Shelf-stable food supply</div>
+          <div class="move-why">Grocery stores empty within hours of a major disaster warning. A two-week supply of food you can prepare without electricity keeps your household fed while supply chains recover.</div>
+        </div>
+        <a href="food-supply.html" class="move-link">Food AND Supply</a>
+      </div>
+
+    </div>
+
+    <div class="phase">
+      <div class="phase-header"><span class="phase-number">03</span> Rebuild and recover</div>
+
+      <div class="move-item">
+        <div class="move-info">
+          <div class="move-name">Tools and repair gear</div>
+          <div class="move-why">After the immediate danger passes, the work begins. Tarps for damaged roofs, multi-tools for quick repairs, saws for fallen trees. The first 48 hours of recovery are on you, not the contractors.</div>
+        </div>
+        <a href="survival-repair.html" class="move-link">Survival AND Repair</a>
+      </div>
+
+      <div class="move-item">
+        <div class="move-info">
+          <div class="move-name">Home security during recovery</div>
+          <div class="move-why">Damaged homes attract looting. Disaster zones often see a spike in property crime during the recovery period. Basic security measures protect what remains while you rebuild.</div>
+        </div>
+        <a href="security-defense.html" class="move-link">Security AND Defense</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<section class="books-section">
+  <div class="container">
+    <div class="section-label" style="margin-top:48px;">Essential reading</div>
+
+    <div class="book-card">
+      <div class="book-cover">Cover</div>
+      <div class="book-info">
+        <div class="book-title">The Unthinkable: Who Survives When Disaster Strikes and Why</div>
+        <div class="book-author">Amanda Ripley</div>
+        <div class="book-desc">A journalist investigates why some people survive disasters and others do not. The answer is rarely physical fitness or luck. It is mental preparation: how quickly your brain moves from denial to action. Ripley interviewed survivors of 9/11, plane crashes, and natural disasters to map the psychology of crisis response. Read this before anything else.</div>
+        <a href="https://www.amazon.com/dp/0307352900?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="book-btn">Amazon</a>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="book-cover">Cover</div>
+      <div class="book-info">
+        <div class="book-title">The Big Ones: How Natural Disasters Have Shaped Us and What We Can Do About Them</div>
+        <div class="book-author">Lucy Jones</div>
+        <div class="book-desc">Written by a veteran seismologist, this book examines the largest natural disasters in history and what they reveal about how societies prepare, respond, and recover. Jones traces patterns from Pompeii to Katrina, showing that human decisions before the disaster determine outcomes far more than the disaster itself.</div>
+        <a href="https://www.amazon.com/dp/0385542704?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="book-btn">Amazon</a>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="book-cover">Cover</div>
+      <div class="book-info">
+        <div class="book-title">SAS Survival Handbook</div>
+        <div class="book-author">John 'Lofty' Wiseman</div>
+        <div class="book-desc">The most comprehensive single-volume survival manual available. Covers shelter, fire, water, food, navigation, first aid, and disaster-specific response across every climate and terrain. Written by a former SAS instructor, it is the reference book that belongs in every evacuation bag and on every shelf.</div>
+        <a href="https://www.amazon.com/dp/0062378074?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="book-btn">Amazon</a>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="book-cover">Cover</div>
+      <div class="book-info">
+        <div class="book-title">Build the Perfect Bug Out Bag</div>
+        <div class="book-author">Creek Stewart</div>
+        <div class="book-desc">A focused, practical guide to building an evacuation bag that actually works. Stewart breaks down what to pack by category: water, food, shelter, fire, first aid, tools, and hygiene, with specific product recommendations and weight considerations. No filler, no philosophy, just a checklist you can execute.</div>
+        <a href="https://www.amazon.com/dp/1440318743?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="book-btn">Amazon</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<!-- EVACUATION BAGS -->
+<section class="books-section">
+  <div class="container">
+    <div class="section-label" style="margin-top:48px;">Evacuation bags</div>
+
+      <div class="book-card">
+        <div class="book-cover">Photo</div>
+        <div class="book-info">
+          <div class="book-title">EVERLIT Emergency Trauma Kit</div>
+          <div class="book-author">~$200</div>
+          <div class="book-desc">Comprehensive IFAK with tourniquet, pressure bandages, chest seals, and airway tools. Compact enough for a bag, complete enough for serious trauma.</div>
+          <a href="https://amzn.to/4uwZKLc" target="_blank" rel="nofollow noopener" class="book-btn">Amazon</a>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <div class="book-cover">Photo</div>
+        <div class="book-info">
+          <div class="book-title">EVERLIT Storm III Emergency Kit</div>
+          <div class="book-author">~$190</div>
+          <div class="book-desc">Pre-assembled 72-hour kit covering food, water, light, warmth, and first aid for two people. A solid foundation to build on or a ready-made grab-and-go option.</div>
+          <a href="https://amzn.to/4lvLEWl" target="_blank" rel="nofollow noopener" class="book-btn">Amazon</a>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <div class="book-cover">Photo</div>
+        <div class="book-info">
+          <div class="book-title">Sirius Pre-Packed Bug Out Bag</div>
+          <div class="book-author">~$299</div>
+          <div class="book-desc">Premium evacuation bag with 72+ hours of supplies: shelter, fire starting, water filtration, food rations, first aid, and tools. Packed and ready to go.</div>
+          <a href="https://amzn.to/470QvJi" target="_blank" rel="nofollow noopener" class="book-btn">Amazon</a>
+        </div>
+      </div>
+
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Browse All Categories</h2>
+        <p>Explore gear and guides across all preparedness categories.</p>
+      </div>
+      <a href="index.html#categories" class="cta-btn">View Categories +</a>
+    </div>
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <a href="index.html" class="footer-brand" style="text-decoration:none;color:inherit;">PARANOID <span class="logo-and">AND</span> READY</a>
+      <ul class="footer-nav">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-tagline">Stay paranoid. Stay ready.</span>
+      <span class="footer-copyright">2025 PARANOID AND READY. As an Amazon Associate we earn from qualifying purchases.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
