@@ -5,112 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>How to Build an Evacuation Bag : PARANOID AND READY</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:#C5C5C5;--bg-surface:#b8b8b8;--bg-raised:#aeaeae;--red:#8B0000;--red-glow:rgba(139,0,0,0.07);
-    --ink:#1A1A1A;--ink-mid:#3a3a3a;--ink-light:#555555;--white:#ffffff;--border:#1A1A1A;--border-mid:#888888;
-    --max-w:1000px;--pad:48px;
-  }
-  * { margin:0;padding:0;box-sizing:border-box; }
-  body { font-family:'JetBrains Mono',monospace;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.6;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased; }
-  body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.6; }
-  a { color:inherit;text-decoration:none; }
-  .container { max-width:var(--max-w);margin:0 auto;padding:0 var(--pad); }
-  nav { max-width:var(--max-w);margin:0 auto;padding:28px var(--pad) 0;display:grid;grid-template-columns:1fr auto 1fr;align-items:center; }
-  .nav-left { display:flex;align-items:center; }
-  .logo { font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--red); }
-  .logo-and { color:var(--ink); }
-  .nav-links { list-style:none;display:flex;gap:28px; }
-  .nav-links a { font-size:10px;font-weight:500;color:var(--ink-mid);text-transform:uppercase;letter-spacing:1.5px;transition:color 0.2s; }
-  .nav-links a:hover { color:var(--ink); }
-  .nav-right { display:flex;align-items:center;justify-content:flex-end;gap:16px; }
-  .nav-search { background:transparent;border:1px solid var(--border);color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;padding:6px 12px;width:150px;outline:none;transition:border-color 0.2s; }
-  .nav-search::placeholder { color:var(--ink-light); }
-  .nav-search:focus { border-color:var(--red); }
-  .header-line { max-width:var(--max-w);margin:20px auto 0;padding:0 var(--pad); }
-  .header-line hr { border:none;border-top:2px solid var(--ink); }
-  .divider { border:none;border-top:2px solid var(--ink); }
-  .breadcrumb { padding:16px 0 0;font-size:10px;font-weight:500;letter-spacing:1px;color:var(--ink-light);text-transform:uppercase; }
-  .breadcrumb a { color:var(--ink-mid);transition:color 0.2s; }
-  .breadcrumb a:hover { color:var(--red); }
-  .breadcrumb .sep { margin:0 8px;color:var(--border-mid); }
-  .breadcrumb .current { color:var(--red); }
 
-  .guide-hero { padding:48px 0 56px;animation:fadeIn 0.4s ease-out both; }
-  .guide-tag { font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--red);border:1px solid var(--red);padding:4px 12px;display:inline-block;margin-bottom:20px; }
-  .guide-hero h1 { font-size:clamp(22px,3.5vw,38px);font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:2px;margin-bottom:24px;line-height:1.15; }
-  .guide-brief { font-size:14px;color:var(--ink);line-height:1.85;font-weight:400; }
-  .guide-brief p { margin-bottom:16px; }
-  .guide-brief p:last-child { margin-bottom:0; }
-
-  .section-label { font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:3px;color:var(--red);display:flex;align-items:center;gap:16px;margin-bottom:32px; }
-  .section-label::after { content:'';flex:1;height:1px;background:var(--ink); }
-
-  .guide-section { padding:0 0 56px;animation:fadeIn 0.4s ease-out 0.05s both; }
-  .guide-category { margin-bottom:32px; }
-  .guide-category:last-child { margin-bottom:0; }
-  .guide-cat-header { font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--ink);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border-mid); }
-  .guide-cat-number { color:var(--red);margin-right:8px; }
-
-  .checklist { list-style:none;display:grid;grid-template-columns:auto 1fr;gap:0; }
-  .checklist-item { display:contents; }
-
-  .check-name { padding:10px 20px 10px 0;border-bottom:1px solid var(--border-mid);font-size:13px;font-weight:600;color:var(--ink);line-height:1.5;white-space:nowrap; }
-  .check-note { padding:10px 0 10px 20px;border-bottom:1px solid var(--border-mid);border-left:1px solid var(--border-mid);font-size:13px;color:var(--ink-mid);font-weight:400;line-height:1.6; }
-  .checklist-item:last-child .check-name, .checklist-item:last-child .check-note { border-bottom:none; }
-
-  .guide-note { font-size:14px;color:var(--ink);line-height:1.85;font-weight:400;margin-bottom:32px; }
-
-  .books-section { padding:0 0 56px;animation:fadeIn 0.4s ease-out 0.1s both; }
-  .book-card { display:flex;gap:28px;padding:28px;border:1px solid var(--border);background:rgba(197,197,197,0.3);margin-bottom:16px;transition:background 0.3s; }
-  .book-card:last-child { margin-bottom:0; }
-  .book-card:hover { background:rgba(184,184,184,0.6); }
-  .book-cover { width:100px;min-width:100px;height:150px;background:var(--bg-raised);border:1px solid var(--border-mid);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--ink-light);text-transform:uppercase;letter-spacing:1px;flex-shrink:0; }
-  .book-info { flex:1;display:flex;flex-direction:column;gap:8px; }
-  .book-title { font-size:14px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:1px;line-height:1.3; }
-  .book-author { font-size:11px;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:1px; }
-  .book-desc { font-size:13px;color:var(--ink-mid);font-weight:400;line-height:1.7;flex:1; }
-  .book-btn { display:inline-block;align-self:flex-start;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--white);background:var(--ink);border:1px solid var(--ink);padding:8px 16px;transition:all 0.2s; }
-  .book-btn:hover { background:var(--red);border-color:var(--red); }
-
-  .cta-section { padding:64px 0;animation:fadeIn 0.4s ease-out 0.15s both; }
-  .cta-inner { display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap; }
-  .cta-text h2 { font-size:16px;font-weight:800;line-height:1.3;margin-bottom:10px;text-transform:uppercase;letter-spacing:2px;color:var(--ink); }
-  .cta-text p { font-size:14px;color:var(--ink-mid);font-weight:400;line-height:1.7; }
-  .cta-btn { display:inline-block;background:var(--ink);border:1px solid var(--ink);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:14px 28px;transition:all 0.2s;white-space:nowrap;flex-shrink:0; }
-  .cta-btn:hover { background:var(--red);border-color:var(--red); }
-
-  footer { padding:40px 0; }
-  .footer-top { display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px; }
-  .footer-brand { font-size:11px;font-weight:800;color:var(--red);letter-spacing:2px;text-transform:uppercase; }
-  .footer-nav { display:flex;gap:28px;list-style:none; }
-  .footer-nav a { font-size:10px;font-weight:500;color:var(--ink-mid);text-transform:uppercase;letter-spacing:1.5px;transition:color 0.2s; }
-  .footer-nav a:hover { color:var(--ink); }
-  .footer-bottom { display:flex;justify-content:space-between;align-items:baseline;padding-top:24px;border-top:1px solid var(--border-mid); }
-  .footer-tagline { font-size:13px;color:var(--ink-mid);font-weight:400;font-style:italic; }
-  .footer-copyright { font-size:11px;color:var(--ink-light);text-align:right; }
-
-  @keyframes fadeIn { from { opacity:0;transform:translateY(10px); } to { opacity:1;transform:translateY(0); } }
-  nav { animation:fadeIn 0.5s ease-out; }
-
-  @media (max-width:768px) {
-    :root { --pad:24px; }
-    .nav-left { display:none; }
-    nav { grid-template-columns:auto 1fr; }
-    .checklist { grid-template-columns:1fr; } .checklist-item { display:flex;flex-direction:column;gap:4px;margin-bottom:14px; } .checklist-item:last-child { margin-bottom:0; } .check-name { border-bottom:none;padding-bottom:2px;white-space:normal; } .check-note { border-left:none;border-bottom:1px solid var(--border-mid);padding-top:0;padding-left:0;padding-bottom:14px; } .checklist-item:last-child .check-note { border-bottom:none; }
-
-    .book-card { flex-direction:column;gap:16px; }
-    .book-cover { width:80px;min-width:80px;height:120px; }
-    .footer-top { flex-direction:column;gap:20px; }
-    .footer-bottom { flex-direction:column;gap:12px; }
-    .footer-copyright { text-align:left; }
-    .cta-inner { flex-direction:column; }
-  }
-  @media (max-width:480px) {
-    .guide-hero h1 { letter-spacing:1px; }
-    .book-card { padding:18px; }
-  }
-</style>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
@@ -129,9 +25,7 @@
 <div class="header-line"><hr class="divider"></div>
 
 <div class="container">
-  <div class="breadcrumb">
-    <a href="../index.html">Home</a><span class="sep">/</span><span class="current">Evacuation Bags</span>
-  </div>
+  
 </div>
 
 <section class="guide-hero">
@@ -156,7 +50,7 @@
       <div class="guide-cat-header"><span class="guide-cat-number">01</span> Water</div>
       <ul class="checklist">
       <li class="checklist-item">
-        <span class="check-name">Water bottle (1L minimum)</span>
+        <span class="check-name">Water bottle</span>
         <span class="check-note">Stainless steel or durable plastic. Doubles as a container for boiling.</span>
       </li>
       <li class="checklist-item">
@@ -173,11 +67,11 @@
       <div class="guide-cat-header"><span class="guide-cat-number">02</span> Food</div>
       <ul class="checklist">
       <li class="checklist-item">
-        <span class="check-name">Energy bars (6+)</span>
+        <span class="check-name">Energy bars</span>
         <span class="check-note">High-calorie, compact, no preparation needed. Rotate every 12 months.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Freeze-dried meals (3+)</span>
+        <span class="check-name">Freeze-dried meals</span>
         <span class="check-note">Just add hot water. Lightweight and calorie-dense.</span>
       </li>
       <li class="checklist-item">
@@ -194,7 +88,7 @@
       <div class="guide-cat-header"><span class="guide-cat-number">03</span> Shelter and warmth</div>
       <ul class="checklist">
       <li class="checklist-item">
-        <span class="check-name">Emergency bivvy or space blanket</span>
+        <span class="check-name">Bivvy</span>
         <span class="check-note">Reflects body heat. Weighs almost nothing. Can save your life in cold weather.</span>
       </li>
       <li class="checklist-item">
@@ -202,11 +96,11 @@
         <span class="check-note">Rain protection, ground cover, improvised shelter. Versatile and compact.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Paracord (50 ft minimum)</span>
+        <span class="check-name">Paracord</span>
         <span class="check-note">Shelter construction, gear repair, clothesline, tourniquet in emergencies.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Warm layer (fleece or puffy jacket)</span>
+        <span class="check-name">Warm layer</span>
         <span class="check-note">Packable insulation. Choose based on your climate.</span>
       </li>
       <li class="checklist-item">
@@ -227,7 +121,7 @@
         <span class="check-note">Backup fire source. Store in a waterproof container.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Headlamp + spare batteries</span>
+        <span class="check-name">Headlamp</span>
         <span class="check-note">Hands-free light. Essential for moving at night.</span>
       </li>
       <li class="checklist-item">
@@ -235,7 +129,7 @@
         <span class="check-note">Backup light source. LED for battery life.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Fire starter (ferro rod or tinder)</span>
+        <span class="check-name">Fire starter</span>
         <span class="check-note">Works when lighters fail. Pair with cotton balls and petroleum jelly.</span>
       </li>
       </ul>
@@ -252,7 +146,7 @@
         <span class="check-note">Stops life-threatening bleeding. Learn to use it before you need it.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Prescription medications (7 days)</span>
+        <span class="check-name">Prescription medications</span>
         <span class="check-note">Whatever you take daily. Rotate regularly for freshness.</span>
       </li>
       <li class="checklist-item">
@@ -260,7 +154,7 @@
         <span class="check-note">You will be walking. Blisters can be debilitating.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Insect repellent and sunscreen</span>
+        <span class="check-name">Insect repellent</span>
         <span class="check-note">Climate-dependent but often critical.</span>
       </li>
       </ul>
@@ -273,15 +167,15 @@
         <span class="check-note">Laminated copies or in a waterproof bag.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Cash in small bills</span>
+        <span class="check-name">Cash</span>
         <span class="check-note">At least $200. ATMs and card readers will not work.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Emergency contact list (printed)</span>
+        <span class="check-name">Emergency contact list</span>
         <span class="check-note">Phone numbers for family, doctors, insurance. Phones die.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">USB drive with digital copies</span>
+        <span class="check-name">USB drive</span>
         <span class="check-note">Encrypted. Insurance policies, medical records, property deeds.</span>
       </li>
       </ul>
@@ -294,11 +188,11 @@
         <span class="check-note">Cutting, prying, screwing, can opening. A quality multi-tool covers many needs.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Duct tape (small roll)</span>
+        <span class="check-name">Duct tape</span>
         <span class="check-note">Wrap around a pencil to save space. Repairs almost anything temporarily.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Zip ties (assorted sizes)</span>
+        <span class="check-name">Zip ties</span>
         <span class="check-note">Lightweight fasteners for gear repair and improvised solutions.</span>
       </li>
       <li class="checklist-item">
@@ -310,7 +204,7 @@
         <span class="check-note">Navigation when GPS and phone batteries die.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Local area map (printed)</span>
+        <span class="check-name">Local area map</span>
         <span class="check-note">Know your evacuation routes. Digital maps require power.</span>
       </li>
       </ul>
@@ -331,11 +225,11 @@
         <span class="check-note">When soap and water are unavailable.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Trash bags (2-3 heavy duty)</span>
+        <span class="check-name">Trash bags</span>
         <span class="check-note">Rain protection, waste disposal, improvised poncho, gear waterproofing.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Toilet paper (compressed roll)</span>
+        <span class="check-name">Toilet paper</span>
         <span class="check-note">Vacuum-sealed or compressed. You will want this.</span>
       </li>
       </ul>
@@ -344,15 +238,15 @@
       <div class="guide-cat-header"><span class="guide-cat-number">09</span> Communication</div>
       <ul class="checklist">
       <li class="checklist-item">
-        <span class="check-name">Phone charger (portable battery)</span>
+        <span class="check-name">Portable phone charger</span>
         <span class="check-note">At least 10,000 mAh. Keep charged. Solar charger as backup.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Emergency radio (AM/FM/NOAA)</span>
+        <span class="check-name">Emergency radio</span>
         <span class="check-note">Battery or crank-powered. Your link to emergency broadcasts.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Pen and waterproof notebook</span>
+        <span class="check-name">Pen and notebook</span>
         <span class="check-note">Leave messages, record information, take notes when phones are dead.</span>
       </li>
       </ul>
@@ -365,7 +259,7 @@
         <span class="check-note">Adjust for your climate. Extra socks are always worth the weight.</span>
       </li>
       <li class="checklist-item">
-        <span class="check-name">Glasses or contacts (spare)</span>
+        <span class="check-name">Spare glasses or contacts</span>
         <span class="check-note">If you depend on corrective lenses, pack a backup pair.</span>
       </li>
       <li class="checklist-item">
@@ -431,7 +325,7 @@
         <h2>Browse All Categories</h2>
         <p>Explore gear and guides across all preparedness categories.</p>
       </div>
-      <a href="index.html#categories" class="cta-btn">View Categories +</a>
+      <a href="../index.html#categories" class="cta-btn">View Categories +</a>
     </div>
   </div>
 </section>
@@ -441,10 +335,10 @@
 <footer>
   <div class="container">
     <div class="footer-top">
-      <a href="index.html" class="footer-brand" style="text-decoration:none;color:inherit;">PARANOID <span class="logo-and">AND</span> READY</a>
+      <a href="../index.html" class="footer-brand" style="text-decoration:none;color:inherit;">PARANOID <span class="logo-and">AND</span> READY</a>
       <ul class="footer-nav">
-        <li><a href="../about.html">About</a></li>
-        <li><a href="../contact.html">Contact</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
       </ul>
     </div>
     <div class="footer-bottom">
