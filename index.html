@@ -90,12 +90,13 @@
   }
 
   /* ---- HERO ---- */
-  .hero { padding: 80px 0 56px; animation: fadeIn 0.6s ease-out 0.05s both; }
+  .hero { padding: 120px 0 48px; animation: fadeIn 0.6s ease-out 0.05s both; }
+  .scenarios { margin-top: 16px; }
   .hero-tagline { font-size: clamp(26px, 4.5vw, 52px); font-weight: 800; line-height: 1.15; letter-spacing: -1px; color: var(--ink); text-align: center; text-transform: uppercase; }
   .hero-tagline span { color: var(--red); }
 
   /* ---- SCENARIOS ---- */
-  .scenarios { padding: 0 0 56px; animation: fadeIn 0.5s ease-out 0.1s both; }
+  .scenarios { padding: 0 0 80px; animation: fadeIn 0.5s ease-out 0.1s both; }
   .scenario-row { display: flex; gap: 24px; justify-content: center; flex-wrap: nowrap; }
   .scenario-pill { cursor: pointer; transition: color 0.2s; }
   .scenario-pill:hover .scenario-name { color: var(--red); }
@@ -247,6 +248,32 @@
     .picks-grid { grid-template-columns: 1fr; max-width: 480px; }
   }
 
+  /* ---- SHOP GRID (5-col) ---- */
+  .shop { padding: 56px 0; animation: fadeIn 0.5s ease-out 0.2s both; }
+  .shop-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .shop-card { border: 1px solid var(--border); display: flex; flex-direction: column; }
+  .shop-card .pick-img { height: 140px; }
+  .shop-card .pick-info { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+  .shop-card .pick-tag { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--red); margin-bottom: 8px; }
+  .shop-card .pick-name { font-size: 12px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; color: var(--ink); }
+  .shop-card .pick-bottom { padding-top: 12px; border-top: 1px solid var(--border-mid); margin-top: auto; display: flex; align-items: center; justify-content: space-between; }
+  .shop-card .pick-price { font-size: 15px; font-weight: 800; color: var(--ink); }
+  @media (max-width: 900px) { .shop-grid { grid-template-columns: repeat(2, 1fr); } .shop-grid .shop-card:last-child { grid-column: 1/-1; max-width: 50%; justify-self: center; } }
+  @media (max-width: 480px) { .shop-grid { grid-template-columns: 1fr; } .shop-grid .shop-card:last-child { max-width: 100%; } }
+
+  /* ---- GUIDE BUTTON ---- */
+  .guides-more { margin-top: 32px; text-align: center; }
+
+  /* ---- SOCIAL ICONS ---- */
+  .footer-social { display: flex; gap: 16px; align-items: center; }
+  .footer-social a { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid var(--border-mid); transition: all 0.2s; }
+  .footer-social a:hover { border-color: var(--red); }
+  .footer-social a svg { width: 14px; height: 14px; fill: var(--ink-mid); transition: fill 0.2s; }
+  .footer-social a:hover svg { fill: var(--red); }
+
+  /* ---- AFFILIATE NOTICE ---- */
+  .affiliate-notice { font-size: 10px; color: var(--ink-light); line-height: 1.6; margin-top: 20px; }
+
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   nav { animation: fadeIn 0.5s ease-out; }
 
@@ -306,7 +333,7 @@
     <div class="scenario-row">
       <a href="power-outage.html" class="scenario-pill"><span class="scenario-name">[ Power Outage ]</span></a>
       <a href="natural-disaster.html" class="scenario-pill"><span class="scenario-name">[ Natural Disaster ]</span></a>
-      <a href="war-unrest.html" class="scenario-pill"><span class="scenario-name">[ War AND Unrest ]</span></a>
+      <a href="war-unrest.html" class="scenario-pill"><span class="scenario-name">[ War and Unrest ]</span></a>
       <a href="economic-collapse.html" class="scenario-pill"><span class="scenario-name">[ Economic Collapse ]</span></a>
       <a href="medical-emergency.html" class="scenario-pill"><span class="scenario-name">[ Medical Emergency ]</span></a>
     </div>
@@ -325,7 +352,7 @@
       <a href="survival-repair.html" class="cat-row"><div class="cat-name">Survival AND Repair</div><div class="cat-examples">Multi-tools, fire starters, paracord, tarps, knives</div></a>
       <a href="security-defense.html" class="cat-row"><div class="cat-name">Security AND Defense</div><div class="cat-examples">Safes, door reinforcements, cameras, motion sensors</div></a>
       <a href="wealth-documents.html" class="cat-row"><div class="cat-name">Wealth AND Documents</div><div class="cat-examples">Cash, precious metals, passports, vital records, barter goods</div></a>
-      <a href="#" class="cat-row"><div class="cat-name">Books AND Knowledge</div><div class="cat-examples">Survival references, off-grid living, self-sufficiency</div></a>
+      <a href="books-knowledge.html" class="cat-row"><div class="cat-name">Books AND Knowledge</div><div class="cat-examples">Survival references, off-grid living, self-sufficiency</div></a>
     </div>
   </div>
 </section>
@@ -334,7 +361,7 @@
 <section class="picks">
   <div class="container">
     <hr class="divider" style="margin-bottom: 48px;">
-    <div class="section-label">Grab AND Go</div>
+    <div class="section-label">Grab and Go</div>
     <div class="picks-grid">
 
       <div class="pick-card">
@@ -380,15 +407,72 @@
   </div>
 </section>
 
-<section class="cta-section">
+<section class="shop">
   <div class="container">
     <hr class="divider" style="margin-bottom: 64px;">
-    <div class="cta-inner">
-      <div class="cta-text">
-        <h2>Shop for the Paranoid</h2>
-        <p>You, your dad, your slightly intense coworker. Whoever it is, we picked the gear worth actually buying. Organized by category, no filler, links straight to Amazon.</p>
+    <div class="section-label">Shop for the Paranoid</div>
+    <div class="shop-grid">
+
+      <div class="shop-card">
+        <div class="pick-img"><span class="pick-img-placeholder">Photo</span></div>
+        <div class="pick-info">
+          <div class="pick-tag">Security</div>
+          <div class="pick-name">SentrySafe SFW123GDC Fireproof Safe</div>
+          <div class="pick-bottom">
+            <span class="pick-price">~$170</span>
+            <a href="https://www.amazon.com/dp/B005P12C5A?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="pick-btn">Amazon</a>
+          </div>
+        </div>
       </div>
-      <a href="#" class="cta-btn">Browse Gift Picks +</a>
+
+      <div class="shop-card">
+        <div class="pick-img"><span class="pick-img-placeholder">Photo</span></div>
+        <div class="pick-info">
+          <div class="pick-tag">Knowledge</div>
+          <div class="pick-name">SAS Survival Handbook, 3rd Edition</div>
+          <div class="pick-bottom">
+            <span class="pick-price">~$15</span>
+            <a href="https://www.amazon.com/dp/0062378074?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="pick-btn">Amazon</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop-card">
+        <div class="pick-img"><span class="pick-img-placeholder">Photo</span></div>
+        <div class="pick-info">
+          <div class="pick-tag">Communication</div>
+          <div class="pick-name">Midland ER310 Emergency Crank Radio</div>
+          <div class="pick-bottom">
+            <span class="pick-price">~$70</span>
+            <a href="https://www.amazon.com/dp/B018S0LSCO?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="pick-btn">Amazon</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop-card">
+        <div class="pick-img"><span class="pick-img-placeholder">Photo</span></div>
+        <div class="pick-info">
+          <div class="pick-tag">Water</div>
+          <div class="pick-name">Sawyer Squeeze Water Filter System</div>
+          <div class="pick-bottom">
+            <span class="pick-price">~$35</span>
+            <a href="https://www.amazon.com/dp/B00B1OSU4W?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="pick-btn">Amazon</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop-card">
+        <div class="pick-img"><span class="pick-img-placeholder">Photo</span></div>
+        <div class="pick-info">
+          <div class="pick-tag">Survival</div>
+          <div class="pick-name">Leatherman Wave+ Multi-Tool</div>
+          <div class="pick-bottom">
+            <span class="pick-price">~$100</span>
+            <a href="https://www.amazon.com/dp/B079MJBP71?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="pick-btn">Amazon</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -422,6 +506,33 @@
           <div class="article-read">Read +</div>
         </div>
       </a>
+      <a href="guide-documents.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
+        <div class="article-meta"><span class="article-tag">Finance</span><span class="article-time">11 min read</span></div>
+        <div class="article-content">
+          <div class="article-title">Documents &amp; Financial Resilience</div>
+          <div class="article-excerpt">Which documents to copy and protect, how much cash to hold, and why gold and silver belong in a serious preparedness plan.</div>
+          <div class="article-read">Read +</div>
+        </div>
+      </a>
+      <a href="guide-safes.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
+        <div class="article-meta"><span class="article-tag">Security</span><span class="article-time">10 min read</span></div>
+        <div class="article-content">
+          <div class="article-title">Home Safes Buying Guide</div>
+          <div class="article-excerpt">Fire ratings, lock types, bolt-down vs. portable, and the five safes worth buying. Plus a primer on concealment.</div>
+          <div class="article-read">Read +</div>
+        </div>
+      </a>
+      <a href="guide-concealment.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
+        <div class="article-meta"><span class="article-tag">Security</span><span class="article-time">8 min read</span></div>
+        <div class="article-content">
+          <div class="article-title">Concealment and Diversion Products</div>
+          <div class="article-excerpt">Diversion safes, concealment furniture, and DIY hiding ideas for every room. Hide valuables in plain sight.</div>
+          <div class="article-read">Read +</div>
+        </div>
+      </a>
+    </div>
+    <div class="guides-more">
+      <a href="guides.html" class="cta-btn">See All Guides +</a>
     </div>
   </div>
 </section>
@@ -431,15 +542,29 @@
     <hr class="divider" style="margin-bottom: 40px;">
     <div class="footer-top">
       <a href="index.html" class="footer-brand" style="text-decoration:none;color:inherit;">PARANOID <span class="logo-and">AND</span> READY</a>
-      <ul class="footer-nav">
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
+      <div style="display:flex;align-items:center;gap:32px;">
+        <ul class="footer-nav" style="display:flex;gap:28px;list-style:none;">
+          <li><a href="about.html" style="font-size:10px;font-weight:500;color:var(--ink-mid);text-transform:uppercase;letter-spacing:1.5px;transition:color 0.2s;">About</a></li>
+          <li><a href="contact.html" style="font-size:10px;font-weight:500;color:var(--ink-mid);text-transform:uppercase;letter-spacing:1.5px;transition:color 0.2s;">Contact</a></li>
+        </ul>
+        <div class="footer-social">
+        <a href="https://x.com/paranoidandready" target="_blank" rel="noopener" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://instagram.com/paranoidandready" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="https://tiktok.com/@paranoidandready" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+      </div>
+      </div>
     </div>
     <div class="footer-bottom">
       <div class="footer-tagline">Stay prepared. Not surprised.</div>
       <div class="footer-copyright">2025 paranoidandready.com</div>
     </div>
+    <div class="affiliate-notice">This site contains affiliate links. When you buy through our links, we may earn a commission at no extra cost to you. This helps us keep the site running and the recommendations honest.</div>
   </div>
 </footer>
 

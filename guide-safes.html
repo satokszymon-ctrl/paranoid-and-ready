@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Choose a Home Safe : PARANOID AND READY</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#C5C5C5;--bg-surface:#b8b8b8;--bg-raised:#aeaeae;--red:#8B0000;--red-glow:rgba(139,0,0,0.07);
+    --ink:#1A1A1A;--ink-mid:#3a3a3a;--ink-light:#555555;--white:#ffffff;--border:#1A1A1A;--border-mid:#888888;
+    --max-w:1000px;--pad:48px;
+  }
+  * { margin:0;padding:0;box-sizing:border-box; }
+  body { font-family:'JetBrains Mono',monospace;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.6;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased; }
+  body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.6; }
+  a { color:inherit;text-decoration:none; }
+  .container { max-width:var(--max-w);margin:0 auto;padding:0 var(--pad); }
+  nav { max-width:var(--max-w);margin:0 auto;padding:28px var(--pad) 0;display:grid;grid-template-columns:1fr auto 1fr;align-items:center; }
+  .nav-left { display:flex;align-items:center; }
+  .logo { font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--red); }
+  .logo-and { color:var(--ink); }
+  .nav-links { list-style:none;display:flex;gap:28px; }
+  .nav-links a { font-size:10px;font-weight:500;color:var(--ink-mid);text-transform:uppercase;letter-spacing:1.5px;transition:color 0.2s; }
+  .nav-links a:hover { color:var(--ink); }
+  .nav-right { display:flex;align-items:center;justify-content:flex-end;gap:16px; }
+  .nav-search { background:transparent;border:1px solid var(--border);color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;padding:6px 12px;width:150px;outline:none;transition:border-color 0.2s; }
+  .nav-search::placeholder { color:var(--ink-light); }
+  .nav-search:focus { border-color:var(--red); }
+  .unit-toggle { display:flex;border:1px solid var(--border);overflow:hidden;flex-shrink:0; }
+  .unit-toggle .u-opt { font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;background:transparent;border:none;color:var(--ink-light);padding:5px 10px;cursor:pointer;transition:all 0.2s; }
+  .unit-toggle .u-opt.active { background:var(--ink);color:var(--white); }
+  .unit-toggle .u-opt:not(.active):hover { color:var(--ink); }
+  .header-line { max-width:var(--max-w);margin:20px auto 0;padding:0 var(--pad); }
+  .header-line hr { border:none;border-top:2px solid var(--ink); }
+  .divider { border:none;border-top:2px solid var(--ink); }
+  .breadcrumb { padding:16px 0 0;font-size:10px;font-weight:500;letter-spacing:1px;color:var(--ink-light);text-transform:uppercase; }
+  .breadcrumb a { color:var(--ink-mid);transition:color 0.2s; }
+  .breadcrumb a:hover { color:var(--red); }
+  .breadcrumb .sep { margin:0 8px;color:var(--border-mid); }
+  .breadcrumb .current { color:var(--red); }
+
+  .guide-hero { padding:48px 0 56px;animation:fadeIn 0.4s ease-out both; }
+  .guide-tag { font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--red);border:1px solid var(--red);padding:4px 12px;display:inline-block;margin-bottom:20px; }
+  .guide-hero h1 { font-size:clamp(22px,3.5vw,38px);font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:2px;margin-bottom:24px;line-height:1.15; }
+  .guide-brief { font-size:14px;color:var(--ink);line-height:1.85;font-weight:400; }
+  .guide-brief p { margin-bottom:16px; }
+  .guide-brief p:last-child { margin-bottom:0; }
+
+  .section-label { font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:3px;color:var(--red);display:flex;align-items:center;gap:16px;margin-bottom:32px; }
+  .section-label::after { content:'';flex:1;height:1px;background:var(--ink); }
+
+  .guide-section { padding:0 0 56px;animation:fadeIn 0.4s ease-out 0.05s both; }
+  .guide-category { margin-bottom:32px; }
+  .guide-category:last-child { margin-bottom:0; }
+  .guide-cat-header { font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--ink);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--ink); }
+  .guide-cat-number { color:var(--red);margin-right:8px; }
+
+  .checklist { list-style:none;display:grid;grid-template-columns:240px 1fr;gap:0; }
+  .checklist-item { display:contents; }
+
+  .check-name { padding:10px 20px 10px 0;border-bottom:1px solid var(--border-mid);font-size:13px;font-weight:600;color:var(--ink);line-height:1.5;white-space:nowrap; }
+  .check-note { padding:10px 0 10px 20px;border-bottom:1px solid var(--border-mid);border-left:1px solid var(--border-mid);font-size:13px;color:var(--ink-mid);font-weight:400;line-height:1.6; }
+  .checklist-item:last-child .check-name, .checklist-item:last-child .check-note { border-bottom:none; }
+
+  .guide-note { font-size:14px;color:var(--ink);line-height:1.85;font-weight:400;margin-bottom:32px; }
+
+  .products-section { padding:0 0 56px;animation:fadeIn 0.4s ease-out 0.1s both; }
+  .size-label { font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:16px;margin-top:40px;padding:8px 0 8px 14px;border-left:3px solid var(--red); }
+  .size-label:first-child { margin-top:0; }
+  .product-card { display:flex;gap:28px;padding:28px;border:1px solid var(--border);background:rgba(197,197,197,0.3);margin-bottom:16px;transition:background 0.3s; }
+  .product-card:hover { background:rgba(184,184,184,0.6); }
+  .product-img { width:100px;min-width:100px;height:100px;background:var(--bg-raised);border:1px solid var(--border-mid);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--ink-light);text-transform:uppercase;letter-spacing:1px;flex-shrink:0; }
+  .product-info { flex:1;display:flex;flex-direction:column;gap:8px; }
+  .product-title { font-size:14px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:1px;line-height:1.3; }
+  .product-specs { font-size:11px;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:1px; }
+  .product-desc { font-size:13px;color:var(--ink-mid);font-weight:400;line-height:1.7;flex:1; }
+  .product-btn { display:inline-block;align-self:flex-start;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--white);background:var(--ink);border:1px solid var(--ink);padding:8px 16px;transition:all 0.2s; }
+  .product-btn:hover { background:var(--red);border-color:var(--red); }
+
+  .context-links { display:flex;gap:12px;flex-wrap:wrap;margin-top:16px; }
+  .context-link { font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--ink-mid);border:1px solid var(--border-mid);padding:6px 14px;transition:all 0.2s; }
+  .context-link:hover { color:var(--red);border-color:var(--red); }
+
+  .cta-section { padding:64px 0;animation:fadeIn 0.4s ease-out 0.15s both; }
+  .cta-inner { display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap; }
+  .cta-text h2 { font-size:16px;font-weight:800;line-height:1.3;margin-bottom:10px;text-transform:uppercase;letter-spacing:2px;color:var(--ink); }
+  .cta-text p { font-size:14px;color:var(--ink-mid);font-weight:400;line-height:1.7; }
+  .cta-btn { display:inline-block;background:var(--ink);border:1px solid var(--ink);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:14px 28px;transition:all 0.2s;white-space:nowrap;flex-shrink:0; }
+  .cta-btn:hover { background:var(--red);border-color:var(--red); }
+
+  footer { padding:40px 0; }
+  .footer-top { display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px; }
+  .footer-brand { font-size:11px;font-weight:800;color:var(--red);letter-spacing:2px;text-transform:uppercase; }
+  .footer-nav { display:flex;gap:28px;list-style:none; }
+  .footer-nav a { font-size:10px;font-weight:500;color:var(--ink-mid);text-transform:uppercase;letter-spacing:1.5px;transition:color 0.2s; }
+  .footer-nav a:hover { color:var(--ink); }
+  .footer-bottom { display:flex;justify-content:space-between;align-items:baseline;padding-top:24px;border-top:1px solid var(--border-mid); }
+  .footer-tagline { font-size:13px;color:var(--ink-mid);font-weight:400;font-style:italic; }
+  .footer-copyright { font-size:11px;color:var(--ink-light);text-align:right; }
+
+  @keyframes fadeIn { from { opacity:0;transform:translateY(10px); } to { opacity:1;transform:translateY(0); } }
+  nav { animation:fadeIn 0.5s ease-out; }
+
+  @media (max-width:768px) {
+    :root { --pad:24px; }
+    .nav-left { display:none; }
+    nav { grid-template-columns:auto 1fr; }
+    .checklist { grid-template-columns:1fr; } .checklist-item { display:flex;flex-direction:column;gap:4px;margin-bottom:14px; } .checklist-item:last-child { margin-bottom:0; } .check-name { border-bottom:none;padding-bottom:2px;white-space:normal; } .check-note { border-left:none;border-bottom:1px solid var(--border-mid);padding-top:0;padding-left:0;padding-bottom:14px; } .checklist-item:last-child .check-note { border-bottom:none; }
+    .product-card { flex-direction:column;gap:16px; }
+    .product-img { width:80px;min-width:80px;height:80px; }
+    .footer-top { flex-direction:column;gap:20px; }
+    .footer-bottom { flex-direction:column;gap:12px; }
+    .footer-copyright { text-align:left; }
+    .cta-inner { flex-direction:column; }
+    .context-links { flex-direction:column; }
+  }
+  @media (max-width:480px) {
+    .guide-hero h1 { letter-spacing:1px; }
+    .product-card { padding:18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <ul class="nav-links">
+      <li><a href="index.html#categories">Categories</a></li>
+      <li><a href="index.html#guides">Guides</a></li>
+    </ul>
+  </div>
+  <a href="index.html" class="logo">PARANOID <span class="logo-and">and</span> READY</a>
+  <div class="nav-right">
+    <input type="text" class="nav-search" placeholder="Search...">
+    <div class="unit-toggle">
+      <button class="u-opt" data-system="imperial" onclick="setUnits('imperial')">LB</button>
+      <button class="u-opt" data-system="metric" onclick="setUnits('metric')">KG</button>
+    </div>
+  </div>
+</nav>
+<div class="header-line"><hr class="divider"></div>
+
+<div class="container">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a><span class="sep">/</span><span class="current">How to Choose a Home Safe</span>
+  </div>
+</div>
+
+<section class="guide-hero">
+  <div class="container">
+    <div class="guide-tag">Guide</div>
+    <h1>How to Choose a Home Safe</h1>
+    <div class="guide-brief">
+      <p>Cash, precious metals, passports, deeds, insurance policies, encrypted drives. None of it matters if it can be carried out in a burglary or destroyed in a house fire. A safe protects against both. Most people buy one that is too small, not fire-rated, or never bolted down. This guide covers what to look for and six specific safes that earn a recommendation.</p>
+      <p>If you have not documented what belongs in a safe, start with our <a href="guide-documents.html" style="color:var(--red);border-bottom:1px solid var(--red);">Documents and Financial Resilience</a> guide. For precious metals, the <a href="wealth-documents.html" style="color:var(--red);border-bottom:1px solid var(--red);">Wealth and Documents</a> page covers what to hold and how much.</p>
+    </div>
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<section class="guide-section">
+  <div class="container">
+    <div class="section-label" style="margin-top:48px;">What to look for</div>
+    <p class="guide-note">Not all safes are created equal, and marketing language is designed to confuse. "Fireproof" can mean 30 minutes or 2 hours. "Waterproof" can mean splash-resistant or fully submersible. The specifications below are what actually matter when your safe is the last line of defense between your irreplaceable assets and a house fire, a flood, or a break-in.</p>
+
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">01</span> Fire rating</div>
+      <ul class="checklist">
+        <li class="checklist-item">
+          <span class="check-name">UL Classification</span>
+          <span class="check-note">The only fire rating that matters is one tested by an independent lab. UL (Underwriters Laboratories) Classification is the gold standard. If a safe is not UL Classified, the manufacturer's fire claims are unverified marketing.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Duration and temperature</span>
+          <span class="check-note">Minimum acceptable: 30 minutes at <span data-imperial="1,550°F" data-metric="843°C">1,550°F</span>. Better: 1 hour at <span data-imperial="1,700°F" data-metric="927°C">1,700°F</span>. Most house fires are contained within 20 minutes, but structural fires can exceed an hour. Buy the longest rating you can afford.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">What it protects</span>
+          <span class="check-note">Paper survives below <span data-imperial="350°F" data-metric="177°C">350°F</span>. Digital media (USB drives, hard drives, CDs) needs below <span data-imperial="125°F" data-metric="52°C">125°F</span>. A safe rated for paper may not protect your backup drives. Check the ETL Verified media protection rating separately.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">02</span> Water resistance</div>
+      <ul class="checklist">
+        <li class="checklist-item">
+          <span class="check-name">ETL Verification</span>
+          <span class="check-note">Look for ETL Verified water protection, tested by Intertek. This means the safe was submerged and its contents stayed dry. Without this, "waterproof" is just a label.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Submersion duration</span>
+          <span class="check-note">Ranges from 24 hours to 100 hours depending on model. Water damage after a fire (from hoses and sprinklers) is as common as fire damage itself. Do not skip this rating.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">03</span> Lock types</div>
+      <ul class="checklist">
+        <li class="checklist-item">
+          <span class="check-name">Key lock</span>
+          <span class="check-note">Simple and reliable. No batteries to die, no codes to forget. The tradeoff: keys can be lost, copied, or found by the wrong person. Best for portable chests where simplicity matters.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Dial combination</span>
+          <span class="check-note">Mechanical, no batteries. Slower to open but extremely reliable over decades. Cannot be hacked electronically. The classic choice for large home safes.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Digital keypad</span>
+          <span class="check-note">Fast access, programmable codes, often backlit for low-light use. Requires batteries (typically AAA). Best models include a backup key override. Replace batteries annually.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Biometric (fingerprint)</span>
+          <span class="check-note">Fastest access: 1 to 2 seconds. No code to remember, nothing to lose. Best for quick-access safes where speed matters. Some models store 20 or more fingerprint profiles. Always confirm there is a backup entry method.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">04</span> Construction and anchoring</div>
+      <ul class="checklist">
+        <li class="checklist-item">
+          <span class="check-name">Bolt it down</span>
+          <span class="check-note">A safe that is not bolted to the floor or wall is a heavy box someone can carry out. Every home safe over <span data-imperial="50 lbs" data-metric="23 kg">50 lbs</span> should be anchored. Most quality safes include bolt-down hardware. Use it.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Steel gauge</span>
+          <span class="check-note">Lower number means thicker steel. 14-gauge is excellent for home safes. 16-gauge is standard and adequate for most. Anything thinner than 18-gauge is decorative, not protective.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Pry resistance</span>
+          <span class="check-note">Look for pry-resistant hinge bars, concealed hinges, and live-locking bolts. These features determine how long a safe resists a crowbar. Interior-mounted hinges cannot be attacked from the outside.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Drop test</span>
+          <span class="check-note">ETL Verified drop tests confirm the safe stays locked after falling <span data-imperial="15 ft" data-metric="4.5 m">15 ft</span> (simulating a floor collapse during a fire). Not all safes are tested for this. The ones that are earn extra confidence.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">05</span> Size and what to store</div>
+      <ul class="checklist">
+        <li class="checklist-item">
+          <span class="check-name">Size for what you need</span>
+          <span class="check-note">Bigger is not always better. A large safe is harder to hide and draws more attention. A compact safe in a non-obvious location can be more secure than a full-size one in the master bedroom closet. Match the size to your actual contents and where you can conceal it.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Documents</span>
+          <span class="check-note">Birth certificates, passports, property deeds, insurance policies, wills, power of attorney, Social Security cards, marriage and divorce certificates. Paper copies of everything that proves who you are and what you own.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Cash and precious metals</span>
+          <span class="check-note">Emergency cash in mixed denominations. Gold and silver coins or bars. These are heavy: factor the weight into safe placement and floor support. A bag of silver coins weighs more than you expect.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Digital backups</span>
+          <span class="check-note">Encrypted USB drives, external hard drives, or SD cards containing scanned documents, family photos, financial records, and password vaults. Ensure the safe is ETL Verified for digital media protection.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">High-value small items</span>
+          <span class="check-note">Jewellery, watches, spare vehicle keys, medication (check temperature sensitivity), and anything irreplaceable that fits.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">06</span> Placement and OPSEC</div>
+      <ul class="checklist">
+        <li class="checklist-item">
+          <span class="check-name">Hidden beats obvious</span>
+          <span class="check-note">The best safe placement is one nobody would think to look. Behind a false panel in a built-in wardrobe, inside a piece of furniture, beneath a shelf unit that conceals it, or in a seldom-used storage area. A burglar searching a house is on a clock. Every second they spend looking is a second closer to leaving.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Smaller can be smarter</span>
+          <span class="check-note">A compact safe that fits behind or inside something is harder to find than a large floor safe sitting in plain view. A medium safe tucked into an unexpected location often beats a large one in the master bedroom closet, the first place anyone looks.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Avoid the obvious spots</span>
+          <span class="check-note">Master bedroom, home office, and the garage are the first three rooms a burglar checks. Laundry rooms, pantries, utility closets, basement storage areas, and children's rooms are rarely searched early. Think like someone with 10 minutes.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Ground floor, interior wall</span>
+          <span class="check-note">For fire safety, ground floor placement on an interior wall is ideal. Upper floors carry a floor-collapse risk during a structural fire. Garages and attics see temperature extremes that degrade contents over time.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Tell almost nobody</span>
+          <span class="check-note">The fewer people who know you own a safe, and where it is, the better. This includes service workers, house guests, and social media. Operational security is a habit, not a one-time decision.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="guide-category">
+      <div class="guide-cat-header"><span class="guide-cat-number">07</span> Redundancy</div>
+      <ul class="checklist">
+        <li class="checklist-item">
+          <span class="check-name">Distribute your assets</span>
+          <span class="check-note">A home safe is one layer, not the whole system. A second portable chest at a trusted relative's home, a bank safe deposit box in a different city, or an encrypted cloud backup for digital files. If your single safe is compromised, everything is gone.</span>
+        </li>
+        <li class="checklist-item">
+          <span class="check-name">Split by priority</span>
+          <span class="check-note">Primary safe for daily-access items (cash, metals, frequently referenced documents). A separate portable chest for grab-and-go evacuation copies. A quick-access safe for items you need in seconds. Three roles, three locations.</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<section class="products-section">
+  <div class="container">
+    <div class="section-label" style="margin-top:48px;">Recommended safes</div>
+    <p class="guide-note">Five picks across different roles. A fireproof pouch for grab-and-go. A portable chest for offsite backup. Three bolt-down safes in escalating sizes for primary home storage. A layered setup beats a single oversized box.</p>
+
+    <div class="product-card">
+      <div class="product-img">Photo</div>
+      <div class="product-info">
+        <div class="product-title">ROLOWAY Fireproof Document Bag</div>
+        <div class="product-specs">15" x 11" · Dual-layer fiberglass · <span data-imperial="2,000°F" data-metric="1,093°C">2,000°F</span> rated · Water-resistant · Zipper + Velcro closure</div>
+        <div class="product-desc">Silicone-coated fiberglass pouch for passports, cash, deeds, and USB drives. Fits inside a safe or a go-bag. Reflective strip for grab-and-go in the dark. Tradeoff: brief fire exposure only, not a substitute for a UL-rated safe.</div>
+        <a href="https://www.amazon.com/dp/B07GL3479V?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="product-btn">View on Amazon</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">Photo</div>
+      <div class="product-info">
+        <div class="product-title">Honeywell 1114 Portable Chest</div>
+        <div class="product-specs">0.39 cu ft · 60 min at <span data-imperial="1,700°F" data-metric="927°C">1,700°F</span> · 100hr waterproof · Key lock · <span data-imperial="42 lbs" data-metric="19 kg">42 lbs</span></div>
+        <div class="product-desc">Best portable fire chest you can buy. 1 hour fire rating, 100 hours waterproof, fits legal-size documents flat. Carry handle for evacuations. Lifetime after-fire replacement. Tradeoff: key lock only, and at <span data-imperial="42 lbs" data-metric="19 kg">42 lbs</span> it is portable but not light.</div>
+        <a href="https://www.amazon.com/dp/B08Z8VJCFP?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="product-btn">View on Amazon</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">Photo</div>
+      <div class="product-info">
+        <div class="product-title">SentrySafe SFW123GDC (Small Bolt-Down)</div>
+        <div class="product-specs">1.23 cu ft · 60 min at <span data-imperial="1,700°F" data-metric="927°C">1,700°F</span> · 24hr waterproof · Digital keypad + key · Bolt-down · <span data-imperial="87 lbs" data-metric="39 kg">87 lbs</span></div>
+        <div class="product-desc">The workhorse. 1-hour fire, 24-hour water, bolt-down hardware, backlit keypad, interior light. Fits documents, cash, metals, and drives. Survives a <span data-imperial="15 ft" data-metric="4.5 m">15 ft</span> drop test. Tradeoff: digital lock needs AAA batteries annually.</div>
+        <a href="https://www.amazon.com/dp/B005P12C5A?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="product-btn">View on Amazon</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">Photo</div>
+      <div class="product-info">
+        <div class="product-title">SentrySafe SFW205CWB (Medium Bolt-Down)</div>
+        <div class="product-specs">2.05 cu ft · 60 min at <span data-imperial="1,700°F" data-metric="927°C">1,700°F</span> · 24hr waterproof · Dial combo · Bolt-down · <span data-imperial="125 lbs" data-metric="57 kg">125 lbs</span></div>
+        <div class="product-desc">Mechanical dial: no batteries, no electricity, works for decades. Six <span data-imperial="1-inch" data-metric="25 mm">1-inch</span> bolts, pry-resistant hinge bar. Fits hanging files, stacked cash, and precious metals. Tradeoff: slower to open, harder to conceal due to size.</div>
+        <a href="https://www.amazon.com/dp/B00HS3NI4W?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="product-btn">View on Amazon</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">Photo</div>
+      <div class="product-info">
+        <div class="product-title">SentrySafe SFW205GQC (Large, Digital)</div>
+        <div class="product-specs">2.05 cu ft · 60 min at <span data-imperial="1,700°F" data-metric="927°C">1,700°F</span> · 24hr waterproof · Digital keypad + dual key · Bolt-down · Interior light</div>
+        <div class="product-desc">Same protection as the SFW205CWB with faster digital access. Dual key override, LED interior light, adjustable shelf, deep door pocket. Tradeoff: battery-dependent. Choose this over the CWB if you value speed of access over mechanical simplicity.</div>
+        <a href="https://www.amazon.com/dp/B00JQ753YQ?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="product-btn">View on Amazon</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<section class="products-section">
+  <div class="container">
+    <div class="section-label" style="margin-top:48px;">Concealment</div>
+    <p class="guide-note">A safe resists force. Concealment adds uncertainty. Every hiding spot a burglar has to find is time they do not have. These are not replacements for a fire-rated safe. They are an additional layer that works best when combined with one. For a full guide to diversion products, DIY hiding spots, and unconventional concealment ideas, see our <a href="guide-concealment.html" style="color:var(--red);border-bottom:1px solid var(--red);">Concealment and Diversion Guide</a>.</p>
+
+    <div class="product-card">
+      <div class="product-img">Photo</div>
+      <div class="product-info">
+        <div class="product-title">Houseables Concealment Floating Shelf</div>
+        <div class="product-specs">RFID lock · Damped quiet opening · Real wood · Backup power · Wall-mounted</div>
+        <div class="product-desc">Looks like a normal floating shelf. RFID card releases a drop-down compartment, slow and quiet. Backup power means dead batteries never lock you out. Tradeoff: shallow depth suits cash, keys, and documents only.</div>
+        <a href="https://www.amazon.com/dp/B0BXH8F1ML?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="product-btn">View on Amazon</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">Photo</div>
+      <div class="product-info">
+        <div class="product-title">Elder Welder Wall Outlet Hidden Safe</div>
+        <div class="product-specs">Alloy steel · Key lock · Real wall plate · 30 cu in capacity · Installs between studs</div>
+        <div class="product-desc">Looks exactly like a standard wall outlet. Metal housing installs between wall studs in under 30 minutes. Optional fake plug cord for extra camouflage. Holds cash, cards, keys, USB drives. Tradeoff: small capacity, no fire rating, requires cutting into drywall.</div>
+        <a href="https://www.amazon.com/dp/B09YYZ78XC?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="product-btn">View on Amazon</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">Photo</div>
+      <div class="product-info">
+        <div class="product-title">KYODOLED Diversion Book Safe</div>
+        <div class="product-specs">9.5" x 6.2" x 2.2" · Steel interior · 3-digit combination lock · <span data-imperial="1.7 lbs" data-metric="0.8 kg">1.7 lbs</span></div>
+        <div class="product-desc">Dictionary cover, steel box inside, combination lock. Blends into any bookshelf. Cheap enough to scatter several across locations. Tradeoff: no fire or water protection, and a thorough search will find it.</div>
+        <a href="https://www.amazon.com/dp/B07Q1BCCLK?tag=badmarketings-20" target="_blank" rel="nofollow noopener" class="product-btn">View on Amazon</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="container"><hr class="divider"></div>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Protect what paper proves</h2>
+        <p>Documents, cash, metals, and digital backups. A safe is the container that makes all other wealth preparation viable.</p>
+      </div>
+      <a href="guide-documents.html" class="cta-btn">Documents Guide</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <hr class="divider" style="margin-bottom: 40px;">
+    <div class="footer-top">
+      <a href="index.html" class="footer-brand" style="text-decoration:none;color:inherit;">PARANOID <span class="logo-and">and</span> READY</a>
+      <ul class="footer-nav">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-tagline">Stay prepared. Not surprised.</div>
+      <div class="footer-copyright">2025 paranoidandready.com</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---- Unit toggle ---- */
+var currentSystem = 'imperial';
+
+function applyUnits(sys) {
+  currentSystem = sys;
+  document.querySelectorAll('[data-imperial][data-metric]').forEach(function(el) {
+    el.textContent = el.getAttribute('data-' + sys);
+  });
+  document.querySelectorAll('.u-opt').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-system') === sys);
+  });
+}
+
+function setUnits(sys) {
+  try { localStorage.setItem('pr-units', sys); } catch(e) {}
+  applyUnits(sys);
+}
+
+/* Initialise on load */
+(function() {
+  var saved;
+  try { saved = localStorage.getItem('pr-units'); } catch(e) {}
+  if (!saved) {
+    var lang = (navigator.language || 'en-US');
+    saved = (lang === 'en-US' || lang === 'en-LR' || lang === 'en-MM') ? 'imperial' : 'metric';
+  }
+  applyUnits(saved);
+})();
+</script>
+
+</body>
+</html>
