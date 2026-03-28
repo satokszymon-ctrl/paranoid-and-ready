@@ -5,8 +5,121 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>How to Choose a Home Safe : PARANOID AND READY</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#C5C5C5;--bg-surface:#b8b8b8;--bg-raised:#aeaeae;--red:#8B0000;--red-glow:rgba(139,0,0,0.07);
+    --ink:#1A1A1A;--ink-mid:#3a3a3a;--ink-light:#555555;--white:#ffffff;--border:#1A1A1A;--border-mid:#888888;
+    --max-w:1000px;--pad:48px;
+  }
+  * { margin:0;padding:0;box-sizing:border-box; }
+  body { font-family:'JetBrains Mono',monospace;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.6;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased; }
+  body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.6; }
+  a { color:inherit;text-decoration:none; }
+  .container { max-width:var(--max-w);margin:0 auto;padding:0 var(--pad); }
+  nav { max-width:var(--max-w);margin:0 auto;padding:28px var(--pad) 0;display:grid;grid-template-columns:1fr auto 1fr;align-items:center; }
+  .nav-left { display:flex;align-items:center; }
+  .logo { font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--red); }
+  .logo-and { color:var(--ink); }
+  .nav-links { list-style:none;display:flex;gap:28px; }
+  .nav-links a { font-size:10px;font-weight:500;color:var(--ink-mid);text-transform:uppercase;letter-spacing:1.5px;transition:color 0.2s; }
+  .nav-links a:hover { color:var(--ink); }
+  .nav-right { display:flex;align-items:center;justify-content:flex-end;gap:16px; }
+  .nav-search { background:transparent;border:1px solid var(--border);color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;padding:6px 12px;width:150px;outline:none;transition:border-color 0.2s; }
+  .nav-search::placeholder { color:var(--ink-light); }
+  .nav-search:focus { border-color:var(--red); }
+  .unit-toggle { display:flex;border:1px solid var(--border);overflow:hidden;flex-shrink:0; }
+  .unit-toggle .u-opt { font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;background:transparent;border:none;color:var(--ink-light);padding:5px 10px;cursor:pointer;transition:all 0.2s; }
+  .unit-toggle .u-opt.active { background:var(--ink);color:var(--white); }
+  .unit-toggle .u-opt:not(.active):hover { color:var(--ink); }
+  .header-line { max-width:var(--max-w);margin:20px auto 0;padding:0 var(--pad); }
+  .header-line hr { border:none;border-top:2px solid var(--ink); }
+  .divider { border:none;border-top:2px solid var(--ink); }
+  .breadcrumb { padding:16px 0 0;font-size:10px;font-weight:500;letter-spacing:1px;color:var(--ink-light);text-transform:uppercase; }
+  .breadcrumb a { color:var(--ink-mid);transition:color 0.2s; }
+  .breadcrumb a:hover { color:var(--red); }
+  .breadcrumb .sep { margin:0 8px;color:var(--border-mid); }
+  .breadcrumb .current { color:var(--red); }
 
-  <link rel="stylesheet" href="../css/style.css">
+  .guide-hero { padding:48px 0 56px;animation:fadeIn 0.4s ease-out both; }
+  .guide-tag { font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--red);border:1px solid var(--red);padding:4px 12px;display:inline-block;margin-bottom:20px; }
+  .guide-hero h1 { font-size:clamp(22px,3.5vw,38px);font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:2px;margin-bottom:24px;line-height:1.15; }
+  .guide-brief { font-size:14px;color:var(--ink);line-height:1.85;font-weight:400; }
+  .guide-brief p { margin-bottom:16px; }
+  .guide-brief p:last-child { margin-bottom:0; }
+
+  .section-label { font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:3px;color:var(--red);display:flex;align-items:center;gap:16px;margin-bottom:32px; }
+  .section-label::after { content:'';flex:1;height:1px;background:var(--ink); }
+
+  .guide-section { padding:0 0 56px;animation:fadeIn 0.4s ease-out 0.05s both; }
+  .guide-category { margin-bottom:32px; }
+  .guide-category:last-child { margin-bottom:0; }
+  .guide-cat-header { font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--ink);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--ink); }
+  .guide-cat-number { color:var(--red);margin-right:8px; }
+
+  .checklist { list-style:none;display:grid;grid-template-columns:240px 1fr;gap:0; }
+  .checklist-item { display:contents; }
+
+  .check-name { padding:10px 20px 10px 0;border-bottom:1px solid var(--border-mid);font-size:13px;font-weight:600;color:var(--ink);line-height:1.5;white-space:nowrap; }
+  .check-note { padding:10px 0 10px 20px;border-bottom:1px solid var(--border-mid);border-left:1px solid var(--border-mid);font-size:13px;color:var(--ink-mid);font-weight:400;line-height:1.6; }
+  .checklist-item:last-child .check-name, .checklist-item:last-child .check-note { border-bottom:none; }
+
+  .guide-note { font-size:14px;color:var(--ink);line-height:1.85;font-weight:400;margin-bottom:32px; }
+
+  .products-section { padding:0 0 56px;animation:fadeIn 0.4s ease-out 0.1s both; }
+  .size-label { font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:16px;margin-top:40px;padding:8px 0 8px 14px;border-left:3px solid var(--red); }
+  .size-label:first-child { margin-top:0; }
+  .product-card { display:flex;gap:28px;padding:28px;border:1px solid var(--border);background:rgba(197,197,197,0.3);margin-bottom:16px;transition:background 0.3s; }
+  .product-card:hover { background:rgba(184,184,184,0.6); }
+  .product-img { width:100px;min-width:100px;height:100px;background:var(--bg-raised);border:1px solid var(--border-mid);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--ink-light);text-transform:uppercase;letter-spacing:1px;flex-shrink:0; }
+  .product-info { flex:1;display:flex;flex-direction:column;gap:8px; }
+  .product-title { font-size:14px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:1px;line-height:1.3; }
+  .product-specs { font-size:11px;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:1px; }
+  .product-desc { font-size:13px;color:var(--ink-mid);font-weight:400;line-height:1.7;flex:1; }
+  .product-btn { display:inline-block;align-self:flex-start;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--white);background:var(--ink);border:1px solid var(--ink);padding:8px 16px;transition:all 0.2s; }
+  .product-btn:hover { background:var(--red);border-color:var(--red); }
+
+  .context-links { display:flex;gap:12px;flex-wrap:wrap;margin-top:16px; }
+  .context-link { font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--ink-mid);border:1px solid var(--border-mid);padding:6px 14px;transition:all 0.2s; }
+  .context-link:hover { color:var(--red);border-color:var(--red); }
+
+  .cta-section { padding:64px 0;animation:fadeIn 0.4s ease-out 0.15s both; }
+  .cta-inner { display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap; }
+  .cta-text h2 { font-size:16px;font-weight:800;line-height:1.3;margin-bottom:10px;text-transform:uppercase;letter-spacing:2px;color:var(--ink); }
+  .cta-text p { font-size:14px;color:var(--ink-mid);font-weight:400;line-height:1.7; }
+  .cta-btn { display:inline-block;background:var(--ink);border:1px solid var(--ink);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:14px 28px;transition:all 0.2s;white-space:nowrap;flex-shrink:0; }
+  .cta-btn:hover { background:var(--red);border-color:var(--red); }
+
+  footer { padding:40px 0; }
+  .footer-top { display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px; }
+  .footer-brand { font-size:11px;font-weight:800;color:var(--red);letter-spacing:2px;text-transform:uppercase; }
+  .footer-nav { display:flex;gap:28px;list-style:none; }
+  .footer-nav a { font-size:10px;font-weight:500;color:var(--ink-mid);text-transform:uppercase;letter-spacing:1.5px;transition:color 0.2s; }
+  .footer-nav a:hover { color:var(--ink); }
+  .footer-bottom { display:flex;justify-content:space-between;align-items:baseline;padding-top:24px;border-top:1px solid var(--border-mid); }
+  .footer-tagline { font-size:13px;color:var(--ink-mid);font-weight:400;font-style:italic; }
+  .footer-copyright { font-size:11px;color:var(--ink-light);text-align:right; }
+
+  @keyframes fadeIn { from { opacity:0;transform:translateY(10px); } to { opacity:1;transform:translateY(0); } }
+  nav { animation:fadeIn 0.5s ease-out; }
+
+  @media (max-width:768px) {
+    :root { --pad:24px; }
+    .nav-left { display:none; }
+    nav { grid-template-columns:auto 1fr; }
+    .checklist { grid-template-columns:1fr; } .checklist-item { display:flex;flex-direction:column;gap:4px;margin-bottom:14px; } .checklist-item:last-child { margin-bottom:0; } .check-name { border-bottom:none;padding-bottom:2px;white-space:normal; } .check-note { border-left:none;border-bottom:1px solid var(--border-mid);padding-top:0;padding-left:0;padding-bottom:14px; } .checklist-item:last-child .check-note { border-bottom:none; }
+    .product-card { flex-direction:column;gap:16px; }
+    .product-img { width:80px;min-width:80px;height:80px; }
+    .footer-top { flex-direction:column;gap:20px; }
+    .footer-bottom { flex-direction:column;gap:12px; }
+    .footer-copyright { text-align:left; }
+    .cta-inner { flex-direction:column; }
+    .context-links { flex-direction:column; }
+  }
+  @media (max-width:480px) {
+    .guide-hero h1 { letter-spacing:1px; }
+    .product-card { padding:18px; }
+  }
+</style>
 </head>
 <body>
 
@@ -29,7 +142,9 @@
 <div class="header-line"><hr class="divider"></div>
 
 <div class="container">
-  
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">/</span><span class="current">How to Choose a Home Safe</span>
+  </div>
 </div>
 
 <section class="guide-hero">
@@ -38,7 +153,7 @@
     <h1>How to Choose a Home Safe</h1>
     <div class="guide-brief">
       <p>Cash, precious metals, passports, deeds, insurance policies, encrypted drives. None of it matters if it can be carried out in a burglary or destroyed in a house fire. A safe protects against both. Most people buy one that is too small, not fire-rated, or never bolted down. This guide covers what to look for and six specific safes that earn a recommendation.</p>
-      <p>If you have not documented what belongs in a safe, start with our <a href="../guides/guide-documents.html" style="color:var(--red);border-bottom:1px solid var(--red);">Documents and Financial Resilience</a> guide. For precious metals, the <a href="../categories/wealth-documents.html" style="color:var(--red);border-bottom:1px solid var(--red);">Wealth and Documents</a> page covers what to hold and how much.</p>
+      <p>If you have not documented what belongs in a safe, start with our <a href="guide-documents.html" style="color:var(--red);border-bottom:1px solid var(--red);">Documents and Financial Resilience</a> guide. For precious metals, the <a href="wealth-documents.html" style="color:var(--red);border-bottom:1px solid var(--red);">Wealth and Documents</a> page covers what to hold and how much.</p>
     </div>
   </div>
 </section>
@@ -260,7 +375,7 @@
 <section class="products-section">
   <div class="container">
     <div class="section-label" style="margin-top:48px;">Concealment</div>
-    <p class="guide-note">A safe resists force. Concealment adds uncertainty. Every hiding spot a burglar has to find is time they do not have. These are not replacements for a fire-rated safe. They are an additional layer that works best when combined with one. For a full guide to diversion products, DIY hiding spots, and unconventional concealment ideas, see our <a href="../guides/guide-concealment.html" style="color:var(--red);border-bottom:1px solid var(--red);">Concealment and Diversion Guide</a>.</p>
+    <p class="guide-note">A safe resists force. Concealment adds uncertainty. Every hiding spot a burglar has to find is time they do not have. These are not replacements for a fire-rated safe. They are an additional layer that works best when combined with one. For a full guide to diversion products, DIY hiding spots, and unconventional concealment ideas, see our <a href="guide-concealment.html" style="color:var(--red);border-bottom:1px solid var(--red);">Concealment and Diversion Guide</a>.</p>
 
     <div class="product-card">
       <div class="product-img">Photo</div>
@@ -304,7 +419,7 @@
         <h2>Protect what paper proves</h2>
         <p>Documents, cash, metals, and digital backups. A safe is the container that makes all other wealth preparation viable.</p>
       </div>
-      <a href="../guides/guide-documents.html" class="cta-btn">Documents Guide</a>
+      <a href="guide-documents.html" class="cta-btn">Documents Guide</a>
     </div>
   </div>
 </section>
@@ -313,10 +428,10 @@
   <div class="container">
     <hr class="divider" style="margin-bottom: 40px;">
     <div class="footer-top">
-      <a href="../index.html" class="footer-brand" style="text-decoration:none;color:inherit;">PARANOID <span class="logo-and">and</span> READY</a>
+      <a href="index.html" class="footer-brand" style="text-decoration:none;color:inherit;">PARANOID <span class="logo-and">and</span> READY</a>
       <ul class="footer-nav">
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../contact.html">Contact</a></li>
       </ul>
     </div>
     <div class="footer-bottom">

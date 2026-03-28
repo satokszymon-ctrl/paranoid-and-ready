@@ -5,8 +5,301 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PARANOID AND READY : Gear, Guides AND Gifts for the Prepared Mind</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #C5C5C5;
+    --bg-surface:  #b8b8b8;
+    --red:         #8B0000;
+    --red-glow:    rgba(139, 0, 0, 0.07);
+    --ink:         #1A1A1A;
+    --ink-mid:     #3a3a3a;
+    --ink-light:   #555555;
+    --white:       #ffffff;
+    --border:      #1A1A1A;
+    --border-mid:  #888888;
+    --max-w:       1000px;
+    --pad:         48px;
+  }
 
-  <link rel="stylesheet" href="css/style.css">
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.6;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 28px var(--pad) 0;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .nav-left { display: flex; align-items: center; }
+  .logo { font-size: 13px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--red); }
+  .logo-and { color: var(--ink); }
+  .nav-links { list-style: none; display: flex; gap: 28px; }
+  .nav-links a { font-size: 10px; font-weight: 500; color: var(--ink-mid); text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-right { display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
+  .nav-search { background: transparent; border: 1px solid var(--border); color: var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; padding: 6px 12px; width: 150px; outline: none; transition: border-color 0.2s; }
+  .nav-search::placeholder { color: var(--ink-light); }
+  .nav-search:focus { border-color: var(--red); }
+
+  .unit-toggle { display: flex; border: 1px solid var(--border); overflow: hidden; flex-shrink: 0; }
+  .unit-toggle .u-opt { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; background: transparent; border: none; color: var(--ink-light); padding: 5px 10px; cursor: pointer; transition: all 0.2s; }
+  .unit-toggle .u-opt.active { background: var(--ink); color: var(--white); }
+  .unit-toggle .u-opt:not(.active):hover { color: var(--ink); }
+
+  /* Divider: always inside .container so it matches content width */
+  .divider {
+    border: none;
+    border-top: 2px solid var(--ink);
+  }
+
+  .header-line {
+    max-width: var(--max-w);
+    margin: 20px auto 0;
+    padding: 0 var(--pad);
+  }
+
+  /* ---- HERO ---- */
+  .hero { padding: 120px 0 48px; animation: fadeIn 0.6s ease-out 0.05s both; }
+  .scenarios { margin-top: 16px; }
+  .hero-tagline { font-size: clamp(26px, 4.5vw, 52px); font-weight: 800; line-height: 1.15; letter-spacing: -1px; color: var(--ink); text-align: center; text-transform: uppercase; }
+  .hero-tagline span { color: var(--red); }
+
+  /* ---- SCENARIOS ---- */
+  .scenarios { padding: 0 0 80px; animation: fadeIn 0.5s ease-out 0.1s both; }
+  .scenario-row { display: flex; gap: 24px; justify-content: center; flex-wrap: nowrap; }
+  .scenario-pill { cursor: pointer; transition: color 0.2s; }
+  .scenario-pill:hover .scenario-name { color: var(--red); }
+  .scenario-name { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink-mid); line-height: 1.4; white-space: nowrap; }
+
+  /* ---- SECTION LABEL ---- */
+  .section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: var(--red); margin-bottom: 32px; display: flex; align-items: center; gap: 16px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--ink); }
+
+  /* ---- CATEGORIES ---- */
+  .categories { padding: 48px 0; animation: fadeIn 0.5s ease-out 0.15s both; }
+  .cat-list { display: flex; flex-direction: column; }
+  .cat-row { display: flex; text-decoration: none; color: inherit; align-items: baseline; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--red); cursor: pointer; transition: background 0.2s; gap: 24px; }
+  .cat-row:first-child { border-top: 1px solid var(--red); }
+  .cat-row:hover { background: var(--red-glow); }
+  .cat-name { font-size: 14px; font-weight: 800; color: var(--red); text-transform: uppercase; letter-spacing: 2px; white-space: nowrap; flex-shrink: 0; }
+  .cat-examples { font-size: 11px; color: var(--ink-mid); text-align: right; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ---- CTA ---- */
+  .cta-section { padding: 64px 0; animation: fadeIn 0.4s ease-out 0.2s both; }
+  .cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .cta-text h2 { font-size: 16px; font-weight: 800; line-height: 1.3; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--ink); }
+  .cta-text p { font-size: 14px; color: var(--ink-mid); font-weight: 400; line-height: 1.7; }
+  .cta-btn { display: inline-block; background: var(--ink); border: 1px solid var(--ink); color: var(--white); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 14px 28px; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+  .cta-btn:hover { background: var(--red); border-color: var(--red); }
+
+  /* ---- ARTICLES ---- */
+  .articles { padding: 56px 0; animation: fadeIn 0.5s ease-out 0.25s both; }
+  .article-list { display: flex; flex-direction: column; }
+  .article-row { display: flex; align-items: flex-start; gap: 32px; padding: 20px 0; border-bottom: 1px solid var(--border-mid); cursor: pointer; transition: opacity 0.2s; }
+  .article-row:hover { opacity: 0.6; }
+  .article-row:first-child { border-top: 1px solid var(--border-mid); }
+  .article-meta { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; width: 90px; }
+  .article-tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--red); }
+  .article-time { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--ink-light); }
+  .article-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; line-height: 1.4; color: var(--ink); }
+  .article-excerpt { font-size: 13px; color: var(--ink-mid); font-weight: 400; line-height: 1.6; margin-bottom: 10px; }
+  .article-read { font-size: 10px; font-weight: 700; color: var(--red); letter-spacing: 1px; }
+
+  /* ---- FOOTER ---- */
+  footer { padding: 40px 0; }
+  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+  .footer-brand { font-size: 11px; font-weight: 800; color: var(--red); letter-spacing: 2px; text-transform: uppercase; }
+  .footer-nav { display: flex; gap: 28px; list-style: none; }
+  .footer-nav a { font-size: 10px; font-weight: 500; color: var(--ink-mid); text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.2s; }
+  .footer-nav a:hover { color: var(--ink); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: baseline; padding-top: 24px; border-top: 1px solid var(--border-mid); }
+  .footer-tagline { font-size: 13px; color: var(--ink-mid); font-weight: 400; font-style: italic; }
+  .footer-copyright { font-size: 11px; color: var(--ink-light); text-align: right; }
+
+  /* ---- GRAB AND GO PICKS ---- */
+  .picks { padding: 56px 0; animation: fadeIn 0.5s ease-out 0.2s both; }
+
+  .picks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .pick-card {
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pick-img {
+    height: 180px;
+    background: var(--bg-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pick-img-placeholder {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ink-light);
+  }
+
+  .pick-info {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pick-tag {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--red);
+    margin-bottom: 10px;
+  }
+
+  .pick-name {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+
+  .pick-desc {
+    font-size: 13px;
+    color: var(--ink-mid);
+    font-weight: 400;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .pick-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-mid);
+    margin-top: auto;
+  }
+
+  .pick-price {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--ink);
+  }
+
+  .pick-btn {
+    display: inline-block;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    color: var(--white);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .pick-btn:hover { background: var(--red); border-color: var(--red); }
+
+  @media (max-width: 900px) {
+    .picks-grid { grid-template-columns: 1fr; max-width: 480px; }
+  }
+
+  /* ---- SHOP GRID (5-col) ---- */
+  .shop { padding: 56px 0; animation: fadeIn 0.5s ease-out 0.2s both; }
+  .shop-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .shop-card { border: 1px solid var(--border); display: flex; flex-direction: column; }
+  .shop-card .pick-img { height: 140px; }
+  .shop-card .pick-info { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+  .shop-card .pick-tag { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--red); margin-bottom: 8px; }
+  .shop-card .pick-name { font-size: 12px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; color: var(--ink); }
+  .shop-card .pick-bottom { padding-top: 12px; border-top: 1px solid var(--border-mid); margin-top: auto; display: flex; align-items: center; justify-content: space-between; }
+  .shop-card .pick-price { font-size: 15px; font-weight: 800; color: var(--ink); }
+  @media (max-width: 900px) { .shop-grid { grid-template-columns: repeat(2, 1fr); } .shop-grid .shop-card:last-child { grid-column: 1/-1; max-width: 50%; justify-self: center; } }
+  @media (max-width: 480px) { .shop-grid { grid-template-columns: 1fr; } .shop-grid .shop-card:last-child { max-width: 100%; } }
+
+  /* ---- GUIDE BUTTON ---- */
+  .guides-more { margin-top: 32px; text-align: center; }
+
+  /* ---- SOCIAL ICONS ---- */
+  .footer-social { display: flex; gap: 16px; align-items: center; }
+  .footer-social a { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid var(--border-mid); transition: all 0.2s; }
+  .footer-social a:hover { border-color: var(--red); }
+  .footer-social a svg { width: 14px; height: 14px; fill: var(--ink-mid); transition: fill 0.2s; }
+  .footer-social a:hover svg { fill: var(--red); }
+
+  /* ---- AFFILIATE NOTICE ---- */
+  .affiliate-notice { font-size: 10px; color: var(--ink-light); line-height: 1.6; margin-top: 20px; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  nav { animation: fadeIn 0.5s ease-out; }
+
+  /* Tablet: scenarios wrap */
+  @media (max-width: 900px) {
+    .scenario-row { flex-wrap: wrap; gap: 12px 24px; }
+  }
+
+  @media (max-width: 768px) {
+    :root { --pad: 24px; }
+    .cat-row { flex-wrap: wrap; }
+    .cat-examples { display: none; }
+    .article-row { flex-direction: column; gap: 8px; }
+    .nav-left { display: none; }
+    nav { grid-template-columns: auto 1fr; }
+    .footer-top { flex-direction: column; gap: 20px; }
+    .footer-bottom { flex-direction: column; gap: 12px; }
+    .footer-copyright { text-align: left; }
+    .cta-inner { flex-direction: column; }
+  }
+
+  /* Phone: scenarios stack */
+  @media (max-width: 480px) {
+    .scenario-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+  }
+</style>
 </head>
 <body>
 
@@ -38,11 +331,11 @@
 <section class="scenarios">
   <div class="container">
     <div class="scenario-row">
-      <a href="scenarios/power-outage.html" class="scenario-pill"><span class="scenario-name">[ Power Outage ]</span></a>
-      <a href="scenarios/natural-disaster.html" class="scenario-pill"><span class="scenario-name">[ Natural Disaster ]</span></a>
-      <a href="scenarios/war-unrest.html" class="scenario-pill"><span class="scenario-name">[ War and Unrest ]</span></a>
-      <a href="scenarios/economic-collapse.html" class="scenario-pill"><span class="scenario-name">[ Economic Collapse ]</span></a>
-      <a href="scenarios/medical-emergency.html" class="scenario-pill"><span class="scenario-name">[ Medical Emergency ]</span></a>
+      <a href="power-outage.html" class="scenario-pill"><span class="scenario-name">[ Power Outage ]</span></a>
+      <a href="natural-disaster.html" class="scenario-pill"><span class="scenario-name">[ Natural Disaster ]</span></a>
+      <a href="war-unrest.html" class="scenario-pill"><span class="scenario-name">[ War and Unrest ]</span></a>
+      <a href="economic-collapse.html" class="scenario-pill"><span class="scenario-name">[ Economic Collapse ]</span></a>
+      <a href="medical-emergency.html" class="scenario-pill"><span class="scenario-name">[ Medical Emergency ]</span></a>
     </div>
   </div>
 </section>
@@ -51,15 +344,15 @@
   <div class="container">
     <div class="section-label">Browse by Category</div>
     <div class="cat-list">
-      <a href="categories/energy-power.html" class="cat-row"><div class="cat-name">Energy AND Power</div><div class="cat-examples">Solar panels, portable power stations, generators, batteries</div></a>
-      <a href="categories/water-hydration.html" class="cat-row"><div class="cat-name">Water AND Hydration</div><div class="cat-examples">Water filters, purification tablets, storage containers</div></a>
-      <a href="categories/food-supply.html" class="cat-row"><div class="cat-name">Food AND Supply</div><div class="cat-examples">Freeze-dried meals, MREs, seed vaults, long-term storage</div></a>
-      <a href="categories/medical-hygiene.html" class="cat-row"><div class="cat-name">Medical AND Hygiene</div><div class="cat-examples">First aid kits, trauma supplies, medications, sanitation</div></a>
-      <a href="categories/communication-navigation.html" class="cat-row"><div class="cat-name">Communication AND Navigation</div><div class="cat-examples">Emergency radios, walkie-talkies, compasses, GPS</div></a>
-      <a href="categories/survival-repair.html" class="cat-row"><div class="cat-name">Survival AND Repair</div><div class="cat-examples">Multi-tools, fire starters, paracord, tarps, knives</div></a>
-      <a href="categories/security-defense.html" class="cat-row"><div class="cat-name">Security AND Defense</div><div class="cat-examples">Safes, door reinforcements, cameras, motion sensors</div></a>
-      <a href="categories/wealth-documents.html" class="cat-row"><div class="cat-name">Wealth AND Documents</div><div class="cat-examples">Cash, precious metals, passports, vital records, barter goods</div></a>
-      <a href="categories/books-knowledge.html" class="cat-row"><div class="cat-name">Books AND Knowledge</div><div class="cat-examples">Survival references, off-grid living, self-sufficiency</div></a>
+      <a href="energy-power.html" class="cat-row"><div class="cat-name">Energy AND Power</div><div class="cat-examples">Solar panels, portable power stations, generators, batteries</div></a>
+      <a href="water-hydration.html" class="cat-row"><div class="cat-name">Water AND Hydration</div><div class="cat-examples">Water filters, purification tablets, storage containers</div></a>
+      <a href="food-supply.html" class="cat-row"><div class="cat-name">Food AND Supply</div><div class="cat-examples">Freeze-dried meals, MREs, seed vaults, long-term storage</div></a>
+      <a href="medical-hygiene.html" class="cat-row"><div class="cat-name">Medical AND Hygiene</div><div class="cat-examples">First aid kits, trauma supplies, medications, sanitation</div></a>
+      <a href="communication-navigation.html" class="cat-row"><div class="cat-name">Communication AND Navigation</div><div class="cat-examples">Emergency radios, walkie-talkies, compasses, GPS</div></a>
+      <a href="survival-repair.html" class="cat-row"><div class="cat-name">Survival AND Repair</div><div class="cat-examples">Multi-tools, fire starters, paracord, tarps, knives</div></a>
+      <a href="security-defense.html" class="cat-row"><div class="cat-name">Security AND Defense</div><div class="cat-examples">Safes, door reinforcements, cameras, motion sensors</div></a>
+      <a href="wealth-documents.html" class="cat-row"><div class="cat-name">Wealth AND Documents</div><div class="cat-examples">Cash, precious metals, passports, vital records, barter goods</div></a>
+      <a href="books-knowledge.html" class="cat-row"><div class="cat-name">Books AND Knowledge</div><div class="cat-examples">Survival references, off-grid living, self-sufficiency</div></a>
     </div>
   </div>
 </section>
@@ -189,7 +482,7 @@
     <hr class="divider" style="margin-bottom: 56px;">
     <div class="section-label">Latest Guides</div>
     <div class="article-list">
-      <a href="guides/guide-evacuation-bags.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
+      <a href="guide-evacuation-bags.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
         <div class="article-meta"><span class="article-tag">Evacuation</span><span class="article-time">10 min read</span></div>
         <div class="article-content">
           <div class="article-title">How to Build an Evacuation Bag</div>
@@ -197,7 +490,7 @@
           <div class="article-read">Read +</div>
         </div>
       </a>
-      <a href="guides/guide-first-aid-kits.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
+      <a href="guide-first-aid-kits.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
         <div class="article-meta"><span class="article-tag">Medical</span><span class="article-time">12 min read</span></div>
         <div class="article-content">
           <div class="article-title">How to Build a First Aid Kit</div>
@@ -205,7 +498,7 @@
           <div class="article-read">Read +</div>
         </div>
       </a>
-      <a href="guides/guide-food-supplies.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
+      <a href="guide-food-supplies.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
         <div class="article-meta"><span class="article-tag">Food</span><span class="article-time">10 min read</span></div>
         <div class="article-content">
           <div class="article-title">Emergency Food Supply Checklist</div>
@@ -213,7 +506,7 @@
           <div class="article-read">Read +</div>
         </div>
       </a>
-      <a href="guides/guide-documents.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
+      <a href="guide-documents.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
         <div class="article-meta"><span class="article-tag">Finance</span><span class="article-time">11 min read</span></div>
         <div class="article-content">
           <div class="article-title">Documents &amp; Financial Resilience</div>
@@ -221,7 +514,7 @@
           <div class="article-read">Read +</div>
         </div>
       </a>
-      <a href="guides/guide-safes.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
+      <a href="guide-safes.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
         <div class="article-meta"><span class="article-tag">Security</span><span class="article-time">10 min read</span></div>
         <div class="article-content">
           <div class="article-title">Home Safes Buying Guide</div>
@@ -229,7 +522,7 @@
           <div class="article-read">Read +</div>
         </div>
       </a>
-      <a href="guides/guide-concealment.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
+      <a href="guide-concealment.html" class="article-row" style="text-decoration:none;color:inherit;display:flex;">
         <div class="article-meta"><span class="article-tag">Security</span><span class="article-time">8 min read</span></div>
         <div class="article-content">
           <div class="article-title">Concealment and Diversion Products</div>
