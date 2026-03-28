@@ -320,6 +320,7 @@ Prepare for scenarios, not ideologies.
 - **Dividers:** `<hr class="divider">` inside `.container` divs. Never `border-top` on section elements.
 - **Borders:** 1px solid ink black for sections, 2px solid ink black for major divisions.
 - **No rounded corners anywhere.**
+- **Styling Architecture:** All CSS lives in `/css/style.css`. Absolutely no inline `<style>` tags in HTML.
 - **Tone:** calm, practical, slightly wry. Never panicked, never salesy.
 
 ---
