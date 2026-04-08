@@ -10,8 +10,8 @@
     --white:       #ffffff;
     --border:      #1A1A1A;
     --border-mid:  #888888;
-    --max-w:       1000px;
-    --pad:         48px;
+    --max-w:       1100px;
+    --pad:         55px;
   }
 
   /* Utility Margins */
@@ -290,7 +290,7 @@
   }
 
   @media (max-width: 768px) {
-    :root { --pad: 24px; }
+    :root { --pad: 16.5px; }
     .cat-row { flex-wrap: wrap; }
     .cat-examples { display: none; }
     .article-row { flex-direction: column; gap: 8px; }
@@ -756,7 +756,7 @@
   .book-category { padding: 0 0 48px; animation: fadeIn 0.4s ease-out 0.1s both; }
 
 @media(max-width:700px){
-    :root{--pad:20px}
+    :root{--pad:16.5px}
     nav{grid-template-columns:1fr;gap:16px;justify-items:center}
     .shop-grid { grid-template-columns: repeat(2, 1fr); }
     .shop-grid .shop-card:last-child { grid-column: 1/-1; max-width: 50%; justify-self: center; }
