@@ -755,6 +755,18 @@
 
   .book-category { padding: 0 0 48px; animation: fadeIn 0.4s ease-out 0.1s both; }
 
+  /* ---- QUICK FACTS (Scenario Pages) ---- */
+  .quick-facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 48px; }
+  .fact-item { border: 1px solid var(--border); padding: 18px; background: rgba(197, 197, 197, 0.3); }
+  .fact-value { font-size: 18px; font-weight: 800; color: var(--red); margin-bottom: 6px; line-height: 1.2; }
+  .fact-label { font-size: 10px; color: var(--ink-mid); text-transform: uppercase; letter-spacing: 1px; line-height: 1.4; font-weight: 500; }
+
+  /* ---- SCENARIO BOOKS GRID (4-col) ---- */
+  .scenario-books-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
+  /* ---- GET READY: no margin-top on own-section inside accordion ---- */
+  .subcat-content > .own-section { margin-top: 0; }
+
 @media(max-width:700px){
     :root{--pad:16.5px}
     nav{grid-template-columns:1fr;gap:16px;justify-items:center}
@@ -766,5 +778,9 @@
     .doc-btn { justify-self: start; }
     .cta-inner{flex-direction:column;text-align:center}
     .footer-top,.footer-bottom{flex-direction:column;gap:12px;align-items:center;text-align:center}
+    .quick-facts { grid-template-columns: repeat(2, 1fr); }
+    .scenario-books-grid { grid-template-columns: repeat(2, 1fr); }
+    .own-list { grid-template-columns: 1fr; }
+    .own-why { border-left: none; padding-left: 0; }
   }
 
